@@ -3,6 +3,13 @@
 
 using namespace std;
 
+void printStripe(vector<Stripe> S) {
+    cout << "X STRIPES :"<<endl;
+    for(auto stripe : S) {
+        cout << stripe.getXInterval().getBottom() <<" "<<stripe.getXInterval().getTop()<<endl;
+    }
+}
+
 vector<Interval> partition(vector<float> coords) {
     vector<Interval> intervals;
     sort(coords.begin(), coords.end());
@@ -139,16 +146,77 @@ float findMedianCoord(vector<Edge> V, vector<Edge>& V1, vector<Edge>& V2) {
     return median;
 }
 
-vector<Stripe> copy(vector<Stripe> *S, vector<float> *P, Interval I) {
-
+bool properSubset(Interval A, Interval B) {
+    // A : 2 3    B : 1 5
+    return A.getBottom() >= B.getBottom() and A.getTop() <= B.getTop();
 }
 
-void blacken(vector<Stripe> *S, set<Interval> *intervals) {
+vector<Stripe> copy(vector<Stripe> *S, vector<float> *P, Interval I) {
+    vector<Interval> intervals = partition(*P);
+    vector<Stripe> Sdash;
+    vector<Interval> temp;
 
+    for(auto interval : intervals) {
+        Stripe *S1 = new Stripe(I, interval, temp);
+        Sdash.push_back(*S1);
+    }
+
+    for(auto stripeDash : Sdash) {
+        for(auto stripe : *S) {
+            if(properSubset(stripeDash.getYInterval(), stripe.getYInterval())) {
+                stripeDash.setXunion(stripe.x_union);
+            }
+        }
+    }
+
+    return Sdash;
+}
+
+void blacken(vector<Stripe> *S, set<Interval> *J) {
+    for(auto stripe : *S) {
+        for(auto interval : *J) {
+            if(properSubset(stripe.getYInterval(), interval)) {
+                vector<Interval> temp;
+                temp.push_back(stripe.getXInterval());
+                stripe.setXunion(temp);
+            }
+        }
+    }
 }
 
 vector<Stripe> concat(vector<Stripe> *S1, vector<Stripe> *S2, vector<float> *P, Interval x_ext) {
+    vector<Interval> intervals = partition(*P);
+    vector<Stripe> Sdash;
+    vector<Interval> temp;
 
+    for(auto interval : intervals) {
+        Stripe *S1 = new Stripe(x_ext, interval, temp);
+        Sdash.push_back(*S1);
+    }
+
+    for(auto stripeDash : Sdash) {
+        Stripe s1Dash, s2Dash;
+
+        for(auto s1 : *S1) {
+            if(s1.getYInterval().getBottom() == stripeDash.getYInterval().getBottom() and
+               s1.getYInterval().getTop() == stripeDash.getYInterval().getTop()) {
+                   s1Dash = s1;
+               }
+        }
+
+        for(auto s2 : *S2) {
+            if(s2.getYInterval().getBottom() == stripeDash.getYInterval().getBottom() and
+               s2.getYInterval().getTop() == stripeDash.getYInterval().getTop()) {
+                   s2Dash = s2;
+               }
+        }
+
+        vector<Interval> temp(s1Dash.x_union);
+        temp.insert(temp.end(), s2Dash.x_union.begin(), s2Dash.x_union.end());
+        stripeDash.setXunion(temp);
+    }
+
+    return Sdash;
 }
 
 void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interval> *R, vector<float> *P, vector<Stripe> *S) {
@@ -199,6 +267,7 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
         vector<Edge> V1, V2;
 
         float xm = findMedianCoord(V, V1, V2);
+        //cout << xm << endl;
 
         Interval *i1 = new Interval(x_ext.getBottom(), xm);
         Stripes(V1, *i1, &L1, &R1, &P1, &S1);
@@ -213,6 +282,9 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
         S1 = copy(&S1, &P1, *i1);
         S2 = copy(&S2, &P2, *i2);
 
+        //printStripe(S1);
+        //printStripe(S2);
+
         set<Interval> R2minusLR, L1minusLR;
         
         R2minusLR = setMinusLRHelper(R2, L1, R2);
@@ -221,10 +293,7 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
         blacken (&S1, &R2minusLR);
         blacken (&S2, &L1minusLR);
 
-        *S = concat(&S1, &S2, &P, x_ext);
-
-        //calculate measure
-        
+        *S = concat(&S1, &S2, P, x_ext);
     }
 }
 
@@ -256,6 +325,7 @@ vector<Stripe> RectangleDAC(vector<Rectangle> rect) {
     P.push_back(INT_MAX);
     
     Stripes(V, *interval, &temp, &temp, &P, &S);
+    printStripe(S);
     return S;
 }
 

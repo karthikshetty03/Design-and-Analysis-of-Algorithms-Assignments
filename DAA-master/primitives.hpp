@@ -60,11 +60,10 @@ class Edge {
 
 //Stripe
 class Stripe {
-	Interval x_interval;
-	Interval y_interval;
-	vector<Interval> x_union;
-
 	public:
+		Interval x_interval;
+		Interval y_interval;
+		vector<Interval> x_union;
 		Stripe();
 		Stripe(Interval x_interval, Interval y_interval, vector<Interval> x_union);
 		void setXunion(vector<Interval> x_union);

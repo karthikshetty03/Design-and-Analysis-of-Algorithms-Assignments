@@ -15,6 +15,21 @@ int selectedPart=0;     //1 if bottom right selected, 2 if top left, 0 if none
 
 vector<Rectangle> rectangles;
 
+//float measure(vector<Stripe> stripes) {
+//    float ans = 0;
+
+//    for(auto stripe : stripes) {
+//        ans += stripe.x_union * (stripe.getYInterval().getTop() - stripe.getYInterval().getBottom());
+//    }
+//}
+
+void printStripes(vector<Stripe> S) {
+    cout <<"Y STRIPES:" <<endl;
+    for(auto stripe : S) {
+        cout << stripe.getYInterval().getBottom() <<" "<<stripe.getYInterval().getTop()<<endl;
+    }
+}
+
 /*
 // to get the index of a selected point for deletion/dragging
 int indexOf(float x, float y)
@@ -142,13 +157,14 @@ int main(int argc, char** argv)
 {
     cout<<"Press to enter Rectangles:"<<endl<<"1 for Manual"<<endl<<"2 for Random"<<endl<<"3 for GUI"<<endl;
     cin>>inputMode;
+    vector<Stripe> stripes;
 
     if(inputMode == 1)
     {
         int n;
         cout<<"Number of rectangles: ";
         cin>>n;
-        cout<<"Enter Points in format x1 y1 x2 y2 (Bottom left and top Right Points):"<<endl;
+        cout<<"Enter Points in format x1 y1 x2 y2:"<<endl;
         for(int i=0;i<n;i++)
         {
             float f1,f2,f3,f4;
@@ -162,7 +178,7 @@ int main(int argc, char** argv)
         }
         //Algorithm Implementation
         //Output
-        vector<Stripe> stripes = RectangleDAC(rectangles);
+        stripes = RectangleDAC(rectangles);
     }
     else if(inputMode == 2){
         int n;
@@ -185,7 +201,10 @@ int main(int argc, char** argv)
         }
         //Algorithm Implementation
         //Output
-        vector<Stripe> stripes = RectangleDAC(rectangles);
+        stripes = RectangleDAC(rectangles);
+        //cout << stripes.size()<<endl;
+        //float ans = measure(Stripe);
+        //cout << ans << endl;
     }
     
 	//glutInit(&argc, argv); /* initialize GLUT system */
@@ -199,6 +218,7 @@ int main(int argc, char** argv)
 	//glutMouseFunc(mouse);
     //glutMotionFunc(drag);
     //glutMainLoop(); /* start processing events... */
+    printStripes(stripes);
 
 	return 0;
 }

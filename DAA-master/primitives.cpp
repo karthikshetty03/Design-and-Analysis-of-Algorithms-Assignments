@@ -100,6 +100,9 @@ Interval Stripe::getYInterval() {
 	return this->y_interval;
 }
 
+Interval Stripe::getXInterval() {
+	return this->x_interval;
+}
 //int main() {
 //	return 0;
 //}
