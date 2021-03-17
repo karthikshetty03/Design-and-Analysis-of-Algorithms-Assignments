@@ -80,19 +80,19 @@ float Edge::getCoord() {
 
 //Stripe function definitions
 Stripe::Stripe() {
-	vector<Interval> temp;
+	
 	this->x_interval = Interval();
 	this->y_interval = Interval();
-	this->x_union = temp;
+	this->x_union = 0;
 }
 
-Stripe::Stripe(Interval x_interval, Interval y_interval, vector<Interval> x_union) {
+Stripe::Stripe(Interval x_interval, Interval y_interval, float x_union) {
 	this->x_interval = x_interval;
 	this->y_interval = y_interval;
 	this->x_union = x_union;
 }
 
-void Stripe::setXunion(vector<Interval> x_union) {
+void Stripe::setXunion(float x_union) {
 	this->x_union = x_union;
 }
 

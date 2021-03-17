@@ -30,10 +30,10 @@ public:
 
 //Interval
 class Interval {
+public:
 	float bottom;
 	float top;
 
-	public:
 		Interval();
 		Interval(float bottom, float top);
 		float getTop();
@@ -41,21 +41,20 @@ class Interval {
 
 		bool operator<(const Interval& t) const
 		{ 
-				return true; 
+			return true;
 		} 
 };
 
 //Edge
 class Edge {
+public:
 	Interval interval;
 	float coord;
 	string edgeType;
-
-	public:
-		Edge(Interval interval, float coord, string edgeType);
-		string getEdgeType();
-		Interval getInterval();
-		float getCoord();
+	Edge(Interval interval, float coord, string edgeType);
+	string getEdgeType();
+	Interval getInterval();
+	float getCoord();
 };
 
 //Stripe
@@ -63,10 +62,11 @@ class Stripe {
 	public:
 		Interval x_interval;
 		Interval y_interval;
-		vector<Interval> x_union;
+		float x_union;
+
 		Stripe();
-		Stripe(Interval x_interval, Interval y_interval, vector<Interval> x_union);
-		void setXunion(vector<Interval> x_union);
+		Stripe(Interval x_interval, Interval y_interval, float x_union);
+		void setXunion(float x_union);
 		Interval getXInterval();
 		Interval getYInterval();
 };

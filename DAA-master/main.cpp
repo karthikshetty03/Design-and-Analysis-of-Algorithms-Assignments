@@ -158,6 +158,7 @@ int main(int argc, char** argv)
 {
     cout<<"Press to enter Rectangles:"<<endl<<"1 for Manual"<<endl<<"2 for Random"<<endl<<"3 for GUI"<<endl;
     cin>>inputMode;
+    //inputMode = 1;
     vector<Stripe> stripes;
 
     if(inputMode == 1)
@@ -165,17 +166,22 @@ int main(int argc, char** argv)
         int n;
         cout<<"Number of rectangles: ";
         cin>>n;
+        //n = 2;
         cout<<"Enter Points in format x1 y1 x2 y2:"<<endl;
+        //float k = 1;
         for(int i=0;i<n;i++)
         {
             float f1,f2,f3,f4;
             cin>>f1>>f2>>f3>>f4;
+            //f1 = f2 = k;
+            //f3 = f4 = k+1;
 
             Point *P1 = new Point(f1,f2);
             Point *P2 = new Point(f3,f4);
             
             Rectangle *r = new Rectangle(*P1,*P2);
             rectangles.push_back(*r);
+            //k+=2;
         }
         //Algorithm Implementation
         //Output
