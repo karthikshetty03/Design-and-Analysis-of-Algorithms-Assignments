@@ -24,6 +24,7 @@ vector<Rectangle> rectangles;
 //}
 
 void printStripes(vector<Stripe> S) {
+ 
     cout <<"Y STRIPES:" <<endl;
     for(auto stripe : S) {
         cout << stripe.getYInterval().getBottom() <<" "<<stripe.getYInterval().getTop()<<endl;

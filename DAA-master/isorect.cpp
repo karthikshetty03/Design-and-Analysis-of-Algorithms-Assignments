@@ -4,9 +4,12 @@
 using namespace std;
 
 void printStripe(vector<Stripe> S) {
-    cout << "X STRIPES :"<<endl;
+    cout << "X UNIONS :"<<endl;
+
     for(auto stripe : S) {
-        cout << stripe.getXInterval().getBottom() <<" "<<stripe.getXInterval().getTop()<<endl;
+        cout << stripe.x_union.size() << endl;
+        for(auto x : stripe.x_union)
+            cout << x.getBottom() << " " << x.getTop() << endl;
     }
 }
 
@@ -14,7 +17,7 @@ vector<Interval> partition(vector<float> coords) {
     vector<Interval> intervals;
     sort(coords.begin(), coords.end());
 
-    for(int i = 0;i < coords.size()-1; i++) {
+    for(int i = 0; i < coords.size()-1; i++) {
         float y1 = coords[i];
         float y2 = coords[i+1];
 
