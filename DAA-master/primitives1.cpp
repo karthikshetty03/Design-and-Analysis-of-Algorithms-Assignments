@@ -1,4 +1,4 @@
-#include "primitives.hpp"
+#include "primitives1.hpp"
 
 //Point functions definitions
 float Point::getX(){			// Returns x value of the point

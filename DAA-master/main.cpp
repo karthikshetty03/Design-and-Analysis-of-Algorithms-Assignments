@@ -4,6 +4,7 @@
 #include <GL/glut.h>
 #include <GL/freeglut.h>
 #include "isorect.hpp"
+#include "contour.hpp"
 using namespace std;
 
 int inputMode;          //1 for manual, 2 for random points
@@ -14,14 +15,6 @@ int selected=-1;        //-1 if no point selected, index of that point if some p
 int selectedPart=0;     //1 if bottom right selected, 2 if top left, 0 if none
 
 vector<Rectangle> rectangles;
-
-//float measure(vector<Stripe> stripes) {
-//    float ans = 0;
-
-//    for(auto stripe : stripes) {
-//        ans += stripe.x_union * (stripe.getYInterval().getTop() - stripe.getYInterval().getBottom());
-//    }
-//}
 
 void printStripes(vector<Stripe> S) {
  
@@ -160,6 +153,7 @@ int main(int argc, char** argv)
     cin>>inputMode;
     //inputMode = 1;
     vector<Stripe> stripes;
+    float ans = 0;
 
     if(inputMode == 1)
     {
@@ -186,6 +180,7 @@ int main(int argc, char** argv)
         //Algorithm Implementation
         //Output
         stripes = RectangleDAC(rectangles);
+        ans = measure(stripes);
     }
     else if(inputMode == 2){
         int n;
@@ -226,6 +221,9 @@ int main(int argc, char** argv)
     //glutMotionFunc(drag);
     //glutMainLoop(); /* start processing events... */
     printStripes(stripes);
+
+    cout <<"THE MEASURE FOR THE GIVEN SET OF RECTANGLES IS :"<<endl;
+    cout << ans << endl;
 
 	return 0;
 }

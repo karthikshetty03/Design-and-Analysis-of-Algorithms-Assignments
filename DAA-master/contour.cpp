@@ -1,23 +1,12 @@
 #include<bits/stdc++.h>
-#include "primitives1.hpp"
+#include "primitives2.hpp"
 using namespace std;
-
-float measure(vector<Stripe> stripe) {
-    float ans = 0;
-
-    for(int i = 1; i < stripe.size()-1; i++) {
-
-        ans += stripe[i].x_union * (stripe[i].getYInterval().getTop() - stripe[i].getYInterval().getBottom());
-    }
-
-    return ans;
-}
 
 void printStripe(vector<Stripe> S) {
     cout << "X UNIONS :"<<endl;
 
     for(auto &stripe : S) 
-       cout << stripe.x_union << endl;
+       cout << stripe.tree->coord << endl;
 }
 
 vector<Interval> partition(vector<float> coords) {
@@ -166,17 +155,17 @@ bool properSubset(Interval A, Interval B) {
 vector<Stripe> copy(vector<Stripe> *S, vector<float> *P, Interval I) {
     vector<Interval> intervals = partition(*P);
     vector<Stripe> Sdash;
-    float temp = 0;
+    ctree* tree = NULL;
 
     for(auto &interval : intervals) {
-        Stripe *S1 = new Stripe(I, interval, temp);
+        Stripe *S1 = new Stripe(I, interval, tree);
         Sdash.push_back(*S1);
     }
 
     for(auto &stripeDash : Sdash) {
         for(auto &stripe : *S) {
             if(properSubset(stripeDash.getYInterval(), stripe.getYInterval())) {
-                stripeDash.setXunion(stripe.x_union);
+                stripeDash.setTree(stripe.tree);
             }
         }
     }
@@ -188,8 +177,8 @@ void blacken(vector<Stripe> *S, vector<Interval> *J) {
     for(auto &stripe : *S) {
         for(auto &interval : *J) {
             if(properSubset(stripe.getYInterval(), interval)) {
-                float temp = stripe.getXInterval().getTop() - stripe.getXInterval().getBottom();
-                stripe.setXunion(temp);
+                ctree* tree = NULL;
+                stripe.setTree(tree);
                 break;
             }
         }
@@ -199,33 +188,46 @@ void blacken(vector<Stripe> *S, vector<Interval> *J) {
 vector<Stripe> concat(vector<Stripe> *S1, vector<Stripe> *S2, vector<float> *P, Interval x_ext) {
     vector<Interval> intervals = partition(*P);
     vector<Stripe> Sdash;
-    float temp = 0;
+    ctree* tree = NULL;
 
     for(auto &interval : intervals) {
-        Stripe *S = new Stripe(x_ext, interval, temp);
+        Stripe *S = new Stripe(x_ext, interval, tree);
         Sdash.push_back(*S);
     }
 
     for(auto &stripeDash : Sdash) {
         float ans = 0;
+        Stripe *s1Dash, *s2Dash;
 
         for(auto &s1 : *S1) {
             if(s1.getYInterval().getBottom() == stripeDash.getYInterval().getBottom() and
                s1.getYInterval().getTop() == stripeDash.getYInterval().getTop()) {
-                ans += s1.x_union;
+                s1Dash = &s1;
                 break;
-               }
+            }
         }
 
         for(auto &s2 : *S2) {
             if(s2.getYInterval().getBottom() == stripeDash.getYInterval().getBottom() and
                s2.getYInterval().getTop() == stripeDash.getYInterval().getTop()) {
-                ans += s2.x_union;
+                s2Dash = &s2;
                 break;
-               }
+            }
         }
 
-        stripeDash.setXunion(ans);
+        if(s1Dash->tree and s2Dash->tree) {
+          ctree *tree = new ctree(s1Dash->getXInterval().getTop(), "undef", s1Dash->tree, s2Dash->tree);
+          stripeDash.setTree(tree);
+        }
+        else if(s1Dash->tree and !s2Dash->tree) {
+          stripeDash.setTree(s1Dash->tree);
+        }
+        else if(!s1Dash->tree and s2Dash->tree) {
+          stripeDash.setTree(s2Dash->tree);
+        }
+        else {
+          stripeDash.setTree(NULL);
+        }
     }
 
     return Sdash;
@@ -253,7 +255,7 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
         vector<Interval> intervals = partition(*P);
 
         for(auto &interval : intervals) {
-            float temp = 0;
+            ctree* temp = NULL;
             Stripe* stripe = new Stripe(x_ext, interval, temp);
             (*S).push_back(*stripe);
         }
@@ -263,15 +265,15 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
 
             if(interval.getBottom() == edge.getInterval().getBottom() and 
                 interval.getTop() == edge.getInterval().getTop()) {
-                 float tempInterval;
+                 ctree* tree;
 
                 if(edge.getEdgeType() == "left") {
-                    tempInterval = x_ext.getTop() - edge.getCoord();
+                    tree = new ctree(edge.getCoord(), "left", NULL, NULL);
                 } else {
-                    tempInterval = edge.getCoord() - x_ext.getBottom();
+                    tree = new ctree(edge.getCoord(), "right", NULL, NULL);
                 }
 
-                ((*S)[i]).setXunion(tempInterval);
+                ((*S)[i]).setTree(tree);
             }
         }
     } 
