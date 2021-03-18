@@ -1,5 +1,4 @@
 #include<bits/stdc++.h>
-
 using namespace std;
 
 //Point
@@ -38,11 +37,11 @@ public:
 		Interval(float bottom, float top);
 		float getTop();
 		float getBottom();
-
-		bool operator<(const Interval& t) const
-		{ 
-			return true;
-		} 
+		
+	  bool operator<(const Interval& t) const
+    { 
+        return (this->bottom < t.bottom); 
+    } 
 };
 
 //Edge
