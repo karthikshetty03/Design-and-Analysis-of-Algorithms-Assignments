@@ -1,4 +1,4 @@
-#include "primitives1.hpp"
+#include "primitives.hpp"
 
 //Point functions definitions
 float Point::getX(){			// Returns x value of the point
@@ -106,3 +106,37 @@ Interval Stripe::getXInterval() {
 //int main() {
 //	return 0;
 //}
+
+ctree::ctree(float coord, string edgeType, ctree* left, ctree* right) {
+	this->edgeType = edgeType;
+	this->left = left;
+	this->right = right;
+	this->coord = coord;
+}
+
+//Stripe function definitions
+StripePrime::StripePrime() {
+	
+	this->x_interval = Interval();
+	this->y_interval = Interval();
+	this->tree = NULL;
+}
+
+StripePrime::StripePrime(Interval x_interval, Interval y_interval, ctree* tree) {
+	this->x_interval = x_interval;
+	this->y_interval = y_interval;
+	this->tree = NULL;
+}
+
+Interval StripePrime::getYInterval() {
+	return this->y_interval;
+}
+
+Interval StripePrime::getXInterval() {
+	return this->x_interval;
+}
+
+void StripePrime::setTree(ctree* tree) {
+	this->tree = tree;
+}
+

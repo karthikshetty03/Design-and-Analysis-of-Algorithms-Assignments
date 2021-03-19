@@ -1,5 +1,5 @@
 #include<bits/stdc++.h>
-#include "primitives2.hpp"
+#include "primitives.hpp"
 using namespace std;
 set <float> Coords;
 
@@ -35,7 +35,7 @@ void inorder(ctree* tree) {
     inorder(tree->right);
 }
 
-vector<Interval> stripeIntervals(Stripe s) {
+vector<Interval> stripeIntervals(StripePrime s) {
     Coords.clear();
     inorder(s.tree);
 
@@ -50,9 +50,9 @@ vector<Interval> stripeIntervals(Stripe s) {
     return intervals;
 }
 
-Edge* contour_pieces(Edge h, vector<Stripe>& S) {
+Edge* contour_pieces(Edge h, vector<StripePrime>& S) {
     vector<Interval> intervals;
-    Stripe *sDash;
+    StripePrime *sDash;
 
     if(h.getEdgeType() == "bottom") {
         for(auto s : S) {
@@ -127,7 +127,7 @@ Edge* contour_pieces(Edge h, vector<Stripe>& S) {
     return new Edge(finAns[0], h.getCoord(), "undef");
 }
 
-vector<Edge> contour(vector<Edge>& H, vector<Stripe>& S) {
+vector<Edge> contour(vector<Edge>& H, vector<StripePrime>& S) {
     vector<Edge> ans;
 
     for(auto h : H) {
@@ -289,13 +289,13 @@ bool properSubset(Interval A, Interval B) {
     return A.getBottom() >= B.getBottom() and A.getTop() <= B.getTop();
 }
 
-vector<Stripe> copy(vector<Stripe> *S, vector<float> *P, Interval I) {
+vector<StripePrime> copy(vector<StripePrime> *S, vector<float> *P, Interval I) {
     vector<Interval> intervals = partition(*P);
-    vector<Stripe> Sdash;
+    vector<StripePrime> Sdash;
     ctree* tree = NULL;
 
     for(auto &interval : intervals) {
-        Stripe *S1 = new Stripe(I, interval, tree);
+        StripePrime *S1 = new StripePrime(I, interval, tree);
         Sdash.push_back(*S1);
     }
 
@@ -311,7 +311,7 @@ vector<Stripe> copy(vector<Stripe> *S, vector<float> *P, Interval I) {
     return Sdash;
 }
 
-void blacken(vector<Stripe> *S, vector<Interval> *J) {
+void blacken(vector<StripePrime> *S, vector<Interval> *J) {
     for(auto &stripe : *S) {
         for(auto &interval : *J) {
             if(properSubset(stripe.getYInterval(), interval)) {
@@ -323,19 +323,19 @@ void blacken(vector<Stripe> *S, vector<Interval> *J) {
     }
 }
 
-vector<Stripe> concat(vector<Stripe> *S1, vector<Stripe> *S2, vector<float> *P, Interval x_ext) {
+vector<StripePrime> concat(vector<StripePrime> *S1, vector<StripePrime> *S2, vector<float> *P, Interval x_ext) {
     vector<Interval> intervals = partition(*P);
-    vector<Stripe> Sdash;
+    vector<StripePrime> Sdash;
     ctree* tree = NULL;
 
     for(auto &interval : intervals) {
-        Stripe *S = new Stripe(x_ext, interval, tree);
+        StripePrime *S = new StripePrime(x_ext, interval, tree);
         Sdash.push_back(*S);
     }
 
     for(auto &stripeDash : Sdash) {
         float ans = 0;
-        Stripe *s1Dash, *s2Dash;
+        StripePrime *s1Dash, *s2Dash;
 
         for(auto &s1 : *S1) {
             if(s1.getYInterval().getBottom() == stripeDash.getYInterval().getBottom() and
@@ -371,7 +371,7 @@ vector<Stripe> concat(vector<Stripe> *S1, vector<Stripe> *S2, vector<float> *P, 
     return Sdash;
 }
 
-void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interval> *R, vector<float> *P, vector<Stripe> *S) {
+void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interval> *R, vector<float> *P, vector<StripePrime> *S) {
     if(V.size() == 1) {
         Edge edge = V[0];
         (*L).clear();
@@ -395,7 +395,7 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
         //A) --> S: = {(i x, iy, 0) ] ix = x e x t and i y ~ p a r t i t i o n (P)}
         for(auto &interval : intervals) {
             ctree* temp = NULL;
-            Stripe* stripe = new Stripe(x_ext, interval, temp);
+            StripePrime* stripe = new StripePrime(x_ext, interval, temp);
             (*S).push_back(*stripe);
         }
 
@@ -420,7 +420,7 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
     {
         vector<Interval> L1, L2, R1, R2;
         vector<float> P1, P2;
-        vector<Stripe> S1, S2, S_left, S_right;
+        vector<StripePrime> S1, S2, S_left, S_right;
         vector<Edge> V1, V2;
 
         //DIvide
@@ -454,10 +454,10 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
     }
 }
 
-vector<Stripe> RectangleDAC(vector<Rectangle> rect) {
+map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect) {
 
     vector<Edge> V;
-    vector<Stripe> S;
+    vector<StripePrime> S;
     vector<float> P;
     vector<Edge> H;
 
@@ -503,7 +503,8 @@ vector<Stripe> RectangleDAC(vector<Rectangle> rect) {
         cout << endl;
     }
 
-    return S;
+    return stripeContours;
+
     /*
     1 2 3 4
     2 1 4 4

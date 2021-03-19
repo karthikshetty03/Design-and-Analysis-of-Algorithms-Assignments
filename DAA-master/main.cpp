@@ -1,9 +1,17 @@
 //To compile g++ main.cpp isorect.cpp primitives.cpp -lGL -lGLU -lglut
+/*
 
+Contour.hpp --> contour.cpp 
+                            | --> Primitves.hpp
+Isorect.hpp --- Isorect.cpp
+*/
 #include <bits/stdc++.h>
 #include <GL/glut.h>
 #include <GL/freeglut.h>
-//#include "isorect.hpp"
+#include "isorect.hpp"
+
+#include "primitives.hpp"
+
 #include "contour.hpp"
 using namespace std;
 
@@ -153,6 +161,7 @@ int main(int argc, char** argv)
     cin>>inputMode;
     //inputMode = 1;
     vector<Stripe> stripes;
+    map<int, vector<Interval>> contourStripes;
     float ans = 0;
 
     if(inputMode == 1)
@@ -179,8 +188,10 @@ int main(int argc, char** argv)
         }
         //Algorithm Implementation
         //Output
-        stripes = RectangleDAC(rectangles);
-        //ans = measure(stripes);
+        stripes = RectangleDAC1(rectangles);
+        ans = measure(stripes);
+        printStripes(stripes);
+        contourStripes = RectangleDAC2(rectangles);
     }
     else if(inputMode == 2){
         int n;
@@ -203,7 +214,8 @@ int main(int argc, char** argv)
         }
         //Algorithm Implementation
         //Output
-        stripes = RectangleDAC(rectangles);
+        //stripes = RectangleDAC1(rectangles);
+
         //cout << stripes.size()<<endl;
         //float ans = measure(Stripe);
         //cout << ans << endl;
@@ -220,10 +232,9 @@ int main(int argc, char** argv)
 	//glutMouseFunc(mouse);
     //glutMotionFunc(drag);
     //glutMainLoop(); /* start processing events... */
-    printStripes(stripes);
 
-    //cout <<"THE MEASURE FOR THE GIVEN SET OF RECTANGLES IS :"<<endl;
-    //cout << ans << endl;
+    cout <<"THE MEASURE FOR THE GIVEN SET OF RECTANGLES IS :"<<endl;
+    cout << ans << endl;
 
 	return 0;
 }

@@ -1,3 +1,6 @@
+#ifndef PRIMITIVES_H
+#define PRIMITIVES_H
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -69,3 +72,29 @@ class Stripe {
 		Interval getXInterval();
 		Interval getYInterval();
 };
+
+class ctree {
+	public:
+		float coord;
+		ctree* left;
+		ctree* right;
+		string edgeType;
+		ctree(float coord, string edgeType, ctree* left, ctree* right);
+		
+};
+
+class StripePrime {
+	public:
+		Interval x_interval;
+		Interval y_interval;
+		ctree *tree;
+
+		StripePrime();
+		StripePrime(Interval x_interval, Interval y_interval, ctree* tree);
+		void setTree(ctree* tree);
+		Interval getXInterval();
+		Interval getYInterval();
+};
+
+#endif
+

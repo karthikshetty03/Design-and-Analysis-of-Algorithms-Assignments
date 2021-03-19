@@ -1,5 +1,5 @@
 #include<bits/stdc++.h>
-#include "primitives1.hpp"
+#include "primitives.hpp"
 using namespace std;
 
 float measure(vector<Stripe> stripe) {
@@ -20,7 +20,7 @@ void printStripe(vector<Stripe> S) {
        cout << stripe.x_union << endl;
 }
 
-vector<Interval> partition(vector<float> coords) {
+vector<Interval> partition1(vector<float> coords) {
     vector<Interval> intervals;
     sort(coords.begin(), coords.end());
 
@@ -37,7 +37,7 @@ vector<Interval> partition(vector<float> coords) {
     return intervals;
 }
 
-vector<Interval> setMinusLRHelper(vector<Interval> minusFrom, vector<Interval>& L1,  vector<Interval>& R2) {
+vector<Interval> setMinusLRHelper1(vector<Interval> minusFrom, vector<Interval>& L1,  vector<Interval>& R2) {
     vector<Interval> s;
 
     //find L1 intersection R2 (LR) --> s
@@ -65,11 +65,11 @@ vector<Interval> setMinusLRHelper(vector<Interval> minusFrom, vector<Interval>& 
     return minusFrom;
 }
 
-void setL(vector<Interval> *Lorig, vector<Interval>& L1, vector<Interval>& R1, vector<Interval>& L2, vector<Interval>& R2) {
+void setL1(vector<Interval> *Lorig, vector<Interval>& L1, vector<Interval>& R1, vector<Interval>& L2, vector<Interval>& R2) {
     vector <Interval> s, finalSet;
 
     //L1/LR
-    s = setMinusLRHelper(L1, L1, R2);
+    s = setMinusLRHelper1(L1, L1, R2);
 
     //s --> now union with l2
     for(auto &interval : s) 
@@ -83,11 +83,11 @@ void setL(vector<Interval> *Lorig, vector<Interval>& L1, vector<Interval>& R1, v
         (*Lorig).push_back(finterval);
 }
 
-void setR(vector<Interval> *Rorig, vector<Interval>& L1, vector<Interval>& R1, vector<Interval>& L2, vector<Interval>& R2) {
+void setR1(vector<Interval> *Rorig, vector<Interval>& L1, vector<Interval>& R1, vector<Interval>& L2, vector<Interval>& R2) {
     vector<Interval> s, finalSet;
     
     //R2/LR
-    s = setMinusLRHelper(R2, L1, R2);
+    s = setMinusLRHelper1(R2, L1, R2);
 
     //s --> now union with R1
     for(auto &interval : s) 
@@ -100,7 +100,7 @@ void setR(vector<Interval> *Rorig, vector<Interval>& L1, vector<Interval>& R1, v
         (*Rorig).push_back(finterval);
 }
 
-void setP(vector<float> *P, vector<float> P1, vector<float> P2) {
+void setP1(vector<float> *P, vector<float> P1, vector<float> P2) {
     set<float> P1UnionP2;
 
     for(auto &p1 : P1) 
@@ -113,7 +113,7 @@ void setP(vector<float> *P, vector<float> P1, vector<float> P2) {
         (*P).push_back(p);
 }
 
-float findMedianCoord(vector<Edge> V, vector<Edge>& V1, vector<Edge>& V2) {
+float findMedianCoord1(vector<Edge> V, vector<Edge>& V1, vector<Edge>& V2) {
 
     vector<float> points;
     set < float> s;
@@ -159,12 +159,12 @@ float findMedianCoord(vector<Edge> V, vector<Edge>& V1, vector<Edge>& V2) {
     return median;
 }
 
-bool properSubset(Interval A, Interval B) {
+bool properSubset1(Interval A, Interval B) {
     return A.getBottom() >= B.getBottom() and A.getTop() <= B.getTop();
 }
 
-vector<Stripe> copy(vector<Stripe> *S, vector<float> *P, Interval I) {
-    vector<Interval> intervals = partition(*P);
+vector<Stripe> copy1(vector<Stripe> *S, vector<float> *P, Interval I) {
+    vector<Interval> intervals = partition1(*P);
     vector<Stripe> Sdash;
     float temp = 0;
 
@@ -175,7 +175,7 @@ vector<Stripe> copy(vector<Stripe> *S, vector<float> *P, Interval I) {
 
     for(auto &stripeDash : Sdash) {
         for(auto &stripe : *S) {
-            if(properSubset(stripeDash.getYInterval(), stripe.getYInterval())) {
+            if(properSubset1(stripeDash.getYInterval(), stripe.getYInterval())) {
                 stripeDash.setXunion(stripe.x_union);
             }
         }
@@ -184,10 +184,10 @@ vector<Stripe> copy(vector<Stripe> *S, vector<float> *P, Interval I) {
     return Sdash;
 }
 
-void blacken(vector<Stripe> *S, vector<Interval> *J) {
+void blacken1(vector<Stripe> *S, vector<Interval> *J) {
     for(auto &stripe : *S) {
         for(auto &interval : *J) {
-            if(properSubset(stripe.getYInterval(), interval)) {
+            if(properSubset1(stripe.getYInterval(), interval)) {
                 float temp = stripe.getXInterval().getTop() - stripe.getXInterval().getBottom();
                 stripe.setXunion(temp);
                 break;
@@ -196,8 +196,8 @@ void blacken(vector<Stripe> *S, vector<Interval> *J) {
     }
 }
 
-vector<Stripe> concat(vector<Stripe> *S1, vector<Stripe> *S2, vector<float> *P, Interval x_ext) {
-    vector<Interval> intervals = partition(*P);
+vector<Stripe> concat1(vector<Stripe> *S1, vector<Stripe> *S2, vector<float> *P, Interval x_ext) {
+    vector<Interval> intervals = partition1(*P);
     vector<Stripe> Sdash;
     float temp = 0;
 
@@ -231,7 +231,7 @@ vector<Stripe> concat(vector<Stripe> *S1, vector<Stripe> *S2, vector<float> *P, 
     return Sdash;
 }
 
-void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interval> *R, vector<float> *P, vector<Stripe> *S) {
+void Stripes1(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interval> *R, vector<float> *P, vector<Stripe> *S) {
     if(V.size() == 1) {
         Edge edge = V[0];
         (*L).clear();
@@ -250,7 +250,7 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
         (*P).push_back(edge.getInterval().getTop());
         (*P).push_back(INT_MAX);
 
-        vector<Interval> intervals = partition(*P);
+        vector<Interval> intervals = partition1(*P);
 
         for(auto &interval : intervals) {
             float temp = 0;
@@ -283,37 +283,37 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
         vector<Edge> V1, V2;
 
         //DIvide
-        float xm = findMedianCoord(V, V1, V2);
+        float xm = findMedianCoord1(V, V1, V2);
 
         Interval *i1 = new Interval(x_ext.getBottom(), xm);
         Interval *i2 = new Interval(xm, x_ext.getTop());
 
         //COnquer
-        Stripes(V1, *i1, &L1, &R1, &P1, &S1);
-        Stripes(V2, *i2, &L2, &R2, &P2, &S2);
+        Stripes1(V1, *i1, &L1, &R1, &P1, &S1);
+        Stripes1(V2, *i2, &L2, &R2, &P2, &S2);
 
         //Merge
-        setL(L, L1, R1, L2, R2);
+        setL1(L, L1, R1, L2, R2);
 
-        setR(R, L1, R1, L2, R2);
-        setP(P, P1, P2);
+        setR1(R, L1, R1, L2, R2);
+        setP1(P, P1, P2);
 
-        S_left =  copy(&S1, P, *i1);
-        S_right = copy(&S2, P, *i2);
+        S_left =  copy1(&S1, P, *i1);
+        S_right = copy1(&S2, P, *i2);
 
         vector<Interval> R2minusLR, L1minusLR;
         
-        R2minusLR = setMinusLRHelper(R2, L1, R2);
-        L1minusLR = setMinusLRHelper(L1, L1, R2);
+        R2minusLR = setMinusLRHelper1(R2, L1, R2);
+        L1minusLR = setMinusLRHelper1(L1, L1, R2);
 
-        blacken (&S_left, &R2minusLR);
-        blacken (&S_right, &L1minusLR);
+        blacken1(&S_left, &R2minusLR);
+        blacken1(&S_right, &L1minusLR);
 
-        *S = concat(&S_left, &S_right, P, x_ext);
+        *S = concat1(&S_left, &S_right, P, x_ext);
     }
 }
 
-vector<Stripe> RectangleDAC(vector<Rectangle> rect) {
+vector<Stripe> RectangleDAC1(vector<Rectangle> rect) {
 
     vector<Edge> V;
     vector<Stripe> S;
@@ -335,7 +335,7 @@ vector<Stripe> RectangleDAC(vector<Rectangle> rect) {
     Interval *interval = new Interval(INT_MIN, INT_MAX);
     vector<Interval> temp1, temp2;
     
-    Stripes(V, *interval, &temp1, &temp2, &P, &S);
+    Stripes1(V, *interval, &temp1, &temp2, &P, &S);
     printStripe(S);
 
     return S;
