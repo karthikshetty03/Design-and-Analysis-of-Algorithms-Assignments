@@ -161,7 +161,7 @@ int main(int argc, char** argv)
     cin>>inputMode;
     //inputMode = 1;
     vector<Stripe> stripes;
-    map<int, vector<Interval>> contourStripes;
+    map<int, vector<Edge>> contourStripes;
     float ans = 0;
 
     if(inputMode == 1)
@@ -169,25 +169,19 @@ int main(int argc, char** argv)
         int n;
         cout<<"Number of rectangles: ";
         cin>>n;
-        //n = 2;
         cout<<"Enter Points in format x1 y1 x2 y2:"<<endl;
-        //float k = 1;
         for(int i=0;i<n;i++)
         {
             float f1,f2,f3,f4;
             cin>>f1>>f2>>f3>>f4;
-            //f1 = f2 = k;
-            //f3 = f4 = k+1;
-
+            
             Point *P1 = new Point(f1,f2);
             Point *P2 = new Point(f3,f4);
             
             Rectangle *r = new Rectangle(*P1,*P2);
             rectangles.push_back(*r);
-            //k+=2;
         }
-        //Algorithm Implementation
-        //Output
+       
         stripes = RectangleDAC1(rectangles);
         ans = measure(stripes);
         printStripes(stripes);
@@ -212,15 +206,11 @@ int main(int argc, char** argv)
             Rectangle *r = new Rectangle(*P1,*P2);
             rectangles.push_back(*r);
         }
-        //Algorithm Implementation
-        //Output
-        //stripes = RectangleDAC1(rectangles);
-
-        //cout << stripes.size()<<endl;
-        //float ans = measure(Stripe);
-        //cout << ans << endl;
     }
     
+     cout <<"THE MEASURE FOR THE GIVEN SET OF RECTANGLES IS :"<<endl;
+    cout << ans << endl;
+
 	//glutInit(&argc, argv); /* initialize GLUT system */
 	//glutInitDisplayMode(GLUT_RGB);
     //glutInitWindowSize(1500,1000); /* width=1500 pixels height=1000 pixels */
@@ -232,9 +222,6 @@ int main(int argc, char** argv)
 	//glutMouseFunc(mouse);
     //glutMotionFunc(drag);
     //glutMainLoop(); /* start processing events... */
-
-    cout <<"THE MEASURE FOR THE GIVEN SET OF RECTANGLES IS :"<<endl;
-    cout << ans << endl;
 
 	return 0;
 }

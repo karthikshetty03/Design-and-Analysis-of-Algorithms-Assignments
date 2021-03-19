@@ -123,7 +123,7 @@ Edge* contour_pieces(Edge h, vector<StripePrime>& S) {
         finAns.push_back(h.getInterval());
     }
 
-    return new Edge(finAns[0], h.getCoord(), "undef");
+    return new Edge(finAns[0], h.getCoord(), h.getEdgeType());
 }
 
 vector<Edge> contour(vector<Edge>& H, vector<StripePrime>& S) {
@@ -453,7 +453,7 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
     }
 }
 
-map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect) {
+map<int, vector<Edge>> RectangleDAC2(vector<Rectangle> rect) {
 
     vector<Edge> V;
     vector<StripePrime> S;
@@ -484,21 +484,22 @@ map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect) {
     vector<Interval> temp1, temp2;
     
     Stripes(V, *interval, &temp1, &temp2, &P, &S);
+
     vector<Edge> contourPieces = contour(H, S);
 
     cout <<"CONTOUR PIECES: "<<endl;
 
-    map<int, vector<Interval>> stripeContours;
+    map<int, vector<Edge>> stripeContours;
 
     for(auto x : contourPieces) {
-        stripeContours[x.getCoord()].push_back(x.getInterval());
+        stripeContours[x.getCoord()].push_back(x);
         //cout << x.getCoord() <<": "<< x.getInterval().getBottom() << " "<<x.getInterval().getTop() <<endl;
     }
     
     for(auto x : stripeContours) {
         cout <<"<--- Stripe "<< x.first <<" --->"<<endl;
         for(auto y : x.second)
-            cout << y.getBottom() <<" "<<y.getTop()<<endl;
+            cout <<y.getEdgeType() <<": "<< y.getInterval().getBottom() <<" "<<y.getInterval().getTop()<<endl;
         cout << endl;
     }
 
