@@ -93,7 +93,6 @@ Edge* contour_pieces(Edge h, vector<Stripe>& S) {
         }
     }
 
-    //cout << ans.size() << endl;
     vector<Interval> finAns;
     int flag = 0;
 
