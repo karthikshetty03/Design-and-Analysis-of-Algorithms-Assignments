@@ -78,12 +78,15 @@ Edge* contour_pieces(Edge h, vector<Stripe>& S) {
     float bottom = h.getInterval().getBottom();
     float top = h.getInterval().getTop();
 
+    //3 - 6
+    //intersection
     for(auto x : intervals) {
+        // top = 3 or bottom  = 6
         if(x.getTop() <= bottom or x.getBottom() >= top) {
             continue;
         }
         else {
-            float newBottom = min(bottom, x.getBottom());
+            float newBottom = max(bottom, x.getBottom());
             float newTop = min(top, x.getTop());
             Interval *interval = new Interval(newBottom, newTop);
             ans.push_back(*interval);
@@ -95,7 +98,8 @@ Edge* contour_pieces(Edge h, vector<Stripe>& S) {
     int flag = 0;
 
     for(auto x : ans) {
-        if(x.getTop() < top or x.getBottom() > bottom) {
+        //4 - 5
+        if(x.getTop() < top and x.getBottom() > bottom) {
             Interval *i1 = new Interval(bottom, x.getBottom());
             Interval *i2 = new Interval(x.getTop(), top);
             finAns.push_back(*i1);
@@ -504,6 +508,5 @@ vector<Stripe> RectangleDAC(vector<Rectangle> rect) {
     1 2 3 4
     2 1 4 4
     5 3 6 6
-
-*/
+    */
 }
