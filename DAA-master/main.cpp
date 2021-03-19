@@ -3,7 +3,7 @@
 #include <bits/stdc++.h>
 #include <GL/glut.h>
 #include <GL/freeglut.h>
-#include "isorect.hpp"
+//#include "isorect.hpp"
 #include "contour.hpp"
 using namespace std;
 
@@ -180,7 +180,7 @@ int main(int argc, char** argv)
         //Algorithm Implementation
         //Output
         stripes = RectangleDAC(rectangles);
-        ans = measure(stripes);
+        //ans = measure(stripes);
     }
     else if(inputMode == 2){
         int n;
@@ -222,8 +222,8 @@ int main(int argc, char** argv)
     //glutMainLoop(); /* start processing events... */
     printStripes(stripes);
 
-    cout <<"THE MEASURE FOR THE GIVEN SET OF RECTANGLES IS :"<<endl;
-    cout << ans << endl;
+    //cout <<"THE MEASURE FOR THE GIVEN SET OF RECTANGLES IS :"<<endl;
+    //cout << ans << endl;
 
 	return 0;
 }

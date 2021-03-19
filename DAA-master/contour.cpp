@@ -1,13 +1,98 @@
 #include<bits/stdc++.h>
 #include "primitives2.hpp"
 using namespace std;
+set <float> Coords;
 
-void printStripe(vector<Stripe> S) {
-    cout << "X UNIONS :"<<endl;
+vector<Interval> makeIntervals() {
+    vector<Interval> intervals;
+    vector<float> TreeCoords;
 
-    for(auto &stripe : S) 
-       cout << stripe.tree->coord << endl;
+    for(auto x : Coords)
+        TreeCoords.push_back(x);
+    
+    Interval *interval;
+
+    if(Coords.size() == 0) {
+        return intervals;
+    }
+
+    for(int i = 1; i < TreeCoords.size(); i++) {
+        interval = new Interval(TreeCoords[i-1], TreeCoords[i]);
+        intervals.push_back(*interval);
+        i++;
+    }
+
+    return intervals;
 }
+
+void inorder(ctree* tree) {
+    if(!tree)
+        return;
+
+    inorder(tree->left);
+    if(tree->edgeType != "undef")
+        Coords.insert(tree->coord);
+    inorder(tree->right);
+}
+
+vector<Interval> stripeIntervals(Stripe s) {
+    Coords.clear();
+    inorder(s.tree);
+
+    cout <<"Intervals :"<<endl;
+
+    vector<Interval> intervals = makeIntervals();
+
+      for(auto x : intervals)
+        cout << x.getBottom() << " "<<x.getTop() <<endl;
+    cout << endl;
+
+    return intervals;
+}
+
+Interval contour_pieces(Edge h, vector<Stripe>& S) {
+    vector<Interval> intervals;
+    Stripe *sDash;
+
+    if(h.getEdgeType() == "bottom") {
+        for(auto s : S) {
+            if(s.getYInterval().getTop() == h.getCoord()) {
+                    sDash = &s;
+                    break;
+            }
+        }
+    }
+    else {
+        for(auto s : S) {
+            if(s.getYInterval().getBottom() == h.getCoord()) {
+                    sDash = &s;
+                    break;
+            }
+        }
+    }
+
+    cout << h.getCoord() <<": "<<h.getInterval().getBottom() <<" "<< h.getInterval().getTop()<<endl;
+    intervals = stripeIntervals(*sDash);
+    return h.getInterval();
+}
+
+vector<Interval> contour(vector<Edge>& H, vector<Stripe>& S) {
+    vector<Interval> ans;
+    Interval partAns;
+
+    for(auto h : H) 
+        partAns = contour_pieces(h, S);
+
+    return ans;
+}
+
+/*
+1 3 2 4
+1 1 2 2
+2 2 3 3
+3 3 4 4
+3 1 4 2
+*/
 
 vector<Interval> partition(vector<float> coords) {
     vector<Interval> intervals;
@@ -48,7 +133,6 @@ vector<Interval> setMinusLRHelper(vector<Interval> minusFrom, vector<Interval>& 
 
             itr++;
         }
-        
     }
 
     return minusFrom;
@@ -166,6 +250,7 @@ vector<Stripe> copy(vector<Stripe> *S, vector<float> *P, Interval I) {
         for(auto &stripe : *S) {
             if(properSubset(stripeDash.getYInterval(), stripe.getYInterval())) {
                 stripeDash.setTree(stripe.tree);
+                break;
             }
         }
     }
@@ -215,7 +300,7 @@ vector<Stripe> concat(vector<Stripe> *S1, vector<Stripe> *S2, vector<float> *P, 
             }
         }
 
-        if(s1Dash->tree and s2Dash->tree) {
+        if(s1Dash->tree and s2Dash->tree and s1Dash->tree != s2Dash->tree) {
           ctree *tree = new ctree(s1Dash->getXInterval().getTop(), "undef", s1Dash->tree, s2Dash->tree);
           stripeDash.setTree(tree);
         }
@@ -254,6 +339,7 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
 
         vector<Interval> intervals = partition(*P);
 
+        //A) --> S: = {(i x, iy, 0) ] ix = x e x t and i y ~ p a r t i t i o n (P)}
         for(auto &interval : intervals) {
             ctree* temp = NULL;
             Stripe* stripe = new Stripe(x_ext, interval, temp);
@@ -320,25 +406,32 @@ vector<Stripe> RectangleDAC(vector<Rectangle> rect) {
     vector<Edge> V;
     vector<Stripe> S;
     vector<float> P;
+    vector<Edge> H;
 
     for(auto &rectangle: rect) {
         Point p1 = rectangle.getP1();
         Point p2 = rectangle.getP2();
 
         Interval *interval = new Interval(p1.getY(), p2.getY());
+        Interval *horizon = new Interval(p1.getX(), p2.getX());
 
         Edge *leftEdge = new Edge(*interval, p1.getX(), "left");
         Edge *rightEdge = new Edge(*interval, p2.getX(), "right");
 
+        Edge *horizonBottomEdge = new Edge(*horizon, p1.getY(), "bottom");
+        Edge *horizonTopEdge = new Edge(*horizon, p2.getY(), "top");
+
         V.push_back(*leftEdge);
         V.push_back(*rightEdge);
+
+        H.push_back(*horizonBottomEdge);
+        H.push_back(*horizonTopEdge);
     }
 
     Interval *interval = new Interval(INT_MIN, INT_MAX);
     vector<Interval> temp1, temp2;
     
     Stripes(V, *interval, &temp1, &temp2, &P, &S);
-    printStripe(S);
-
+    contour(H, S);
     return S;
 }
