@@ -32,6 +32,88 @@ void printStripes(vector<Stripe> S) {
     }
 }
 
+// main function
+
+int main(int argc, char** argv)
+{
+    cout<<"Press to enter Rectangles:"<<endl<<"1 for Manual"<<endl<<"2 for Random"<<endl<<"3 for GUI"<<endl;
+    cin>>inputMode;
+    //inputMode = 1;
+    vector<Stripe> stripes;
+    map<int, vector<Edge>> contourStripes;
+    float ans = 0;
+
+    if(inputMode == 1)
+    {
+        int n;
+        cout<<"Number of rectangles: ";
+        cin>>n;
+        cout<<"Enter Points in format x1 y1 x2 y2:"<<endl;
+        for(int i=0;i<n;i++)
+        {
+            int f1,f2,f3,f4;
+            cin>>f1>>f2>>f3>>f4;
+            
+            Point *P1 = new Point(min(f1, f3), min(f2, f4));
+            Point *P2 = new Point(max(f1, f3), max(f2, f4));
+            
+            Rectangle *r = new Rectangle(*P1,*P2);
+            rectangles.push_back(*r);
+        }
+    }
+    else if(inputMode == 2){
+        int n;
+        cout<<"Number of rectangles: ";
+        cin>>n;
+        for(int i=0;i<n;i++)
+        {
+            float f11,f22,f33,f44;
+
+            f11 = (((float)rand())/(float)RAND_MAX)*1400;
+            f22 = (((float)rand())/(float)RAND_MAX)*900;
+            f33 = (((float)rand())/(float)RAND_MAX)*1400;
+            f44 = (((float)rand())/(float)RAND_MAX)*900;
+
+            int f1, f2, f3, f4;
+            f1 = ceil(f11);
+            f2 = ceil(f22);
+            f3 = ceil(f33);
+            f4 = ceil(f44);
+
+            cout << f1 <<" "<<f2<<" "<<f3<<" " <<f4<<endl;
+
+            Point *P1 = new Point(min(f1, f3), min(f2, f4));
+            Point *P2 = new Point(max(f1, f3), max(f2, f4));
+
+            Rectangle *r = new Rectangle(*P1,*P2);
+            rectangles.push_back(*r);
+        }
+    }
+
+    stripes = RectangleDAC1(rectangles);
+    ans = measure(stripes);
+    printStripes(stripes);
+    contourStripes = RectangleDAC2(rectangles);
+    
+    cout <<"THE MEASURE FOR THE GIVEN SET OF RECTANGLES IS :"<<endl;
+    cout << ans << endl;
+	return 0;
+}
+
+
+
+	//glutInit(&argc, argv); /* initialize GLUT system */
+	//glutInitDisplayMode(GLUT_RGB);
+    //glutInitWindowSize(1500,1000); /* width=1500 pixels height=1000 pixels */
+    //glutCreateWindow("Union of IsoRectangles");     /* create window */
+	//glutReshapeFunc(changeSize);
+    //glClearColor(1.0, 1.0, 1.0, 0.0); /* set background to white */
+    //gluOrtho2D(0,1500, 0,1000); /* how object is mapped to window */
+    //glutDisplayFunc(drawScene); /* set window's display callback */
+	//glutMouseFunc(mouse);
+    //glutMotionFunc(drag);
+    //glutMainLoop(); /* start processing events... */
+
 /*
 // to get the index of a selected point for deletion/dragging
 int indexOf(float x, float y)
@@ -152,76 +234,3 @@ void changeSize(int w, int h) {
 	float ratio = 1;
 }
 */
-
-// main function
-
-int main(int argc, char** argv)
-{
-    cout<<"Press to enter Rectangles:"<<endl<<"1 for Manual"<<endl<<"2 for Random"<<endl<<"3 for GUI"<<endl;
-    cin>>inputMode;
-    //inputMode = 1;
-    vector<Stripe> stripes;
-    map<int, vector<Edge>> contourStripes;
-    float ans = 0;
-
-    if(inputMode == 1)
-    {
-        int n;
-        cout<<"Number of rectangles: ";
-        cin>>n;
-        cout<<"Enter Points in format x1 y1 x2 y2:"<<endl;
-        for(int i=0;i<n;i++)
-        {
-            float f1,f2,f3,f4;
-            cin>>f1>>f2>>f3>>f4;
-            
-            Point *P1 = new Point(f1,f2);
-            Point *P2 = new Point(f3,f4);
-            
-            Rectangle *r = new Rectangle(*P1,*P2);
-            rectangles.push_back(*r);
-        }
-       
-        stripes = RectangleDAC1(rectangles);
-        ans = measure(stripes);
-        printStripes(stripes);
-        contourStripes = RectangleDAC2(rectangles);
-    }
-    else if(inputMode == 2){
-        int n;
-        cout<<"Number of rectangles: ";
-        cin>>n;
-        for(int i=0;i<n;i++)
-        {
-            float f1,f2,f3,f4;
-
-            f1 = (((float)rand())/(float)RAND_MAX)*1400;
-            f2 = (((float)rand())/(float)RAND_MAX)*900;
-            f3 = (((float)rand())/(float)RAND_MAX)*1400;
-            f4 = (((float)rand())/(float)RAND_MAX)*900;
-
-            Point *P1 = new Point(f1,f2);
-            Point *P2 = new Point(f3,f4);
-
-            Rectangle *r = new Rectangle(*P1,*P2);
-            rectangles.push_back(*r);
-        }
-    }
-    
-     cout <<"THE MEASURE FOR THE GIVEN SET OF RECTANGLES IS :"<<endl;
-    cout << ans << endl;
-
-	//glutInit(&argc, argv); /* initialize GLUT system */
-	//glutInitDisplayMode(GLUT_RGB);
-    //glutInitWindowSize(1500,1000); /* width=1500 pixels height=1000 pixels */
-    //glutCreateWindow("Union of IsoRectangles");     /* create window */
-	//glutReshapeFunc(changeSize);
-    //glClearColor(1.0, 1.0, 1.0, 0.0); /* set background to white */
-    //gluOrtho2D(0,1500, 0,1000); /* how object is mapped to window */
-    //glutDisplayFunc(drawScene); /* set window's display callback */
-	//glutMouseFunc(mouse);
-    //glutMotionFunc(drag);
-    //glutMainLoop(); /* start processing events... */
-
-	return 0;
-}
