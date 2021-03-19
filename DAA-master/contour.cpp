@@ -39,18 +39,18 @@ vector<Interval> stripeIntervals(Stripe s) {
     Coords.clear();
     inorder(s.tree);
 
-    cout <<"Intervals :"<<endl;
+    //cout <<"Intervals :"<<endl;
 
     vector<Interval> intervals = makeIntervals();
 
-      for(auto x : intervals)
-        cout << x.getBottom() << " "<<x.getTop() <<endl;
-    cout << endl;
+    //  for(auto x : intervals)
+    //    cout << x.getBottom() << " "<<x.getTop() <<endl;
+    //cout << endl;
 
     return intervals;
 }
 
-Interval contour_pieces(Edge h, vector<Stripe>& S) {
+Edge* contour_pieces(Edge h, vector<Stripe>& S) {
     vector<Interval> intervals;
     Stripe *sDash;
 
@@ -71,17 +71,66 @@ Interval contour_pieces(Edge h, vector<Stripe>& S) {
         }
     }
 
-    cout << h.getCoord() <<": "<<h.getInterval().getBottom() <<" "<< h.getInterval().getTop()<<endl;
+    //cout << h.getCoord() <<": "<<h.getInterval().getBottom() <<" "<< h.getInterval().getTop()<<endl;
     intervals = stripeIntervals(*sDash);
-    return h.getInterval();
+    vector<Interval> ans;
+
+    float bottom = h.getInterval().getBottom();
+    float top = h.getInterval().getTop();
+
+    for(auto x : intervals) {
+        if(x.getTop() <= bottom or x.getBottom() >= top) {
+            continue;
+        }
+        else {
+            float newBottom = min(bottom, x.getBottom());
+            float newTop = min(top, x.getTop());
+            Interval *interval = new Interval(newBottom, newTop);
+            ans.push_back(*interval);
+        }
+    }
+
+    //cout << ans.size() << endl;
+    vector<Interval> finAns;
+    int flag = 0;
+
+    for(auto x : ans) {
+        if(x.getTop() < top or x.getBottom() > bottom) {
+            Interval *i1 = new Interval(bottom, x.getBottom());
+            Interval *i2 = new Interval(x.getTop(), top);
+            finAns.push_back(*i1);
+            finAns.push_back(*i2);
+            flag = 1;
+        }
+        else {
+            if(x.getBottom() > bottom) {
+                Interval *i = new Interval(bottom, x.getBottom());
+                finAns.push_back(*i);
+                flag = 1;
+            }
+            else if(x.getTop() < top) {
+                Interval *i = new Interval(x.getTop(), top);
+                finAns.push_back(*i);
+                flag = 1;
+            }
+        }
+    }
+
+    if(!flag) {
+        finAns.push_back(h.getInterval());
+    }
+
+    return new Edge(finAns[0], h.getCoord(), "undef");
 }
 
-vector<Interval> contour(vector<Edge>& H, vector<Stripe>& S) {
-    vector<Interval> ans;
-    Interval partAns;
+vector<Edge> contour(vector<Edge>& H, vector<Stripe>& S) {
+    vector<Edge> ans;
 
-    for(auto h : H) 
-        partAns = contour_pieces(h, S);
+    for(auto h : H) {
+        vector<Interval> partAns;
+        Edge *edge = contour_pieces(h, S);
+        ans.push_back(*edge);
+    }
 
     return ans;
 }
@@ -432,6 +481,29 @@ vector<Stripe> RectangleDAC(vector<Rectangle> rect) {
     vector<Interval> temp1, temp2;
     
     Stripes(V, *interval, &temp1, &temp2, &P, &S);
-    contour(H, S);
+    vector<Edge> contourPieces = contour(H, S);
+
+    cout <<"CONTOUR PIECES: "<<endl;
+
+    map<int, vector<Interval>> stripeContours;
+
+    for(auto x : contourPieces) {
+        stripeContours[x.getCoord()].push_back(x.getInterval());
+        //cout << x.getCoord() <<": "<< x.getInterval().getBottom() << " "<<x.getInterval().getTop() <<endl;
+    }
+    
+    for(auto x : stripeContours) {
+        cout <<"<--- Stripe "<< x.first <<" --->"<<endl;
+        for(auto y : x.second)
+            cout << y.getBottom() <<" "<<y.getTop()<<endl;
+        cout << endl;
+    }
+
     return S;
+    /*
+    1 2 3 4
+    2 1 4 4
+    5 3 6 6
+
+*/
 }
