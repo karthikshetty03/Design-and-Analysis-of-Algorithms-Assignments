@@ -55,7 +55,7 @@ vector<Interval> stripeIntervals(StripePrime s)
     return intervals;
 }
 
-Edge *contour_pieces(Edge h, vector<StripePrime> &S)
+vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
 {
     vector<Interval> intervals;
     StripePrime *sDash;
@@ -90,11 +90,11 @@ Edge *contour_pieces(Edge h, vector<StripePrime> &S)
     float bottom = h.getInterval().getBottom();
     float top = h.getInterval().getTop();
 
-    //3 - 6
+    //105 - 295
     //intersection
     for (auto x : intervals)
     {
-        // top = 3 or bottom  = 6
+        // 100 - 300
         if (x.getTop() <= bottom or x.getBottom() >= top)
         {
             continue;
@@ -113,13 +113,17 @@ Edge *contour_pieces(Edge h, vector<StripePrime> &S)
 
     for (auto x : ans)
     {
-        //4 - 5
+        //4 - 6
         if (x.getTop() < top and x.getBottom() > bottom)
         {
             Interval *i1 = new Interval(bottom, x.getBottom());
             Interval *i2 = new Interval(x.getTop(), top);
             finAns.push_back(*i1);
             finAns.push_back(*i2);
+            flag = 1;
+        }
+        else if (x.getTop() == top and x.getBottom() == bottom)
+        {
             flag = 1;
         }
         else
@@ -144,7 +148,15 @@ Edge *contour_pieces(Edge h, vector<StripePrime> &S)
         finAns.push_back(h.getInterval());
     }
 
-    return new Edge(finAns[0], h.getCoord(), h.getEdgeType());
+    vector<Edge> edges;
+
+    for (auto fin : finAns)
+    {
+        Edge *edge = new Edge(fin, h.getCoord(), h.getEdgeType());
+        edges.push_back(*edge);
+    }
+
+    return edges;
 }
 
 vector<Edge> contour(vector<Edge> &H, vector<StripePrime> &S)
@@ -153,9 +165,11 @@ vector<Edge> contour(vector<Edge> &H, vector<StripePrime> &S)
 
     for (auto h : H)
     {
-        vector<Interval> partAns;
-        Edge *edge = contour_pieces(h, S);
-        ans.push_back(*edge);
+        vector<Edge> partAns = contour_pieces(h, S);
+        for (auto edge : partAns)
+        {
+            ans.push_back(edge);
+        }
     }
 
     return ans;
