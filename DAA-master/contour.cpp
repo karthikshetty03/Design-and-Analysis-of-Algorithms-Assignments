@@ -44,13 +44,13 @@ vector<Interval> stripeIntervals(StripePrime s)
     Coords.clear();
     inorder(s.tree);
 
-    cout << "Intervals :" << endl;
+    //cout << "Intervals :" << endl;
 
     vector<Interval> intervals = makeIntervals();
 
-    for (auto x : intervals)
-        cout << x.getBottom() << " " << x.getTop() << endl;
-    cout << endl;
+    //for (auto x : intervals)
+    //    cout << x.getBottom() << " " << x.getTop() << endl;
+    //cout << endl;
 
     return intervals;
 }
@@ -83,7 +83,7 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
         }
     }
 
-    cout << h.getCoord() << ": " << h.getInterval().getBottom() << " " << h.getInterval().getTop() << endl;
+    //cout << h.getCoord() << ": " << h.getInterval().getBottom() << " " << h.getInterval().getTop() << endl;
     intervals = stripeIntervals(*sDash);
     vector<Interval> ans;
 
