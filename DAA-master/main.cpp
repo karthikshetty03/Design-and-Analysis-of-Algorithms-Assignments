@@ -28,13 +28,15 @@ g++ main.cpp isorect.cpp contour.cpp primitives.cpp -o combined -lGL -lGLU -lglu
 #include "contour.hpp"
 using namespace std;
 
-bool isTopLeft = false;
-Point *P1, *P2;
-Rectangle *rect;
-int selected = -1;    //-1 if no point selected, index of that point if some point is selected
-int selectedPart = 0; //1 if bottom right selected, 2 if top left, 0 if none
-
 vector<Rectangle> rectangles;
+
+bool sortbyfirst(const pair<int, int> &a, const pair<int, int> &b)
+{
+    if(a.first == b.first)
+        return a.second < b.second;
+
+    return (a.first < b.first);
+}
 
 void printStripes(vector<Stripe> S)
 {
@@ -48,13 +50,7 @@ void printStripes(vector<Stripe> S)
 
 int main(int argc, char **argv)
 {
-    srand((unsigned)time(NULL));
-    cout << "Input 1 or 2:" << endl;
-    cout << "1 for Manual Input of Coordinates" << endl;
-    cout << "2 for Random Input of Coordinates" << endl;
-
     vector<Stripe> stripes;
-    map<int, vector<Edge>> contourStripes;
     float ans = 0;
 
     int n;
@@ -97,14 +93,13 @@ int main(int argc, char **argv)
 
     stripes = RectangleDAC1(rectangles);
     ans = measure(stripes);
+    cout << "The MeAsure for the given set of rectangles is : " << ans;
+
     printStripes(stripes);
-    contourStripes = RectangleDAC2(rectangles);
+    map<int, vector<Interval>> contourStripes = RectangleDAC2(rectangles);
 
     fstream my_file2;
     my_file2.open("my_file2.txt", ios::out);
-
-    cout << "THE MEASURE FOR THE GIVEN SET OF RECTANGLES IS :" << endl;
-    cout << ans << endl;
 
     if (!my_file2)
     {
@@ -123,10 +118,10 @@ int main(int argc, char **argv)
         float y1 = x.first;
         float y2 = x.first;
 
-        for (auto edges : x.second)
+        for (auto interval : x.second)
         {
-            float x1 = edges.getInterval().getBottom();
-            float x2 = edges.getInterval().getTop();
+            float x1 = interval.getBottom();
+            float x2 = interval.getTop();
             arr.push_back({x1, y1});
             arr.push_back({x2, y2});
             horizontal.push_back({x1, y1});
@@ -134,7 +129,7 @@ int main(int argc, char **argv)
         }
     }
 
-    sort(arr.begin(), arr.end());
+    sort(arr.begin(), arr.end(), sortbyfirst);
 
     fstream my_file;
     my_file.open("my_file.txt", ios::out);

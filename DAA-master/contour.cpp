@@ -44,13 +44,13 @@ vector<Interval> stripeIntervals(StripePrime s)
     Coords.clear();
     inorder(s.tree);
 
-    //cout <<"Intervals :"<<endl;
+    cout << "Intervals :" << endl;
 
     vector<Interval> intervals = makeIntervals();
 
-    //  for(auto x : intervals)
-    //    cout << x.getBottom() << " "<<x.getTop() <<endl;
-    //cout << endl;
+    for (auto x : intervals)
+        cout << x.getBottom() << " " << x.getTop() << endl;
+    cout << endl;
 
     return intervals;
 }
@@ -83,7 +83,7 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
         }
     }
 
-    //cout << h.getCoord() <<": "<<h.getInterval().getBottom() <<" "<< h.getInterval().getTop()<<endl;
+    cout << h.getCoord() << ": " << h.getInterval().getBottom() << " " << h.getInterval().getTop() << endl;
     intervals = stripeIntervals(*sDash);
     vector<Interval> ans;
 
@@ -540,7 +540,7 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
     }
 }
 
-map<int, vector<Edge>> RectangleDAC2(vector<Rectangle> rect)
+map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
 {
 
     vector<Edge> V;
@@ -575,26 +575,44 @@ map<int, vector<Edge>> RectangleDAC2(vector<Rectangle> rect)
     Stripes(V, *interval, &temp1, &temp2, &P, &S);
 
     vector<Edge> contourPieces = contour(H, S);
-
-    cout << "CONTOUR PIECES: " << endl;
-
     map<int, vector<Edge>> stripeContours;
+    map<int, vector<Interval>> newStripeContours;
 
     for (auto x : contourPieces)
     {
         stripeContours[x.getCoord()].push_back(x);
-        //cout << x.getCoord() <<": "<< x.getInterval().getBottom() << " "<<x.getInterval().getTop() <<endl;
     }
 
     for (auto x : stripeContours)
     {
-        cout << "<--- Stripe " << x.first << " --->" << endl;
-        for (auto y : x.second)
-            cout << y.getEdgeType() << ": " << y.getInterval().getBottom() << " " << y.getInterval().getTop() << endl;
-        cout << endl;
+        int start = x.second[0].getInterval().getBottom();
+        int end = x.second[0].getInterval().getTop();
+        vector<Interval> ans;
+
+        for (int i = 1; i < x.second.size(); i++)
+        {
+
+            if (x.second[i].getInterval().getBottom() <= end)
+            {
+                end = max(end, (int)x.second[i].getInterval().getTop());
+            }
+            else
+            {
+                Interval *temp = new Interval(start, end);
+                ans.push_back(*temp);
+
+                start = x.second[i].getInterval().getBottom();
+                end = x.second[i].getInterval().getTop();
+            }
+        }
+
+        Interval *temp = new Interval(start, end);
+        ans.push_back(*temp);
+
+        newStripeContours[x.first] = ans;
     }
 
-    return stripeContours;
+    return newStripeContours;
 
     /*
     1 2 3 4
