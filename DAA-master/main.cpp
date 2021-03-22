@@ -28,7 +28,6 @@ g++ main.cpp isorect.cpp contour.cpp primitives.cpp -o combined -lGL -lGLU -lglu
 #include "contour.hpp"
 using namespace std;
 
-int inputMode;
 bool isTopLeft = false;
 Point *P1, *P2;
 Rectangle *rect;
@@ -49,11 +48,10 @@ void printStripes(vector<Stripe> S)
 
 int main(int argc, char **argv)
 {
+    srand((unsigned)time(NULL));
     cout << "Input 1 or 2:" << endl;
     cout << "1 for Manual Input of Coordinates" << endl;
     cout << "2 for Random Input of Coordinates" << endl;
-
-    cin >> inputMode;
 
     vector<Stripe> stripes;
     map<int, vector<Edge>> contourStripes;
@@ -66,81 +64,36 @@ int main(int argc, char **argv)
     fstream my_file1;
     my_file1.open("my_file1.txt", ios::out);
 
-    if (inputMode == 1)
+    cout << "Enter Points in format x1 y1 x2 y2:" << endl;
+
+    for (int i = 0; i < n; i++)
     {
-        cout << "Enter Points in format x1 y1 x2 y2:" << endl;
+        int f1, f2, f3, f4;
+        cin >> f1 >> f2 >> f3 >> f4;
 
-        for (int i = 0; i < n; i++)
+        int x1 = min(f1, f3);
+        int y1 = min(f2, f4);
+        int x2 = max(f1, f3);
+        int y2 = max(f2, f4);
+
+        if (!my_file1)
         {
-            int f1, f2, f3, f4;
-            cin >> f1 >> f2 >> f3 >> f4;
-
-            int x1 = min(f1, f3);
-            int y1 = min(f2, f4);
-            int x2 = max(f1, f3);
-            int y2 = max(f2, f4);
-
-            if (!my_file1)
-            {
-                cout << "File not created!";
-            }
-            else
-            {
-                my_file1 << x1 << " " << y1 << endl;
-                my_file1 << x2 << " " << y2 << endl;
-            }
-
-            Point *P1 = new Point(x1, y1);
-            Point *P2 = new Point(x2, y2);
-
-            Rectangle *r = new Rectangle(*P1, *P2);
-            rectangles.push_back(*r);
+            cout << "File not created!";
         }
-    }
-    else if (inputMode == 2)
-    {
-        for (int i = 0; i < n; i++)
+        else
         {
-            float f11, f22, f33, f44;
-
-            f11 = (((float)rand()) / (float)RAND_MAX) * 1400;
-            f22 = (((float)rand()) / (float)RAND_MAX) * 900;
-            f33 = (((float)rand()) / (float)RAND_MAX) * 1400;
-            f44 = (((float)rand()) / (float)RAND_MAX) * 900;
-
-            int f1, f2, f3, f4;
-
-            f1 = ceil(f11);
-            f2 = ceil(f22);
-            f3 = ceil(f33);
-            f4 = ceil(f44);
-
-            cout << f1 << " " << f2 << " " << f3 << " " << f4 << endl;
-
-            int x1 = min(f1, f3);
-            int y1 = min(f2, f4);
-            int x2 = max(f1, f3);
-            int y2 = max(f2, f4);
-
-            if (!my_file1)
-            {
-                cout << "File not created!";
-            }
-            else
-            {
-                my_file1 << x1 << " " << y1 << endl;
-                my_file1 << x2 << " " << y2 << endl;
-            }
-
-            Point *P1 = new Point(x1, y1);
-            Point *P2 = new Point(x2, y2);
-
-            Rectangle *r = new Rectangle(*P1, *P2);
-            rectangles.push_back(*r);
+            my_file1 << x1 << " " << y1 << endl;
+            my_file1 << x2 << " " << y2 << endl;
         }
 
-        my_file1.close();
+        Point *P1 = new Point(x1, y1);
+        Point *P2 = new Point(x2, y2);
+
+        Rectangle *r = new Rectangle(*P1, *P2);
+        rectangles.push_back(*r);
     }
+
+    my_file1.close();
 
     stripes = RectangleDAC1(rectangles);
     ans = measure(stripes);
@@ -152,14 +105,15 @@ int main(int argc, char **argv)
 
     cout << "THE MEASURE FOR THE GIVEN SET OF RECTANGLES IS :" << endl;
     cout << ans << endl;
-    
+
     if (!my_file2)
     {
         cout << "File not created!";
     }
     else
     {
-        my_file2 <<endl<< "THE MEASURE FOR THE GIVEN SET OF RECTANGLES IS : " << ans;
+        my_file2 << endl;
+        my_file2 << "The MeAsure for the given set of rectangles is : " << ans;
     }
 
     vector<pair<int, int>> arr, horizontal;
