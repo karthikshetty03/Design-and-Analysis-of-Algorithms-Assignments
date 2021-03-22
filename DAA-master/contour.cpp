@@ -1,22 +1,21 @@
 #include <bits/stdc++.h>
 #include "primitives.hpp"
 using namespace std;
-set<float> Coords;
+vector<float> TreeCoords;
 
 vector<Interval> makeIntervals()
 {
     vector<Interval> intervals;
-    vector<float> TreeCoords;
-
-    for (auto x : Coords)
-        TreeCoords.push_back(x);
-
     Interval *interval;
 
-    if (Coords.size() == 0)
+    if (TreeCoords.size() == 0)
     {
         return intervals;
     }
+
+    for (auto x : TreeCoords)
+        cout << x << " ";
+    cout << endl;
 
     for (int i = 1; i < TreeCoords.size(); i++)
     {
@@ -34,23 +33,25 @@ void inorder(ctree *tree)
         return;
 
     inorder(tree->left);
+
     if (tree->edgeType != "undef")
-        Coords.insert(tree->coord);
+        TreeCoords.push_back(tree->coord);
+
     inorder(tree->right);
 }
 
 vector<Interval> stripeIntervals(StripePrime s)
 {
-    Coords.clear();
+    TreeCoords.clear();
     inorder(s.tree);
 
-    //cout << "Intervals :" << endl;
+    cout << "Intervals :" << endl;
 
     vector<Interval> intervals = makeIntervals();
 
-    //for (auto x : intervals)
-    //    cout << x.getBottom() << " " << x.getTop() << endl;
-    //cout << endl;
+    for (auto x : intervals)
+        cout << x.getBottom() << " " << x.getTop() << endl;
+    cout << endl;
 
     return intervals;
 }
@@ -83,18 +84,18 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
         }
     }
 
-    //cout << h.getCoord() << ": " << h.getInterval().getBottom() << " " << h.getInterval().getTop() << endl;
+    cout << h.getCoord() << ": " << h.getInterval().getBottom() << " " << h.getInterval().getTop() << endl;
     intervals = stripeIntervals(*sDash);
     vector<Interval> ans;
 
     float bottom = h.getInterval().getBottom();
     float top = h.getInterval().getTop();
 
-    //105 - 295
+    //100 - 700
     //intersection
     for (auto x : intervals)
     {
-        // 100 - 300
+        // 100 - 400
         if (x.getTop() <= bottom or x.getBottom() >= top)
         {
             continue;
@@ -111,9 +112,10 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
     vector<Interval> finAns;
     int flag = 0;
 
-    for (auto x : ans)
+    for (auto &x : ans)
     {
-        //4 - 6
+        //100 - 400
+        //400 - 700
         if (x.getTop() < top and x.getBottom() > bottom)
         {
             Interval *i1 = new Interval(bottom, x.getBottom());
@@ -130,22 +132,19 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
         {
             if (x.getBottom() > bottom)
             {
-                Interval *i = new Interval(bottom, x.getBottom());
-                finAns.push_back(*i);
-                flag = 1;
+                top = x.getBottom();   
             }
             else if (x.getTop() < top)
             {
-                Interval *i = new Interval(x.getTop(), top);
-                finAns.push_back(*i);
-                flag = 1;
+                bottom = x.getTop();
             }
         }
     }
 
     if (!flag)
     {
-        finAns.push_back(h.getInterval());
+        Interval *interval = new Interval(bottom, top);
+        finAns.push_back(*interval);
     }
 
     vector<Edge> edges;
@@ -610,6 +609,16 @@ map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
         ans.push_back(*temp);
 
         newStripeContours[x.first] = ans;
+    }
+
+    for (auto x : newStripeContours)
+    {
+        cout << "Stripe : " << x.first << endl;
+
+        for (auto y : x.second)
+        {
+            cout << y.getBottom() << " " << y.getTop() << endl;
+        }
     }
 
     return newStripeContours;
