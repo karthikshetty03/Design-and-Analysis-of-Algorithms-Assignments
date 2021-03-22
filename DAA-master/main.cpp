@@ -152,7 +152,7 @@ int main(int argc, char **argv)
 
     cout << "THE MEASURE FOR THE GIVEN SET OF RECTANGLES IS :" << endl;
     cout << ans << endl;
-
+    
     if (!my_file2)
     {
         cout << "File not created!";
