@@ -1,2 +1,2 @@
 
-The MeAsure for the given set of rectangles is : 180000
+The MeAsure for the given set of rectangles is : 568027
