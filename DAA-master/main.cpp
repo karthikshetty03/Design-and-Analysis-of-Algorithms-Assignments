@@ -106,7 +106,7 @@ int main(int argc, char **argv)
 
     //Part 1: Calculate Measure
     stripes = RectangleDAC1(rectangles);
-    printStripes(stripes);
+    //printStripes(stripes);
 
     ans = measure(stripes);
     cout << "The Measure for the given set of rectangles is : " << ans << endl;

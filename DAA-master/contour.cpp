@@ -14,10 +14,6 @@ vector<Interval> makeIntervals()
         return intervals;
     }
 
-    //for (auto x : TreeCoords)
-    //    cout << x << " ";
-    //cout << endl;
-
     for (int i = 1; i < TreeCoords.size(); i++)
     {
         interval = new Interval(TreeCoords[i - 1], TreeCoords[i]);
@@ -45,15 +41,7 @@ vector<Interval> stripeIntervals(StripePrime s)
 {
     TreeCoords.clear();
     inorder(s.tree);
-
-    cout << "Intervals :" << endl;
-
     vector<Interval> intervals = makeIntervals();
-
-    for (auto x : intervals)
-        cout << x.getBottom() << " " << x.getTop() << endl;
-    cout << endl;
-
     return intervals;
 }
 
@@ -85,21 +73,14 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
         }
     }
 
-    cout << h.getCoord() << ": " << h.getInterval().getBottom() << " " << h.getInterval().getTop() << endl;
     intervals = stripeIntervals(*sDash);
     vector<Interval> ans;
 
     float bottom = h.getInterval().getBottom();
     float top = h.getInterval().getTop();
 
-    //intersection
-    //1 - 8
-
-    //2 - 6
-    //4 - 7
     for (auto x : intervals)
     {
-        // 100 - 400
         if (x.getTop() <= bottom or x.getBottom() >= top)
         {
             continue;
@@ -119,11 +100,6 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
         return lhs.getBottom() < rhs.getBottom();
     });
 
-    cout << "ANS : " << endl;
-
-    for (auto x : ans)
-        cout << x.getBottom() << " " << x.getTop() << endl;
-
     vector<Interval> finAns;
     Interval *temp = new Interval(bottom, top);
     finAns.push_back(*temp);
@@ -133,11 +109,6 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
         int bottomn = x.getBottom();
         int topn = x.getTop();
         vector<Interval> finNew;
-
-        cout << "FINANS : " << h.getCoord() << endl;
-
-        for (auto x : finAns)
-            cout << x.getBottom() << " " << x.getTop() << endl;
 
         for (auto y : finAns)
         {
@@ -149,46 +120,29 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
             else
             {
                 //3-8, 4-6
-                if (y.getBottom() == bottomn)
+                if (y.getBottom() != bottomn)
                 {
-                    //lite
-                }
-                else
-                {
-                    cout << "Y" << endl;
                     Interval *temp = new Interval(y.getBottom(), bottomn);
                     finNew.push_back(*temp);
                 }
 
-                if (y.getTop() == topn)
+                if (y.getTop() != topn)
                 {
-                    //lite
-                }
-                else
-                {
-                    cout << "Y" << endl;
                     Interval *temp = new Interval(topn, y.getTop());
                     finNew.push_back(*temp);
                 }
-                //2-3
-                //1-4
-                //4-8
             }
         }
 
         finAns.clear();
 
         for (auto it : finNew)
+        {
             finAns.push_back(it);
+        }
     }
 
-    cout << "Final CHeckpoint  :" << h.getCoord() << endl;
-
-    for (auto x : finAns)
-        cout << x.getBottom() << " " << x.getTop() << endl;
-
     vector<Edge> edges;
-
     for (auto x : finAns)
     {
         Edge *edge = new Edge(x, h.getCoord(), "undef");
@@ -629,16 +583,6 @@ map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
 
     for (auto &x : stripeC)
     {
-        cout << "Before Stripe Merge : " << x.first << endl;
-
-        for (auto y : x.second)
-        {
-            cout << y.first << " " << y.second << endl;
-        }
-    }
-
-    for (auto &x : stripeC)
-    {
         int start = x.second[0].first;
         int end = x.second[0].second;
 
@@ -668,17 +612,8 @@ map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
             Interval *temp = new Interval(x.first, x.second);
             fin.push_back(*temp);
         }
+
         newStripeContours[x.first] = fin;
-    }
-
-    for (auto x : newStripeContours)
-    {
-        cout << "Stripe : " << x.first << endl;
-
-        for (auto y : x.second)
-        {
-            cout << y.getBottom() << " " << y.getTop() << endl;
-        }
     }
 
     return newStripeContours;

@@ -384,7 +384,7 @@ vector<Stripe> RectangleDAC1(vector<Rectangle> rect)
     vector<Interval> temp1, temp2;
 
     Stripes1(V, *interval, temp1, temp2, P, S);
-    printXUnions(S);
+    //printXUnions(S);
 
     return S;
 }
