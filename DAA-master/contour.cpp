@@ -2,7 +2,7 @@
 #include "primitives.hpp"
 using namespace std;
 
-//leaf nodes of ctree of a particular edge
+///leaf nodes of ctree of a particular edge
 vector<float> TreeCoords;
 
 ///Tree traversall to find leaf node coords
@@ -19,7 +19,7 @@ void inorder(ctree *tree)
     inorder(tree->right);
 }
 
-//Make intervals of coordinates in vector TreeCoords
+///Make intervals of coordinates in vector TreeCoords
 vector<Interval> makeIntervals()
 {
     vector<Interval> intervals;
@@ -40,6 +40,7 @@ vector<Interval> makeIntervals()
     return intervals;
 }
 
+///Helper function to call inorder traversal function and makeINtervals together
 vector<Interval> stripeIntervals(StripePrime s)
 {
     TreeCoords.clear();
@@ -48,6 +49,7 @@ vector<Interval> stripeIntervals(StripePrime s)
     return intervals;
 }
 
+///function that calculates contour pieces corresponding to a [articular edge
 vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
 {
     vector<Interval> intervals;
@@ -82,6 +84,7 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
     float bottom = h.getInterval().getBottom();
     float top = h.getInterval().getTop();
 
+    ///< Intersection with the edge
     for (auto x : intervals)
     {
         if (x.getTop() <= bottom or x.getBottom() >= top)
@@ -107,6 +110,7 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
     Interval *temp = new Interval(bottom, top);
     finAns.push_back(*temp);
 
+    ///< Minus operation on intersection set from edge interval
     for (auto x : ans)
     {
         int bottomn = x.getBottom();
@@ -155,6 +159,7 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
     return edges;
 }
 
+///function to call contour stripes on each edge in a loop
 vector<Edge> contour(vector<Edge> &H, vector<StripePrime> &S)
 {
     vector<Edge> ans;
@@ -172,6 +177,7 @@ vector<Edge> contour(vector<Edge> &H, vector<StripePrime> &S)
     return ans;
 }
 
+/// function to return intervals after partition
 vector<Interval> partition(vector<float> coords)
 {
     vector<Interval> intervals;
@@ -192,11 +198,12 @@ vector<Interval> partition(vector<float> coords)
     return intervals;
 }
 
+/// helper function to calculate set/ LR
 vector<Interval> setMinusLRHelper(vector<Interval> minusFrom, vector<Interval> &L1, vector<Interval> &R2)
 {
     vector<Interval> s;
 
-    //find L1 intersection R2 (LR) --> s
+    ///< find L1 intersection R2 (LR) --> s
     for (auto &l1 : L1)
     {
         for (auto &r2 : R2)
@@ -208,7 +215,7 @@ vector<Interval> setMinusLRHelper(vector<Interval> minusFrom, vector<Interval> &
         }
     }
 
-    //remove elements of LR (--> s) if nay from minusFromSet
+    ///< remove elements of LR (--> s) if nay from minusFromSet
     for (auto &x : s)
     {
         auto itr = minusFrom.begin();
@@ -226,14 +233,15 @@ vector<Interval> setMinusLRHelper(vector<Interval> minusFrom, vector<Interval> &
     return minusFrom;
 }
 
+/// function to perform L2 union (l1/LR) and push to Lorig
 void setL(vector<Interval> &Lorig, vector<Interval> &L1, vector<Interval> &R1, vector<Interval> &L2, vector<Interval> &R2)
 {
     vector<Interval> s, finalSet;
 
-    //L1/LR
+    ///< L1/LR
     s = setMinusLRHelper(L1, L1, R2);
 
-    //s --> now union with l2
+    ///< s --> now union with l2
     for (auto &interval : s)
         finalSet.push_back(interval);
 
@@ -244,14 +252,15 @@ void setL(vector<Interval> &Lorig, vector<Interval> &L1, vector<Interval> &R1, v
         Lorig.push_back(finterval);
 }
 
+/// function to perform R1 union (R2/LR) and push to Lorig
 void setR(vector<Interval> &Rorig, vector<Interval> &L1, vector<Interval> &R1, vector<Interval> &L2, vector<Interval> &R2)
 {
     vector<Interval> s, finalSet;
 
-    //R2/LR
+    ///< R2/LR
     s = setMinusLRHelper(R2, L1, R2);
 
-    //s --> now union with R1
+    ///< s --> now union with R1
     for (auto &interval : s)
         finalSet.push_back(interval);
 
@@ -262,6 +271,7 @@ void setR(vector<Interval> &Rorig, vector<Interval> &L1, vector<Interval> &R1, v
         Rorig.push_back(finterval);
 }
 
+/// function to calculate union of P1 and P2
 void setP(vector<float> &P, vector<float> P1, vector<float> P2)
 {
     set<float> P1UnionP2;
@@ -276,6 +286,7 @@ void setP(vector<float> &P, vector<float> P1, vector<float> P2)
         P.push_back(p);
 }
 
+/// function to calculate median of edge sets V1 and V2
 float findMedianCoord(vector<Edge> &V, vector<Edge> &V1, vector<Edge> &V2)
 {
 
@@ -328,11 +339,13 @@ float findMedianCoord(vector<Edge> &V, vector<Edge> &V1, vector<Edge> &V2)
     return median;
 }
 
+/// helper function to check for subset of a set
 bool properSubset(Interval A, Interval B)
 {
     return A.getBottom() >= B.getBottom() and A.getTop() <= B.getTop();
 }
 
+/// The copy function that returns stripes
 vector<StripePrime> copy(vector<StripePrime> &S, vector<float> &P, Interval I)
 {
     vector<Interval> intervals = partition(P);
@@ -360,6 +373,7 @@ vector<StripePrime> copy(vector<StripePrime> &S, vector<float> &P, Interval I)
     return Sdash;
 }
 
+/// The blacken function
 void blacken(vector<StripePrime> &S, vector<Interval> &J)
 {
     for (auto &stripe : S)
@@ -376,6 +390,7 @@ void blacken(vector<StripePrime> &S, vector<Interval> &J)
     }
 }
 
+/// The concat function
 vector<StripePrime> concat(vector<StripePrime> &S1, vector<StripePrime> &S2, vector<float> &P, Interval x_ext)
 {
     vector<Interval> intervals = partition(P);
@@ -435,6 +450,7 @@ vector<StripePrime> concat(vector<StripePrime> &S1, vector<StripePrime> &S2, vec
     return Sdash;
 }
 
+/// The main divide and conquer algorithm to calculate stripes
 void Stripes(vector<Edge> &V, Interval x_ext, vector<Interval> &L, vector<Interval> &R, vector<float> &P, vector<StripePrime> &S)
 {
     if (V.size() == 1)
@@ -529,6 +545,7 @@ void Stripes(vector<Edge> &V, Interval x_ext, vector<Interval> &L, vector<Interv
     }
 }
 
+/// Stripes function is called and then further contours to return conour peices mapped to corressponding y-stripes
 map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
 {
 
@@ -579,7 +596,7 @@ map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
                 return lhs.getInterval().getTop() < rhs.getInterval().getTop();
             return lhs.getInterval().getBottom() < rhs.getInterval().getBottom();
         });
-        
+
         int start = x.second[0].getInterval().getBottom();
         int end = x.second[0].getInterval().getTop();
         vector<Interval> ans;
@@ -609,3 +626,4 @@ map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
 
     return newStripeContours;
 }
+

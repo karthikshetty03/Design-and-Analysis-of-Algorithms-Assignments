@@ -46,7 +46,7 @@ while i < len(content_list) - 1:
     if x1 != x2 and y1 != y2:
         i += 2
         continue
-    plt.plot([x1, x2], [y1, y2], "g", linewidth = "2")
+    plt.plot([x1, x2], [y1, y2], "g", linewidth="2")
     i += 2
 
 plt.show()

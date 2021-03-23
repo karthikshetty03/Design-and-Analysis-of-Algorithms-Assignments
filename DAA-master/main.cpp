@@ -1,20 +1,18 @@
-/*
-Authors:
-    Shetty Karthik Ravindra (2018A7PS0141H)
-    Abhirath Singh Parmar (2018A7PS0520H)
-    Koustubh Sharma (2018A7PS0114H)
-    Rishabh Baid (2018A7PS)
-
-Project Structure :
-
-               | contour.cpp --> contour.hpp  |
- main.cpp ---> |                              | --> primitves.cpp  ---> primitves.hpp
-               | isorect.cpp --> isorect.hpp  |
-
-Compile and Run:
-    g++ main.cpp isorect.cpp contour.cpp primitives.cpp -o combined -lGL -lGLU -lglut
-    ./combined
-
+/**
+ *   Authors:
+ *      Shetty Karthik Ravindra (2018A7PS0141H)
+ *      Abhirath Singh Parmar (2018A7PS0520H)
+ *
+ *  Project Structure :
+ *
+ *              | contour.cpp --> contour.hpp  |
+ *  main.cpp ---> |                              | --> primitves.cpp  ---> primitves.hpp
+ *              | isorect.cpp --> isorect.hpp  |
+ *
+ *  Compile and Run:
+ *      g++ main.cpp isorect.cpp contour.cpp primitives.cpp -o combined -lGL -lGLU -lglut
+ *      ./combined
+ *
 */
 #include <bits/stdc++.h>
 #include "isorect.hpp"
@@ -23,7 +21,7 @@ using namespace std;
 
 vector<Rectangle> rectangles;
 
-//Print Y-Stripes
+/// Print Y-Stripes
 void printStripes(vector<Stripe> S)
 {
     cout << "Y STRIPES:" << endl;
@@ -32,6 +30,7 @@ void printStripes(vector<Stripe> S)
         cout << stripe.getYInterval().getBottom() << " " << stripe.getYInterval().getTop() << endl;
 }
 
+/// driver code
 int main(int argc, char **argv)
 {
     vector<Stripe> stripes;
@@ -52,13 +51,13 @@ int main(int argc, char **argv)
 
         cin >> f1 >> f2 >> f3 >> f4;
 
-        //take points that are bottom-left and top-right
+        ///< take points that are bottom-left and top-right
         int x1 = min(f1, f3);
         int y1 = min(f2, f4);
         int x2 = max(f1, f3);
         int y2 = max(f2, f4);
 
-        //writing Rectangle Coordinates to a file
+        ///< writing Rectangle Coordinates to a file
         if (!my_file1)
         {
             cout << "File is not created!";
@@ -72,28 +71,28 @@ int main(int argc, char **argv)
         Point *P1 = new Point(x1, y1);
         Point *P2 = new Point(x2, y2);
 
-        //forms the iso-rectangle using two diagonal opposite points
+        ///< forms the iso-rectangle using two diagonal opposite points
         Rectangle *r = new Rectangle(*P1, *P2);
         rectangles.push_back(*r);
     }
 
     my_file1.close();
 
-    //Part 1: Calculate Measure
+    ///< Part 1: Calculate Measure
     stripes = RectangleDAC1(rectangles);
     printStripes(stripes);
 
     ans = measure(stripes);
     cout << "The Measure for the given set of rectangles is : " << ans << endl;
 
-    //Part 2: Calculate Contour Pieces
+    ///< Part 2: Calculate Contour Pieces
     map<int, vector<Interval>> contourStripes = RectangleDAC2(rectangles);
     vector<pair<int, int>> arr, horizontal;
 
     fstream my_file2;
     my_file2.open("my_file2.txt", ios::out);
 
-    //write measure to a file
+    ///< write measure to a file
     if (!my_file2)
     {
         cout << "File not created!";
@@ -123,10 +122,10 @@ int main(int argc, char **argv)
         }
     }
 
-    //sort and take consecutive as vertical stripes
+    ///< sort and take consecutive as vertical stripes
     sort(arr.begin(), arr.end());
 
-    //write all contour pieces to a file
+    ///< write all contour pieces to a file
     fstream my_file;
     my_file.open("my_file.txt", ios::out);
 
