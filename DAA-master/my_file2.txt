@@ -1,2 +1,0 @@
-
-The Measure for the given set of rectangles is : 3.10989e+12
