@@ -11,7 +11,6 @@ my_file = open("my_file1.txt", "r")
 content = my_file.read()
 content_rect = content.split("\n")
 del content_rect[len(content_rect) - 1]
-print(content_rect)
 
 i = 0
 while i < len(content_rect) - 1:
@@ -33,7 +32,6 @@ my_file = open("my_file.txt", "r")
 content = my_file.read()
 content_list = content.split("\n")
 del content_list[len(content_list) - 1]
-print(content_list)
 
 # contour plots
 i = 0
@@ -44,11 +42,10 @@ while i < len(content_list) - 1:
     x2 = int(x2)
     y1 = int(y1)
     y2 = int(y2)
-    if x1 != x2 and y1 != y2:
-        i += 2
-        continue
-    plt.plot([x1, x2], [y1, y2], "g")
-    print()
+    #if x1 != x2 and y1 != y2:
+    #    i += 2
+    #    continue
+    plt.plot([x1, x2], [y1, y2], "g", linewidth="5")
     i += 2
 
 plt.ylabel("some numbers")
