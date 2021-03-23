@@ -118,19 +118,7 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
             return lhs.getTop() < rhs.getTop();
         return lhs.getBottom() < rhs.getBottom();
     });
-
-    //1 - 8
-
-    //2 - 3
-    //1-2, 3-8
-
-    //4 - 6
-    //1-2, 3-4, 6-8
-
-    //2-6
-    //1-2, 6-8
-    //4-7
-    //1-2. 7-8
+    
     cout <<"ANS :"<<endl;
     for(auto x : ans)
         cout << x.getBottom()<<" "<<x.getTop()<<endl;
