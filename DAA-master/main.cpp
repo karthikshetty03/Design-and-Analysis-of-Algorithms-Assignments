@@ -126,7 +126,7 @@ int main(int argc, char **argv)
     else
     {
         my_file2 << endl;
-        my_file2 << "The MeAsure for the given set of rectangles is : " << ans;
+        my_file2 << "The Measure for the given set of rectangles is : " << ans;
     }
 
     for (auto x : contourStripes)
