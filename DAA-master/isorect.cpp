@@ -172,8 +172,8 @@ float findMedianCoord1(vector<Edge> V, vector<Edge> &V1, vector<Edge> &V2)
 
     if (V1.size() == 0 and V2.size() >= 2)
     {
-        for(int i = 0; i < V2.size()/2; i++)
-        V1.push_back(V2[i]);
+        for (int i = 0; i < V2.size() / 2; i++)
+            V1.push_back(V2[i]);
         V2.erase(V2.begin());
     }
 
@@ -270,7 +270,7 @@ vector<Stripe> concat1(vector<Stripe> &S1, vector<Stripe> &S2, vector<float> &P,
 }
 
 //Store all stripes in S vector
-void Stripes1(vector<Edge> V, Interval x_ext, vector<Interval> &L, vector<Interval> &R, vector<float> &P, vector<Stripe> &S)
+void Stripes1(vector<Edge>& V, Interval x_ext, vector<Interval> &L, vector<Interval> &R, vector<float> &P, vector<Stripe> &S)
 {
     if (V.size() == 1)
     {
@@ -374,7 +374,7 @@ vector<Stripe> RectangleDAC1(vector<Rectangle> rect)
         Interval *interval = new Interval(p1.getY(), p2.getY());
 
         Edge *leftEdge = new Edge(*interval, p1.getX(), "left");
-        Edge *rightEdge =new Edge(*interval, p2.getX(), "right");
+        Edge *rightEdge = new Edge(*interval, p2.getX(), "right");
 
         V.push_back(*leftEdge);
         V.push_back(*rightEdge);

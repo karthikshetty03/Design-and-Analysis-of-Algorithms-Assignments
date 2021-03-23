@@ -114,15 +114,15 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
     }
 
     sort(ans.begin(), ans.end(), [](auto &lhs, auto &rhs) {
-        if(lhs.getBottom() == rhs.getBottom())
+        if (lhs.getBottom() == rhs.getBottom())
             return lhs.getTop() < rhs.getTop();
         return lhs.getBottom() < rhs.getBottom();
     });
-    
-    cout <<"ANS : "<<endl;
 
-    for(auto x : ans)
-        cout << x.getBottom()<<" "<<x.getTop()<<endl;
+    cout << "ANS : " << endl;
+
+    for (auto x : ans)
+        cout << x.getBottom() << " " << x.getTop() << endl;
 
     vector<Interval> finAns;
     Interval *temp = new Interval(bottom, top);
@@ -134,10 +134,10 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
         int topn = x.getTop();
         vector<Interval> finNew;
 
-        cout <<"FINANS : "<<h.getCoord()<<endl;
+        cout << "FINANS : " << h.getCoord() << endl;
 
-        for(auto x : finAns)
-            cout << x.getBottom()<<" "<<x.getTop()<<endl;
+        for (auto x : finAns)
+            cout << x.getBottom() << " " << x.getTop() << endl;
 
         for (auto y : finAns)
         {
@@ -149,21 +149,25 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
             else
             {
                 //3-8, 4-6
-                if(y.getBottom() == bottomn) {
+                if (y.getBottom() == bottomn)
+                {
                     //lite
                 }
-                else {
-                    cout <<"Y"<<endl;
+                else
+                {
+                    cout << "Y" << endl;
                     Interval *temp = new Interval(y.getBottom(), bottomn);
                     finNew.push_back(*temp);
                 }
 
-                if(y.getTop() == topn) {
+                if (y.getTop() == topn)
+                {
                     //lite
                 }
-                else {
-                    cout <<"Y"<<endl;
-                    Interval* temp = new Interval(topn, y.getTop());
+                else
+                {
+                    cout << "Y" << endl;
+                    Interval *temp = new Interval(topn, y.getTop());
                     finNew.push_back(*temp);
                 }
                 //2-3
@@ -174,18 +178,19 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
 
         finAns.clear();
 
-        for(auto it : finNew)
+        for (auto it : finNew)
             finAns.push_back(it);
     }
 
-    cout <<"Final CHeckpoint  :"<<h.getCoord()<<endl;
+    cout << "Final CHeckpoint  :" << h.getCoord() << endl;
 
-    for(auto x : finAns)
-        cout << x.getBottom()<<" "<<x.getTop()<<endl;
+    for (auto x : finAns)
+        cout << x.getBottom() << " " << x.getTop() << endl;
 
     vector<Edge> edges;
 
-    for(auto x : finAns) {
+    for (auto x : finAns)
+    {
         Edge *edge = new Edge(x, h.getCoord(), "undef");
         edges.push_back(*edge);
     }
@@ -209,14 +214,6 @@ vector<Edge> contour(vector<Edge> &H, vector<StripePrime> &S)
 
     return ans;
 }
-
-/*
-1 3 2 4
-1 1 2 2
-2 2 3 3
-3 3 4 4
-3 1 4 2
-*/
 
 vector<Interval> partition(vector<float> coords)
 {
@@ -272,7 +269,7 @@ vector<Interval> setMinusLRHelper(vector<Interval> minusFrom, vector<Interval> &
     return minusFrom;
 }
 
-void setL(vector<Interval> *Lorig, vector<Interval> &L1, vector<Interval> &R1, vector<Interval> &L2, vector<Interval> &R2)
+void setL(vector<Interval> &Lorig, vector<Interval> &L1, vector<Interval> &R1, vector<Interval> &L2, vector<Interval> &R2)
 {
     vector<Interval> s, finalSet;
 
@@ -287,10 +284,10 @@ void setL(vector<Interval> *Lorig, vector<Interval> &L1, vector<Interval> &R1, v
         finalSet.push_back(interval);
 
     for (auto &finterval : finalSet)
-        (*Lorig).push_back(finterval);
+        Lorig.push_back(finterval);
 }
 
-void setR(vector<Interval> *Rorig, vector<Interval> &L1, vector<Interval> &R1, vector<Interval> &L2, vector<Interval> &R2)
+void setR(vector<Interval> &Rorig, vector<Interval> &L1, vector<Interval> &R1, vector<Interval> &L2, vector<Interval> &R2)
 {
     vector<Interval> s, finalSet;
 
@@ -305,10 +302,10 @@ void setR(vector<Interval> *Rorig, vector<Interval> &L1, vector<Interval> &R1, v
         finalSet.push_back(interval);
 
     for (auto &finterval : finalSet)
-        (*Rorig).push_back(finterval);
+        Rorig.push_back(finterval);
 }
 
-void setP(vector<float> *P, vector<float> P1, vector<float> P2)
+void setP(vector<float> &P, vector<float> P1, vector<float> P2)
 {
     set<float> P1UnionP2;
 
@@ -319,10 +316,10 @@ void setP(vector<float> *P, vector<float> P1, vector<float> P2)
         P1UnionP2.insert(p2);
 
     for (auto &p : P1UnionP2)
-        (*P).push_back(p);
+        P.push_back(p);
 }
 
-float findMedianCoord(vector<Edge> V, vector<Edge> &V1, vector<Edge> &V2)
+float findMedianCoord(vector<Edge> &V, vector<Edge> &V1, vector<Edge> &V2)
 {
 
     vector<float> points;
@@ -379,9 +376,9 @@ bool properSubset(Interval A, Interval B)
     return A.getBottom() >= B.getBottom() and A.getTop() <= B.getTop();
 }
 
-vector<StripePrime> copy(vector<StripePrime> *S, vector<float> *P, Interval I)
+vector<StripePrime> copy(vector<StripePrime> &S, vector<float> &P, Interval I)
 {
-    vector<Interval> intervals = partition(*P);
+    vector<Interval> intervals = partition(P);
     vector<StripePrime> Sdash;
     ctree *tree = NULL;
 
@@ -393,7 +390,7 @@ vector<StripePrime> copy(vector<StripePrime> *S, vector<float> *P, Interval I)
 
     for (auto &stripeDash : Sdash)
     {
-        for (auto &stripe : *S)
+        for (auto &stripe : S)
         {
             if (properSubset(stripeDash.getYInterval(), stripe.getYInterval()))
             {
@@ -406,11 +403,11 @@ vector<StripePrime> copy(vector<StripePrime> *S, vector<float> *P, Interval I)
     return Sdash;
 }
 
-void blacken(vector<StripePrime> *S, vector<Interval> *J)
+void blacken(vector<StripePrime> &S, vector<Interval> &J)
 {
-    for (auto &stripe : *S)
+    for (auto &stripe : S)
     {
-        for (auto &interval : *J)
+        for (auto &interval : J)
         {
             if (properSubset(stripe.getYInterval(), interval))
             {
@@ -422,9 +419,9 @@ void blacken(vector<StripePrime> *S, vector<Interval> *J)
     }
 }
 
-vector<StripePrime> concat(vector<StripePrime> *S1, vector<StripePrime> *S2, vector<float> *P, Interval x_ext)
+vector<StripePrime> concat(vector<StripePrime> &S1, vector<StripePrime> &S2, vector<float> &P, Interval x_ext)
 {
-    vector<Interval> intervals = partition(*P);
+    vector<Interval> intervals = partition(P);
     vector<StripePrime> Sdash;
     ctree *tree = NULL;
 
@@ -439,7 +436,7 @@ vector<StripePrime> concat(vector<StripePrime> *S1, vector<StripePrime> *S2, vec
         float ans = 0;
         StripePrime *s1Dash, *s2Dash;
 
-        for (auto &s1 : *S1)
+        for (auto &s1 : S1)
         {
             if (s1.getYInterval().getBottom() == stripeDash.getYInterval().getBottom() and
                 s1.getYInterval().getTop() == stripeDash.getYInterval().getTop())
@@ -449,7 +446,7 @@ vector<StripePrime> concat(vector<StripePrime> *S1, vector<StripePrime> *S2, vec
             }
         }
 
-        for (auto &s2 : *S2)
+        for (auto &s2 : S2)
         {
             if (s2.getYInterval().getBottom() == stripeDash.getYInterval().getBottom() and
                 s2.getYInterval().getTop() == stripeDash.getYInterval().getTop())
@@ -481,43 +478,43 @@ vector<StripePrime> concat(vector<StripePrime> *S1, vector<StripePrime> *S2, vec
     return Sdash;
 }
 
-void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interval> *R, vector<float> *P, vector<StripePrime> *S)
+void Stripes(vector<Edge> &V, Interval x_ext, vector<Interval> &L, vector<Interval> &R, vector<float> &P, vector<StripePrime> &S)
 {
     if (V.size() == 1)
     {
         Edge edge = V[0];
-        (*L).clear();
-        (*R).clear();
-        (*P).clear();
-        (*S).clear();
+        L.clear();
+        R.clear();
+        P.clear();
+        S.clear();
 
         if (edge.getEdgeType() == "left")
         {
-            (*L).push_back(edge.getInterval());
+            L.push_back(edge.getInterval());
         }
         else
         {
-            (*R).push_back(edge.getInterval());
+            R.push_back(edge.getInterval());
         }
 
-        (*P).push_back(INT_MIN);
-        (*P).push_back(edge.getInterval().getBottom());
-        (*P).push_back(edge.getInterval().getTop());
-        (*P).push_back(INT_MAX);
+        P.push_back(INT_MIN);
+        P.push_back(edge.getInterval().getBottom());
+        P.push_back(edge.getInterval().getTop());
+        P.push_back(INT_MAX);
 
-        vector<Interval> intervals = partition(*P);
+        vector<Interval> intervals = partition(P);
 
         //A) --> S: = {(i x, iy, 0) ] ix = x e x t and i y ~ p a r t i t i o n (P)}
         for (auto &interval : intervals)
         {
             ctree *temp = NULL;
             StripePrime *stripe = new StripePrime(x_ext, interval, temp);
-            (*S).push_back(*stripe);
+            S.push_back(*stripe);
         }
 
-        for (int i = 0; i < (*S).size(); i++)
+        for (int i = 0; i < (S).size(); i++)
         {
-            Interval interval = ((*S)[i]).getYInterval();
+            Interval interval = ((S)[i]).getYInterval();
 
             if (interval.getBottom() == edge.getInterval().getBottom() and
                 interval.getTop() == edge.getInterval().getTop())
@@ -533,7 +530,7 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
                     tree = new ctree(edge.getCoord(), "right", NULL, NULL);
                 }
 
-                ((*S)[i]).setTree(tree);
+                S[i].setTree(tree);
             }
         }
     }
@@ -551,8 +548,8 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
         Interval *i2 = new Interval(xm, x_ext.getTop());
 
         //COnquer
-        Stripes(V1, *i1, &L1, &R1, &P1, &S1);
-        Stripes(V2, *i2, &L2, &R2, &P2, &S2);
+        Stripes(V1, *i1, L1, R1, P1, S1);
+        Stripes(V2, *i2, L2, R2, P2, S2);
 
         //Merge
         setL(L, L1, R1, L2, R2);
@@ -560,18 +557,18 @@ void Stripes(vector<Edge> V, Interval x_ext, vector<Interval> *L, vector<Interva
         setR(R, L1, R1, L2, R2);
         setP(P, P1, P2);
 
-        S_left = copy(&S1, P, *i1);
-        S_right = copy(&S2, P, *i2);
+        S_left = copy(S1, P, *i1);
+        S_right = copy(S2, P, *i2);
 
         vector<Interval> R2minusLR, L1minusLR;
 
         R2minusLR = setMinusLRHelper(R2, L1, R2);
         L1minusLR = setMinusLRHelper(L1, L1, R2);
 
-        blacken(&S_left, &R2minusLR);
-        blacken(&S_right, &L1minusLR);
+        blacken(S_left, R2minusLR);
+        blacken(S_right, L1minusLR);
 
-        *S = concat(&S_left, &S_right, P, x_ext);
+        S = concat(S_left, S_right, P, x_ext);
     }
 }
 
@@ -607,7 +604,7 @@ map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
     Interval *interval = new Interval(INT_MIN, INT_MAX);
     vector<Interval> temp1, temp2;
 
-    Stripes(V, *interval, &temp1, &temp2, &P, &S);
+    Stripes(V, *interval, temp1, temp2, P, S);
 
     vector<Edge> contourPieces = contour(H, S);
     map<int, vector<Edge>> stripeContours;
@@ -622,18 +619,26 @@ map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
 
     for (auto &x : stripeContours)
     {
-        cout << "Before Stripe Merge : " << x.first << endl;
-        
         for (auto y : x.second)
         {
             stripeC[x.first].push_back({y.getInterval().getBottom(), y.getInterval().getTop()});
-            cout << y.getInterval().getBottom() << " " << y.getInterval().getTop() << endl;
+        }
+
+        sort(stripeC[x.first].begin(), stripeC[x.first].end());
+    }
+
+    for (auto &x : stripeC)
+    {
+        cout << "Before Stripe Merge : " << x.first << endl;
+
+        for (auto y : x.second)
+        {
+            cout << y.first << " " << y.second << endl;
         }
     }
 
-    for (auto x : stripeC)
+    for (auto &x : stripeC)
     {
-        sort(x.second.begin(), x.second.end());
         int start = x.second[0].first;
         int end = x.second[0].second;
 
@@ -658,7 +663,8 @@ map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
 
         vector<Interval> fin;
 
-        for(auto x : ans) {
+        for (auto x : ans)
+        {
             Interval *temp = new Interval(x.first, x.second);
             fin.push_back(*temp);
         }
@@ -676,10 +682,4 @@ map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
     }
 
     return newStripeContours;
-
-    /*
-    1 2 3 4
-    2 1 4 4
-    5 3 6 6
-    */
 }
