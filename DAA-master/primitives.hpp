@@ -1,10 +1,9 @@
 #ifndef PRIMITIVES_H
 #define PRIMITIVES_H
-
 #include<bits/stdc++.h>
 using namespace std;
 
-//Point
+/// Point
 class Point {
 	float x;
 	float y;
@@ -18,7 +17,7 @@ public:
 	void setY(float y);
 };
 
-//Rectangle
+/// Rectangle
 class Rectangle {
 	Point P1,P2;
 
@@ -30,7 +29,7 @@ public:
 	void setP2(Point P2);
 };
 
-//Interval
+/// Interval
 class Interval {
 public:
 	float bottom;
@@ -47,7 +46,7 @@ public:
     } 
 };
 
-//Edge
+/// Edge
 class Edge {
 public:
 	Interval interval;
@@ -59,7 +58,7 @@ public:
 	float getCoord();
 };
 
-//Stripe
+/// Stripe
 class Stripe {
 	public:
 		Interval x_interval;
@@ -73,6 +72,7 @@ class Stripe {
 		Interval getYInterval();
 };
 
+/// ctree
 class ctree {
 	public:
 		float coord;
@@ -83,6 +83,7 @@ class ctree {
 		
 };
 
+/// StripePrime (for contours)
 class StripePrime {
 	public:
 		Interval x_interval;
