@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include "primitives.hpp"
 using namespace std;
+
 vector<float> TreeCoords;
 
 vector<Interval> makeIntervals()
@@ -13,9 +14,9 @@ vector<Interval> makeIntervals()
         return intervals;
     }
 
-    for (auto x : TreeCoords)
-        cout << x << " ";
-    cout << endl;
+    //for (auto x : TreeCoords)
+    //    cout << x << " ";
+    //cout << endl;
 
     for (int i = 1; i < TreeCoords.size(); i++)
     {
@@ -91,8 +92,11 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
     float bottom = h.getInterval().getBottom();
     float top = h.getInterval().getTop();
 
-    //100 - 700
     //intersection
+    //1 - 8
+
+    //2 - 6
+    //4 - 7
     for (auto x : intervals)
     {
         // 100 - 400
@@ -109,49 +113,91 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
         }
     }
 
+    sort(ans.begin(), ans.end(), [](auto &lhs, auto &rhs) {
+        if(lhs.getBottom() == rhs.getBottom())
+            return lhs.getTop() < rhs.getTop();
+        return lhs.getBottom() < rhs.getBottom();
+    });
+
+    //1 - 8
+
+    //2 - 3
+    //1-2, 3-8
+
+    //4 - 6
+    //1-2, 3-4, 6-8
+
+    //2-6
+    //1-2, 6-8
+    //4-7
+    //1-2. 7-8
+    cout <<"ANS :"<<endl;
+    for(auto x : ans)
+        cout << x.getBottom()<<" "<<x.getTop()<<endl;
+
     vector<Interval> finAns;
-    int flag = 0;
+    Interval *temp = new Interval(bottom, top);
+    finAns.push_back(*temp);
 
-    for (auto &x : ans)
+    for (auto x : ans)
     {
-        //100 - 400
-        //400 - 700
-        if (x.getTop() < top and x.getBottom() > bottom)
+        int bottomn = x.getBottom();
+        int topn = x.getTop();
+        vector<Interval> finNew;
+
+        cout <<"FINANS :"<<h.getCoord()<<endl;
+
+        for(auto x : finAns)
+            cout << x.getBottom()<<" "<<x.getTop()<<endl;
+
+        for (auto y : finAns)
         {
-            Interval *i1 = new Interval(bottom, x.getBottom());
-            Interval *i2 = new Interval(x.getTop(), top);
-            finAns.push_back(*i1);
-            finAns.push_back(*i2);
-            flag = 1;
-        }
-        else if (x.getTop() == top and x.getBottom() == bottom)
-        {
-            flag = 1;
-        }
-        else
-        {
-            if (x.getBottom() > bottom)
+            if (y.getTop() <= bottomn or y.getBottom() >= topn)
             {
-                top = x.getBottom();   
+                Interval *temp = new Interval(y.getBottom(), y.getTop());
+                finNew.push_back(*temp);
             }
-            else if (x.getTop() < top)
+            else
             {
-                bottom = x.getTop();
+                //3-8, 4-6
+                if(y.getBottom() == bottomn) {
+                    //lite
+                }
+                else {
+                    cout <<"Y"<<endl;
+                    Interval *temp = new Interval(y.getBottom(), bottomn);
+                    finNew.push_back(*temp);
+                }
+
+                if(y.getTop() == topn) {
+                    //lite
+                }
+                else {
+                    cout <<"Y"<<endl;
+                    Interval* temp = new Interval(topn, y.getTop());
+                    finNew.push_back(*temp);
+                }
+                //2-3
+                //1-4
+                //4-8
             }
         }
+
+        finAns.clear();
+
+        for(auto it : finNew)
+            finAns.push_back(it);
     }
 
-    if (!flag)
-    {
-        Interval *interval = new Interval(bottom, top);
-        finAns.push_back(*interval);
-    }
+    cout <<"FINANS :"<<h.getCoord()<<endl;
+
+    for(auto x : finAns)
+        cout << x.getBottom()<<" "<<x.getTop()<<endl;
 
     vector<Edge> edges;
 
-    for (auto fin : finAns)
-    {
-        Edge *edge = new Edge(fin, h.getCoord(), h.getEdgeType());
+    for(auto x : finAns) {
+        Edge *edge = new Edge(x, h.getCoord(), "undef");
         edges.push_back(*edge);
     }
 

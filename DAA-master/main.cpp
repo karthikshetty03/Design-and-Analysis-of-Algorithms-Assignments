@@ -29,10 +29,11 @@ g++ main.cpp isorect.cpp contour.cpp primitives.cpp -o combined -lGL -lGLU -lglu
 using namespace std;
 
 vector<Rectangle> rectangles;
+int inp = 1;
 
 bool sortbyfirst(const pair<int, int> &a, const pair<int, int> &b)
 {
-    if(a.first == b.first)
+    if (a.first == b.first)
         return a.second < b.second;
 
     return (a.first < b.first);
@@ -52,6 +53,9 @@ int main(int argc, char **argv)
 {
     vector<Stripe> stripes;
     float ans = 0;
+    cout << "Enter 1 for Manual Input of Rectangles" << endl;
+    cout << "Enter 2 for Random Input of Rectangles" << endl;
+    cin >> inp;
 
     int n;
     cout << "Number of rectangles: ";
@@ -65,7 +69,25 @@ int main(int argc, char **argv)
     for (int i = 0; i < n; i++)
     {
         int f1, f2, f3, f4;
-        cin >> f1 >> f2 >> f3 >> f4;
+
+        if (inp == 1)
+            cin >> f1 >> f2 >> f3 >> f4;
+        else
+        {
+             float f11, f22, f33, f44;
+
+            f11 = (((float)rand()) / (float)RAND_MAX) * 1400;
+            f22 = (((float)rand()) / (float)RAND_MAX) * 900;
+            f33 = (((float)rand()) / (float)RAND_MAX) * 1400;
+            f44 = (((float)rand()) / (float)RAND_MAX) * 900;
+
+            f1 = ceil(f11);
+            f2 = ceil(f22);
+            f3 = ceil(f33);
+            f4 = ceil(f44);
+
+            cout << f1 << " " << f2 << " " << f3 << " " << f4 << endl;
+        }
 
         int x1 = min(f1, f3);
         int y1 = min(f2, f4);
@@ -93,7 +115,7 @@ int main(int argc, char **argv)
 
     stripes = RectangleDAC1(rectangles);
     ans = measure(stripes);
-    cout << "The MeAsure for the given set of rectangles is : " << ans;
+    cout << "The MeAsure for the given set of rectangles is : " << ans<<endl;
 
     printStripes(stripes);
     map<int, vector<Interval>> contourStripes = RectangleDAC2(rectangles);
