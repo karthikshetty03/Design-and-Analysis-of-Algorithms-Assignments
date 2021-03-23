@@ -5,7 +5,7 @@ using namespace std;
 //leaf nodes of ctree of a particular edge
 vector<float> TreeCoords;
 
-//Tree traversall to find leaf node coords
+///Tree traversall to find leaf node coords
 void inorder(ctree *tree)
 {
     if (!tree)
