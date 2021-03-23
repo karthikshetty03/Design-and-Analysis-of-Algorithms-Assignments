@@ -2,8 +2,24 @@
 #include "primitives.hpp"
 using namespace std;
 
+//leaf nodes of ctree of a particular edge
 vector<float> TreeCoords;
 
+//Tree traversall to find leaf node coords
+void inorder(ctree *tree)
+{
+    if (!tree)
+        return;
+
+    inorder(tree->left);
+
+    if (tree->edgeType != "undef")
+        TreeCoords.push_back(tree->coord);
+
+    inorder(tree->right);
+}
+
+//Make intervals of coordinates in vector TreeCoords
 vector<Interval> makeIntervals()
 {
     vector<Interval> intervals;
@@ -22,19 +38,6 @@ vector<Interval> makeIntervals()
     }
 
     return intervals;
-}
-
-void inorder(ctree *tree)
-{
-    if (!tree)
-        return;
-
-    inorder(tree->left);
-
-    if (tree->edgeType != "undef")
-        TreeCoords.push_back(tree->coord);
-
-    inorder(tree->right);
 }
 
 vector<Interval> stripeIntervals(StripePrime s)
@@ -569,51 +572,39 @@ map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
         stripeContours[x.getCoord()].push_back(x);
     }
 
-    map<int, vector<pair<int, int>>> stripeC;
-
-    for (auto &x : stripeContours)
+    for (auto x : stripeContours)
     {
-        for (auto y : x.second)
-        {
-            stripeC[x.first].push_back({y.getInterval().getBottom(), y.getInterval().getTop()});
-        }
-
-        sort(stripeC[x.first].begin(), stripeC[x.first].end());
-    }
-
-    for (auto &x : stripeC)
-    {
-        int start = x.second[0].first;
-        int end = x.second[0].second;
-
-        vector<pair<int, int>> ans;
+        sort(x.second.begin(), x.second.end(), [](auto &lhs, auto &rhs) {
+            if (lhs.getInterval().getBottom() == rhs.getInterval().getBottom())
+                return lhs.getInterval().getTop() < rhs.getInterval().getTop();
+            return lhs.getInterval().getBottom() < rhs.getInterval().getBottom();
+        });
+        
+        int start = x.second[0].getInterval().getBottom();
+        int end = x.second[0].getInterval().getTop();
+        vector<Interval> ans;
 
         for (int i = 1; i < x.second.size(); i++)
         {
-            if (x.second[i].first <= end)
+
+            if (x.second[i].getInterval().getBottom() <= end)
             {
-                end = max(end, x.second[i].second);
+                end = max(end, (int)x.second[i].getInterval().getTop());
             }
             else
             {
-                ans.push_back({start, end});
+                Interval *temp = new Interval(start, end);
+                ans.push_back(*temp);
 
-                start = x.second[i].first;
-                end = x.second[i].second;
+                start = x.second[i].getInterval().getBottom();
+                end = x.second[i].getInterval().getTop();
             }
         }
 
-        ans.push_back({start, end});
+        Interval *temp = new Interval(start, end);
+        ans.push_back(*temp);
 
-        vector<Interval> fin;
-
-        for (auto x : ans)
-        {
-            Interval *temp = new Interval(x.first, x.second);
-            fin.push_back(*temp);
-        }
-
-        newStripeContours[x.first] = fin;
+        newStripeContours[x.first] = ans;
     }
 
     return newStripeContours;
