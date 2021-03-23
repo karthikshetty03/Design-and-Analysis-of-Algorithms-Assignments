@@ -1,2 +1,2 @@
 
-The Measure for the given set of rectangles is : 1.0241e+06
+The Measure for the given set of rectangles is : 29

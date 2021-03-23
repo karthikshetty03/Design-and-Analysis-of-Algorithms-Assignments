@@ -22,7 +22,6 @@ Compile and Run:
 using namespace std;
 
 vector<Rectangle> rectangles;
-int inp = 1;
 
 //Print Y-Stripes
 void printStripes(vector<Stripe> S)
@@ -38,11 +37,6 @@ int main(int argc, char **argv)
     vector<Stripe> stripes;
     float ans = 0;
 
-    cout << "Enter 1 for Manual Input of Rectangles" << endl;
-    cout << "Enter 2 for Random Input of Rectangles" << endl;
-
-    cin >> inp;
-
     int n;
     cout << "Number of rectangles: ";
     cin >> n;
@@ -56,26 +50,7 @@ int main(int argc, char **argv)
     {
         int f1, f2, f3, f4;
 
-        if (inp == 1)
-        {
-            cin >> f1 >> f2 >> f3 >> f4;
-        }
-        else
-        {
-            float f11, f22, f33, f44;
-
-            f11 = (((float)rand()) / (float)RAND_MAX) * 1400;
-            f22 = (((float)rand()) / (float)RAND_MAX) * 900;
-            f33 = (((float)rand()) / (float)RAND_MAX) * 1400;
-            f44 = (((float)rand()) / (float)RAND_MAX) * 900;
-
-            f1 = ceil(f11);
-            f2 = ceil(f22);
-            f3 = ceil(f33);
-            f4 = ceil(f44);
-
-            cout << f1 << " " << f2 << " " << f3 << " " << f4 << endl;
-        }
+        cin >> f1 >> f2 >> f3 >> f4;
 
         //take points that are bottom-left and top-right
         int x1 = min(f1, f3);

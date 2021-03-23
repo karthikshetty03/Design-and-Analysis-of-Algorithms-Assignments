@@ -43,11 +43,10 @@ while i < len(content_list) - 1:
     y1 = int(y1)
     y2 = int(y2)
 
-    #if x1 != x2 and y1 != y2:
-    #    i += 2
-    #    continue
-    plt.plot([x1, x2], [y1, y2], "g", linewidth="5")
+    if x1 != x2 and y1 != y2:
+        i += 2
+        continue
+    plt.plot([x1, x2], [y1, y2], "g")
     i += 2
 
-plt.ylabel("some numbers")
 plt.show()
