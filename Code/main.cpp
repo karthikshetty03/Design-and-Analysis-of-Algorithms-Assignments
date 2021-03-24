@@ -14,7 +14,6 @@
  *      ./combined
  *
 */
-
 #include <bits/stdc++.h>
 #include "isorect.hpp"
 #include "contour.hpp"
@@ -80,14 +79,16 @@ int main(int argc, char **argv)
     my_file1.close();
 
     ///< Part 1: Calculate Measure
-    stripes = RectangleDAC1(rectangles);
+    isorect* isorectObject = new isorect();
+    stripes = isorectObject->RectangleDAC1(rectangles);
     printStripes(stripes);
 
-    ans = measure(stripes);
+    ans = isorectObject->measure(stripes);
     cout << "The Measure for the given set of rectangles is : " << ans << endl;
 
     ///< Part 2: Calculate Contour Pieces
-    map<int, vector<Interval>> contourStripes = RectangleDAC2(rectangles);
+    Contour *contourObject = new Contour();
+    map<int, vector<Interval>> contourStripes = contourObject->RectangleDAC2(rectangles);
     vector<pair<int, int>> arr, horizontal;
 
     fstream my_file2;

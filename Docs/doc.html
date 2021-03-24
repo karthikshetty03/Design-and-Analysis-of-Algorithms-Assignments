@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Design and Analysis of Algorithm Assignment.</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="doc.css">
+  </head>
+  <body>
+    <h2>Optimal Divide-and-Conquer to Compute Measure and Contour for a Set of Iso-Rectangles</h2>
+    <p>
+      This algorithm solves two geometrical problems of calculating the mesure of the union of a set of iso-rectangles and finding its contour by the measure problem and the contour problem using a single time-optimal divide-and-conquer algorithm. The efficient divide-and-conquer algorithm is obtained by using a technique called "separational representation", which extends the applicability of divide-and-conquer to orthogonal planar objects.
+    </p>
+    
+    <div>
+     <h3>The Measure Problem</h3>
+     <p>
+        <b>Problem statement:</b> In this problem we are given a set of rectangles and we need to find the area of the union of these set of rectangles.
+     </p>
+     <p>
+        <b>General Discussion on the algorithm:</b> We use divide and conquer method to get the measure of the set of rectangles. We divide Y-axis into multiple stripes and in these multiple stripes we get the x_union, combining both we get the desired result.
+     </p>
+     <p>
+        <b>Timing Analysis:</b> 
+        The code is implemented in the isorect,cpp file where the following functions and their Time Complexities are liste below:
+        <ul>
+          <li>
+            RectangleDAC1(vector<Rectangle> rect) : O(N)
+          </li>
+          <li>
+            Stripes1(vector<Edge> &V, Interval x_ext, vector<Interval> &L, vector<Interval> &R, vector<float> &P, vector<StripePrime> &S) : O(N logN)
+          </li>
+          <li>
+            properSubset1(Interval A, Interval B) : O(1)
+          </li>
+          <li>
+            copy1(vector<StripePrime> *S, vector<float> *P, Interval I) : O(N logN)
+          </li>
+          <li>
+          blacken1(vector<StripePrime> *S, vector<Interval> *J) : O(N logN)
+          </li>
+          <li>
+            concat1(vectorStripePrime> *S1, vector<StripePrime> *S2, vector<float> *P, Interval x_ext)
+          </li>
+          <li>
+            partition1(vector<float> coords) : O(N)
+          </li>
+          <li>
+            setMinusLRHelper1(vector<Interval> minusFrom, vector<Interval> &L1, vector<Interval> &R2) : O(NlogN)
+          </li>
+          <li>
+            setL1(vector<Interval> *Lorig, vector<Interval> &L1, vector<Interval> &R1, vector<Interval> &L2, vector<Interval> &R2) : O(N)
+          </li>
+          <li>
+             setR1(vector<Interval> *Rorig, vector<Interval> &L1, vector<Interval> &R1, vector<Interval> &L2, vector<Interval> &R2) : O(N)
+          </li>
+          <li>
+          setP1(vector<float> *P, vector<float> P1, vector<float> P2) : O(N)
+          </li>
+          <li>
+          findMedianCoord1(vector<Edge> V, vector<Edge> V1, vector<Edge> V2) : O(N)
+          </li>
+
+          <li>
+            measure(vector<Stripe> stripe) : O(N)
+          </li>
+          <li>
+          printStripe(vector<Stripe> S) : O(N)
+          </li>
+        </ul>
+        <p>The overall runtime of the algorithm is<b> O(N logN)</b></p>
+     </p>
+    </div>
+
+    
+    <div>
+      <h3>The Contour Problem</h3>
+      <p>
+        <b>Problem statement: </b>In this problem we are given a set of iso-rectangles and we need to find the contour (boundary) of these rectangles.
+     </p>
+     <p>
+        <b>General Discussion on the algorithm: </b> 
+        <ul>
+          <li>
+          We use divide and conquer method to determine the contour pieces. By dividing the Y-axis into multiple stripes and in these stripes we get the set of intervals which will make the contour.
+          </li>
+          <li>
+          For a set of iso-oriented rectangles in the plane, the contour is the boundary between the free and the covered area of the plane. In general it is a collection of disjoint "contour cycles", each of which is a sequence of alternating horizontal and vertical contour pieces
+          </li>
+        </ul>
+
+        
+     </p>
+
+     <p>
+        <b>Timing Analysis:</b> 
+        The code is implemented in the contour,cpp file where the following functions and their Time Complexities are liste below:
+        <ul>
+          <li>
+            RectangleDAC2(vector<Rectangle> rect) : O(N)
+          </li>
+          <li>
+            Stripes(vector<Edge> &V, Interval x_ext, vector<Interval> &L, vector<Interval> &R, vector<float> &P, vector<StripePrime> &S) : O(N logN)
+          </li>
+          <li>
+            properSubset(Interval A, Interval B) : O(1)
+          </li>
+          <li>
+            copy(vector<StripePrime> &S, vector<float> &P, Interval I) : O(N logN)
+          </li>
+          <li>
+          blacken(vector<StripePrime> &S, vector<Interval> &J) : O(N logN)
+          </li>
+          <li>
+            concat(vectorStripePrime> &S1, vector<StripePrime> &S2, vector<float> &P, Interval x_ext)
+          </li>
+          <li>
+          inorder(ctree *tree) : O(logN)
+          </li>
+          <li>
+            makeIntervals() : O(N)
+          </li>
+          <li>
+            stripeIntervals(StripePrime s) : O(N)
+          </li>
+          <li>
+            contour_pieces(Edge h, vector<StripePrime> &S) : O(N logN)
+          </li>
+          <li>
+            contour(vector<Edge> &H, vector<StripePrime> &S) : O(N)
+          </li>
+          <li>
+            partition(vector<float> coords) : O(N)
+          </li>
+          <li>
+            setMinusLRHelper(vector<Interval> minusFrom, vector<Interval> &L1, vector<Interval> &R2) : O(NlogN)
+          </li>
+          <li>
+            setL(vector<Interval> &Lorig, vector<Interval> &L1, vector<Interval> &R1, vector<Interval> &L2, vector<Interval> &R2) : O(N)
+          </li>
+          <li>
+             setR(vector<Interval> &Rorig, vector<Interval> &L1, vector<Interval> &R1, vector<Interval> &L2, vector<Interval> &R2) : O(N)
+          </li>
+          <li>
+          setP(vector<float> &P, vector<float> P1, vector<float> P2) : O(N)
+          </li>
+          <li>
+          findMedianCoord(vector<Edge> &V, vector<Edge> &V1, vector<Edge> &V2) : O(N)
+          </li>
+        </ul>
+        <p>The overall runtime of the algorithm is<b> O(N logN)</b></p>
+     </p>
+    </div>
+        
+     <p>
+        <b>Issues in coding:</b> Since this is the first time we are implementing a paper, we found the terminologies used in the paper a bit new. But researching a lot helped us in completing the assignment. And since the algorithm described in the paper was only uptil finding the horizontal intervals. We had to spend a lot of research into finding how we get the vertical stripes.
+     </p>
+      <p>
+        <b>Results produced by our code:</b>
+        <div><h4>Input</h4>
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img  src="./assets/Inp2.png" alt="Input 1" width = "1000" height = "400">
+        <br/><br/><h4>Output</h4>
+        <img  src="./assets/Res2.png" alt="Result 1" height = "600">
+        </div>
+        <br/><br/><h4>Output</h4>
+        <div><h4>Input</h4>
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img  src="./assets/Inp1.png" alt="Input 2" height = "600">
+        <br/><br/><h4>Output</h4>
+        <img  src="./assets/Res1.png" alt="Result 2" height = "600">
+        </div>
+         <div><h4>Input</h4>
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img  src="./assets/Inp5.png" alt="Input 2" height = "700">
+        <br/><br/><h4>Output</h4>
+       &emsp;&emsp;&emsp;&emsp; <img  src="./assets/Res5.png" alt="Result 2" height = "600">
+        </div>
+         <div><h4>Input</h4>
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img  src="./assets/Inp3.png" alt="Input 3" width = "600" height = "900">
+        <br/><br/><h4>Output</h4>
+        <img  src="./assets/Res3.png" alt="Result 3" height = "600">
+        </div><h4>Input</h4>
+        &emsp;&emsp;&emsp;  &emsp;&emsp;&emsp;<b></b><a href = "input1.html">Click here to see the testcase</a></b>
+        <br/><br/><h4>Output</h4>
+        <img  src="./assets/Res4.png" alt="Result 3" height = "600">
+        </div>
+      </p>
+       <p>
+        <b>References: </b>Guting paper pdf shared via cms.
+      </p>
+    
+    <script src="" async defer></script>
+  </body>
+</html>

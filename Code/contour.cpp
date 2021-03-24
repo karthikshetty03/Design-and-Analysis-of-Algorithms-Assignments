@@ -1,38 +1,38 @@
 #include <bits/stdc++.h>
 #include "primitives.hpp"
+#include "contour.hpp"
 using namespace std;
 
-///leaf nodes of ctree of a particular edge
-vector<float> TreeCoords;
-
 ///Tree traversall to find leaf node coords
-void inorder(ctree *tree)
+void Contour::inorder(ctree *tree)
 {
+    ///<
     if (!tree)
         return;
 
-    inorder(tree->left);
+    this->inorder(tree->left);
 
     if (tree->edgeType != "undef")
-        TreeCoords.push_back(tree->coord);
+        this->TreeCoords.push_back(tree->coord);
 
-    inorder(tree->right);
+    this->inorder(tree->right);
 }
 
 ///Make intervals of coordinates in vector TreeCoords
-vector<Interval> makeIntervals()
+vector<Interval> Contour::makeIntervals()
 {
+    ///<
     vector<Interval> intervals;
     Interval *interval;
 
-    if (TreeCoords.size() == 0)
+    if (this->TreeCoords.size() == 0)
     {
         return intervals;
     }
 
-    for (int i = 1; i < TreeCoords.size(); i++)
+    for (int i = 1; i < this->TreeCoords.size(); i++)
     {
-        interval = new Interval(TreeCoords[i - 1], TreeCoords[i]);
+        interval = new Interval(this->TreeCoords[i - 1], this->TreeCoords[i]);
         intervals.push_back(*interval);
         i++;
     }
@@ -41,17 +41,19 @@ vector<Interval> makeIntervals()
 }
 
 ///Helper function to call inorder traversal function and makeINtervals together
-vector<Interval> stripeIntervals(StripePrime s)
+vector<Interval> Contour::stripeIntervals(StripePrime s)
 {
-    TreeCoords.clear();
+    ///<
+    this->TreeCoords.clear();
     inorder(s.tree);
     vector<Interval> intervals = makeIntervals();
     return intervals;
 }
 
 ///function that calculates contour pieces corresponding to a [articular edge
-vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
+vector<Edge> Contour::contour_pieces(Edge h, vector<StripePrime> &S)
 {
+    ///<
     vector<Interval> intervals;
     StripePrime *sDash;
 
@@ -78,7 +80,7 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
         }
     }
 
-    intervals = stripeIntervals(*sDash);
+    intervals = this->stripeIntervals(*sDash);
     vector<Interval> ans;
 
     float bottom = h.getInterval().getBottom();
@@ -160,13 +162,14 @@ vector<Edge> contour_pieces(Edge h, vector<StripePrime> &S)
 }
 
 ///function to call contour stripes on each edge in a loop
-vector<Edge> contour(vector<Edge> &H, vector<StripePrime> &S)
+vector<Edge> Contour::contour(vector<Edge> &H, vector<StripePrime> &S)
 {
+    ///<
     vector<Edge> ans;
 
     for (auto h : H)
     {
-        vector<Edge> partAns = contour_pieces(h, S);
+        vector<Edge> partAns = this->contour_pieces(h, S);
 
         for (auto edge : partAns)
         {
@@ -178,8 +181,9 @@ vector<Edge> contour(vector<Edge> &H, vector<StripePrime> &S)
 }
 
 /// function to return intervals after partition
-vector<Interval> partition(vector<float> coords)
+vector<Interval> Contour::partition(vector<float> coords)
 {
+    ///<
     vector<Interval> intervals;
     sort(coords.begin(), coords.end());
 
@@ -199,8 +203,9 @@ vector<Interval> partition(vector<float> coords)
 }
 
 /// helper function to calculate set/ LR
-vector<Interval> setMinusLRHelper(vector<Interval> minusFrom, vector<Interval> &L1, vector<Interval> &R2)
+vector<Interval> Contour::setMinusLRHelper(vector<Interval> minusFrom, vector<Interval> &L1, vector<Interval> &R2)
 {
+    ///<
     vector<Interval> s;
 
     ///< find L1 intersection R2 (LR) --> s
@@ -234,12 +239,13 @@ vector<Interval> setMinusLRHelper(vector<Interval> minusFrom, vector<Interval> &
 }
 
 /// function to perform L2 union (l1/LR) and push to Lorig
-void setL(vector<Interval> &Lorig, vector<Interval> &L1, vector<Interval> &R1, vector<Interval> &L2, vector<Interval> &R2)
+void Contour::setL(vector<Interval> &Lorig, vector<Interval> &L1, vector<Interval> &R1, vector<Interval> &L2, vector<Interval> &R2)
 {
+    ///<
     vector<Interval> s, finalSet;
 
     ///< L1/LR
-    s = setMinusLRHelper(L1, L1, R2);
+    s = this->setMinusLRHelper(L1, L1, R2);
 
     ///< s --> now union with l2
     for (auto &interval : s)
@@ -253,12 +259,12 @@ void setL(vector<Interval> &Lorig, vector<Interval> &L1, vector<Interval> &R1, v
 }
 
 /// function to perform R1 union (R2/LR) and push to Lorig
-void setR(vector<Interval> &Rorig, vector<Interval> &L1, vector<Interval> &R1, vector<Interval> &L2, vector<Interval> &R2)
+void Contour::setR(vector<Interval> &Rorig, vector<Interval> &L1, vector<Interval> &R1, vector<Interval> &L2, vector<Interval> &R2)
 {
     vector<Interval> s, finalSet;
 
     ///< R2/LR
-    s = setMinusLRHelper(R2, L1, R2);
+    s = this->setMinusLRHelper(R2, L1, R2);
 
     ///< s --> now union with R1
     for (auto &interval : s)
@@ -272,8 +278,9 @@ void setR(vector<Interval> &Rorig, vector<Interval> &L1, vector<Interval> &R1, v
 }
 
 /// function to calculate union of P1 and P2
-void setP(vector<float> &P, vector<float> P1, vector<float> P2)
+void Contour::setP(vector<float> &P, vector<float> P1, vector<float> P2)
 {
+    ///<
     set<float> P1UnionP2;
 
     for (auto &p1 : P1)
@@ -287,9 +294,9 @@ void setP(vector<float> &P, vector<float> P1, vector<float> P2)
 }
 
 /// function to calculate median of edge sets V1 and V2
-float findMedianCoord(vector<Edge> &V, vector<Edge> &V1, vector<Edge> &V2)
+float Contour::findMedianCoord(vector<Edge> &V, vector<Edge> &V1, vector<Edge> &V2)
 {
-
+    ///<
     vector<float> points;
     set<float> s;
 
@@ -340,14 +347,16 @@ float findMedianCoord(vector<Edge> &V, vector<Edge> &V1, vector<Edge> &V2)
 }
 
 /// helper function to check for subset of a set
-bool properSubset(Interval A, Interval B)
+bool Contour::properSubset(Interval A, Interval B)
 {
+    ///<
     return A.getBottom() >= B.getBottom() and A.getTop() <= B.getTop();
 }
 
 /// The copy function that returns stripes
-vector<StripePrime> copy(vector<StripePrime> &S, vector<float> &P, Interval I)
+vector<StripePrime> Contour::copy(vector<StripePrime> &S, vector<float> &P, Interval I)
 {
+    ///<
     vector<Interval> intervals = partition(P);
     vector<StripePrime> Sdash;
     ctree *tree = NULL;
@@ -374,8 +383,9 @@ vector<StripePrime> copy(vector<StripePrime> &S, vector<float> &P, Interval I)
 }
 
 /// The blacken function
-void blacken(vector<StripePrime> &S, vector<Interval> &J)
+void Contour::blacken(vector<StripePrime> &S, vector<Interval> &J)
 {
+    ///<
     for (auto &stripe : S)
     {
         for (auto &interval : J)
@@ -391,8 +401,9 @@ void blacken(vector<StripePrime> &S, vector<Interval> &J)
 }
 
 /// The concat function
-vector<StripePrime> concat(vector<StripePrime> &S1, vector<StripePrime> &S2, vector<float> &P, Interval x_ext)
+vector<StripePrime> Contour::concat(vector<StripePrime> &S1, vector<StripePrime> &S2, vector<float> &P, Interval x_ext)
 {
+    ///<
     vector<Interval> intervals = partition(P);
     vector<StripePrime> Sdash;
     ctree *tree = NULL;
@@ -451,8 +462,9 @@ vector<StripePrime> concat(vector<StripePrime> &S1, vector<StripePrime> &S2, vec
 }
 
 /// The main divide and conquer algorithm to calculate stripes
-void Stripes(vector<Edge> &V, Interval x_ext, vector<Interval> &L, vector<Interval> &R, vector<float> &P, vector<StripePrime> &S)
+void Contour::Stripes(vector<Edge> &V, Interval x_ext, vector<Interval> &L, vector<Interval> &R, vector<float> &P, vector<StripePrime> &S)
 {
+    ///<
     if (V.size() == 1)
     {
         Edge edge = V[0];
@@ -475,7 +487,7 @@ void Stripes(vector<Edge> &V, Interval x_ext, vector<Interval> &L, vector<Interv
         P.push_back(edge.getInterval().getTop());
         P.push_back(INT_MAX);
 
-        vector<Interval> intervals = partition(P);
+        vector<Interval> intervals = this->partition(P);
 
         //A) --> S: = {(i x, iy, 0) ] ix = x e x t and i y ~ p a r t i t i o n (P)}
         for (auto &interval : intervals)
@@ -515,40 +527,40 @@ void Stripes(vector<Edge> &V, Interval x_ext, vector<Interval> &L, vector<Interv
         vector<Edge> V1, V2;
 
         //DIvide
-        float xm = findMedianCoord(V, V1, V2);
+        float xm = this->findMedianCoord(V, V1, V2);
 
         Interval *i1 = new Interval(x_ext.getBottom(), xm);
         Interval *i2 = new Interval(xm, x_ext.getTop());
 
         //COnquer
-        Stripes(V1, *i1, L1, R1, P1, S1);
-        Stripes(V2, *i2, L2, R2, P2, S2);
+        this->Stripes(V1, *i1, L1, R1, P1, S1);
+        this->Stripes(V2, *i2, L2, R2, P2, S2);
 
         //Merge
-        setL(L, L1, R1, L2, R2);
+        this->setL(L, L1, R1, L2, R2);
 
-        setR(R, L1, R1, L2, R2);
-        setP(P, P1, P2);
+        this->setR(R, L1, R1, L2, R2);
+        this->setP(P, P1, P2);
 
-        S_left = copy(S1, P, *i1);
-        S_right = copy(S2, P, *i2);
+        S_left = this->copy(S1, P, *i1);
+        S_right = this->copy(S2, P, *i2);
 
         vector<Interval> R2minusLR, L1minusLR;
 
-        R2minusLR = setMinusLRHelper(R2, L1, R2);
-        L1minusLR = setMinusLRHelper(L1, L1, R2);
+        R2minusLR = this->setMinusLRHelper(R2, L1, R2);
+        L1minusLR = this->setMinusLRHelper(L1, L1, R2);
 
-        blacken(S_left, R2minusLR);
-        blacken(S_right, L1minusLR);
+        this->blacken(S_left, R2minusLR);
+        this->blacken(S_right, L1minusLR);
 
-        S = concat(S_left, S_right, P, x_ext);
+        S = this->concat(S_left, S_right, P, x_ext);
     }
 }
 
 /// Stripes function is called and then further contours to return conour peices mapped to corressponding y-stripes
-map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
+map<int, vector<Interval>> Contour::RectangleDAC2(vector<Rectangle> rect)
 {
-
+    ///<
     vector<Edge> V;
     vector<StripePrime> S;
     vector<float> P;
@@ -578,7 +590,7 @@ map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
     Interval *interval = new Interval(INT_MIN, INT_MAX);
     vector<Interval> temp1, temp2;
 
-    Stripes(V, *interval, temp1, temp2, P, S);
+    this->Stripes(V, *interval, temp1, temp2, P, S);
 
     vector<Edge> contourPieces = contour(H, S);
     map<int, vector<Edge>> stripeContours;
@@ -626,4 +638,3 @@ map<int, vector<Interval>> RectangleDAC2(vector<Rectangle> rect)
 
     return newStripeContours;
 }
-

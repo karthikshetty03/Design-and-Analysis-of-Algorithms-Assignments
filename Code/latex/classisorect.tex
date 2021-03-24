@@ -1,0 +1,198 @@
+\hypertarget{classisorect}{}\section{isorect Class Reference}
+\label{classisorect}\index{isorect@{isorect}}
+
+
+Rectangle\+D\+AC Algorithm returns the set of stripes for the set of rectangles.  
+
+
+
+
+{\ttfamily \#include $<$isorect.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{classisorect_ae2478502a1adbae4ff7a95c889860b70}{measure} (vector$<$ \hyperlink{classStripe}{Stripe} $>$ stripe)
+\begin{DoxyCompactList}\small\item\em function to calculate measures using y-\/stripes and x-\/unions \end{DoxyCompactList}\item 
+void \hyperlink{classisorect_abc81549a79ee630c09982f1b560eb644}{print\+Stripe} (vector$<$ \hyperlink{classStripe}{Stripe} $>$ S)
+\begin{DoxyCompactList}\small\item\em helper function to print stripes \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{classInterval}{Interval} $>$ \hyperlink{classisorect_ab488becc2518f42929ddec2468c60e9e}{partition1} (vector$<$ float $>$ coords)
+\begin{DoxyCompactList}\small\item\em helper function to partition and return the intervals \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{classInterval}{Interval} $>$ \hyperlink{classisorect_ac0bb316a2ec6e0003ae4f298e789c3f9}{set\+Minus\+L\+R\+Helper1} (vector$<$ \hyperlink{classInterval}{Interval} $>$ minus\+From, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&L1, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&R2)
+\begin{DoxyCompactList}\small\item\em helper function to calculate set/ LR \end{DoxyCompactList}\item 
+void \hyperlink{classisorect_a0c292396ca5de5692da4130819e1edba}{set\+L1} (vector$<$ \hyperlink{classInterval}{Interval} $>$ $\ast$Lorig, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&L1, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&R1, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&L2, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&R2)
+\begin{DoxyCompactList}\small\item\em function to perform L2 union (l1/\+LR) and push to Lorig \end{DoxyCompactList}\item 
+void \hyperlink{classisorect_af829250d2d043fde4d8356cb68076823}{set\+R1} (vector$<$ \hyperlink{classInterval}{Interval} $>$ $\ast$Rorig, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&L1, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&R1, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&L2, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&R2)
+\begin{DoxyCompactList}\small\item\em function to perform R1 union (R2/\+LR) and push to Lorig \end{DoxyCompactList}\item 
+void \hyperlink{classisorect_af3fb03a32b2c833d32ed610f0b260071}{set\+P1} (vector$<$ float $>$ $\ast$P, vector$<$ float $>$ P1, vector$<$ float $>$ P2)
+\begin{DoxyCompactList}\small\item\em function to calculate union of P1 and P2 \end{DoxyCompactList}\item 
+float \hyperlink{classisorect_a82bd808dcca448ce35645d2af0e13596}{find\+Median\+Coord1} (vector$<$ \hyperlink{classEdge}{Edge} $>$ V, vector$<$ \hyperlink{classEdge}{Edge} $>$ \&V1, vector$<$ \hyperlink{classEdge}{Edge} $>$ \&V2)
+\begin{DoxyCompactList}\small\item\em function to calculate median of edge sets V1 and V2 \end{DoxyCompactList}\item 
+bool \hyperlink{classisorect_a6382fc3ab9d83e36fcb572b1a615fd5f}{proper\+Subset1} (\hyperlink{classInterval}{Interval} A, \hyperlink{classInterval}{Interval} B)
+\begin{DoxyCompactList}\small\item\em helper function to check for subset of a set \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{classStripe}{Stripe} $>$ \hyperlink{classisorect_aa9e8b006294ee85a378fbc061f1c4f2f}{copy1} (vector$<$ \hyperlink{classStripe}{Stripe} $>$ $\ast$S, vector$<$ float $>$ $\ast$P, \hyperlink{classInterval}{Interval} I)
+\begin{DoxyCompactList}\small\item\em The copy function that returns stripes. \end{DoxyCompactList}\item 
+void \hyperlink{classisorect_a689175a85dd1c937a2049498db80a88f}{blacken1} (vector$<$ \hyperlink{classStripe}{Stripe} $>$ $\ast$S, vector$<$ \hyperlink{classInterval}{Interval} $>$ $\ast$J)
+\begin{DoxyCompactList}\small\item\em The blacken function. \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{classStripe}{Stripe} $>$ \hyperlink{classisorect_aae8881a204dd1aac8bcfa00d95a7a7f0}{concat1} (vector$<$ \hyperlink{classStripe}{Stripe} $>$ $\ast$S1, vector$<$ \hyperlink{classStripe}{Stripe} $>$ $\ast$S2, vector$<$ float $>$ $\ast$P, \hyperlink{classInterval}{Interval} x\+\_\+ext)
+\begin{DoxyCompactList}\small\item\em The concat function. \end{DoxyCompactList}\item 
+void \hyperlink{classisorect_a74025c4207a4fe68b7a3e8be79d8c1cc}{Stripes1} (vector$<$ \hyperlink{classEdge}{Edge} $>$ V, \hyperlink{classInterval}{Interval} x\+\_\+ext, vector$<$ \hyperlink{classInterval}{Interval} $>$ $\ast$L, vector$<$ \hyperlink{classInterval}{Interval} $>$ $\ast$R, vector$<$ float $>$ $\ast$P, vector$<$ \hyperlink{classStripe}{Stripe} $>$ $\ast$S)
+\begin{DoxyCompactList}\small\item\em The main divide and conquer algorithm to calculate stripes. \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{classStripe}{Stripe} $>$ \hyperlink{classisorect_af4d857e170d1935ef0e2a9b079bd7e57}{Rectangle\+D\+A\+C1} (vector$<$ \hyperlink{classRectangle}{Rectangle} $>$ rect)
+\begin{DoxyCompactList}\small\item\em Stripes function is called and stripes are returned. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Rectangle\+D\+AC Algorithm returns the set of stripes for the set of rectangles. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classisorect_a689175a85dd1c937a2049498db80a88f}\label{classisorect_a689175a85dd1c937a2049498db80a88f}} 
+\index{isorect@{isorect}!blacken1@{blacken1}}
+\index{blacken1@{blacken1}!isorect@{isorect}}
+\subsubsection{\texorpdfstring{blacken1()}{blacken1()}}
+{\footnotesize\ttfamily void isorect\+::blacken1 (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classStripe}{Stripe} $>$ $\ast$}]{S,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ $\ast$}]{J }\end{DoxyParamCaption})}
+
+
+
+The blacken function. 
+
+$<$ \mbox{\Hypertarget{classisorect_aae8881a204dd1aac8bcfa00d95a7a7f0}\label{classisorect_aae8881a204dd1aac8bcfa00d95a7a7f0}} 
+\index{isorect@{isorect}!concat1@{concat1}}
+\index{concat1@{concat1}!isorect@{isorect}}
+\subsubsection{\texorpdfstring{concat1()}{concat1()}}
+{\footnotesize\ttfamily vector$<$ \hyperlink{classStripe}{Stripe} $>$ isorect\+::concat1 (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classStripe}{Stripe} $>$ $\ast$}]{S1,  }\item[{vector$<$ \hyperlink{classStripe}{Stripe} $>$ $\ast$}]{S2,  }\item[{vector$<$ float $>$ $\ast$}]{P,  }\item[{\hyperlink{classInterval}{Interval}}]{x\+\_\+ext }\end{DoxyParamCaption})}
+
+
+
+The concat function. 
+
+$<$ \mbox{\Hypertarget{classisorect_aa9e8b006294ee85a378fbc061f1c4f2f}\label{classisorect_aa9e8b006294ee85a378fbc061f1c4f2f}} 
+\index{isorect@{isorect}!copy1@{copy1}}
+\index{copy1@{copy1}!isorect@{isorect}}
+\subsubsection{\texorpdfstring{copy1()}{copy1()}}
+{\footnotesize\ttfamily vector$<$ \hyperlink{classStripe}{Stripe} $>$ isorect\+::copy1 (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classStripe}{Stripe} $>$ $\ast$}]{S,  }\item[{vector$<$ float $>$ $\ast$}]{P,  }\item[{\hyperlink{classInterval}{Interval}}]{I }\end{DoxyParamCaption})}
+
+
+
+The copy function that returns stripes. 
+
+$<$ \mbox{\Hypertarget{classisorect_a82bd808dcca448ce35645d2af0e13596}\label{classisorect_a82bd808dcca448ce35645d2af0e13596}} 
+\index{isorect@{isorect}!find\+Median\+Coord1@{find\+Median\+Coord1}}
+\index{find\+Median\+Coord1@{find\+Median\+Coord1}!isorect@{isorect}}
+\subsubsection{\texorpdfstring{find\+Median\+Coord1()}{findMedianCoord1()}}
+{\footnotesize\ttfamily float isorect\+::find\+Median\+Coord1 (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classEdge}{Edge} $>$}]{V,  }\item[{vector$<$ \hyperlink{classEdge}{Edge} $>$ \&}]{V1,  }\item[{vector$<$ \hyperlink{classEdge}{Edge} $>$ \&}]{V2 }\end{DoxyParamCaption})}
+
+
+
+function to calculate median of edge sets V1 and V2 
+
+$<$ \mbox{\Hypertarget{classisorect_ae2478502a1adbae4ff7a95c889860b70}\label{classisorect_ae2478502a1adbae4ff7a95c889860b70}} 
+\index{isorect@{isorect}!measure@{measure}}
+\index{measure@{measure}!isorect@{isorect}}
+\subsubsection{\texorpdfstring{measure()}{measure()}}
+{\footnotesize\ttfamily float isorect\+::measure (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classStripe}{Stripe} $>$}]{stripe }\end{DoxyParamCaption})}
+
+
+
+function to calculate measures using y-\/stripes and x-\/unions 
+
+$<$ \mbox{\Hypertarget{classisorect_ab488becc2518f42929ddec2468c60e9e}\label{classisorect_ab488becc2518f42929ddec2468c60e9e}} 
+\index{isorect@{isorect}!partition1@{partition1}}
+\index{partition1@{partition1}!isorect@{isorect}}
+\subsubsection{\texorpdfstring{partition1()}{partition1()}}
+{\footnotesize\ttfamily vector$<$ \hyperlink{classInterval}{Interval} $>$ isorect\+::partition1 (\begin{DoxyParamCaption}\item[{vector$<$ float $>$}]{coords }\end{DoxyParamCaption})}
+
+
+
+helper function to partition and return the intervals 
+
+$<$ \mbox{\Hypertarget{classisorect_abc81549a79ee630c09982f1b560eb644}\label{classisorect_abc81549a79ee630c09982f1b560eb644}} 
+\index{isorect@{isorect}!print\+Stripe@{print\+Stripe}}
+\index{print\+Stripe@{print\+Stripe}!isorect@{isorect}}
+\subsubsection{\texorpdfstring{print\+Stripe()}{printStripe()}}
+{\footnotesize\ttfamily void isorect\+::print\+Stripe (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classStripe}{Stripe} $>$}]{S }\end{DoxyParamCaption})}
+
+
+
+helper function to print stripes 
+
+$<$ \mbox{\Hypertarget{classisorect_a6382fc3ab9d83e36fcb572b1a615fd5f}\label{classisorect_a6382fc3ab9d83e36fcb572b1a615fd5f}} 
+\index{isorect@{isorect}!proper\+Subset1@{proper\+Subset1}}
+\index{proper\+Subset1@{proper\+Subset1}!isorect@{isorect}}
+\subsubsection{\texorpdfstring{proper\+Subset1()}{properSubset1()}}
+{\footnotesize\ttfamily bool isorect\+::proper\+Subset1 (\begin{DoxyParamCaption}\item[{\hyperlink{classInterval}{Interval}}]{A,  }\item[{\hyperlink{classInterval}{Interval}}]{B }\end{DoxyParamCaption})}
+
+
+
+helper function to check for subset of a set 
+
+$<$ \mbox{\Hypertarget{classisorect_af4d857e170d1935ef0e2a9b079bd7e57}\label{classisorect_af4d857e170d1935ef0e2a9b079bd7e57}} 
+\index{isorect@{isorect}!Rectangle\+D\+A\+C1@{Rectangle\+D\+A\+C1}}
+\index{Rectangle\+D\+A\+C1@{Rectangle\+D\+A\+C1}!isorect@{isorect}}
+\subsubsection{\texorpdfstring{Rectangle\+D\+A\+C1()}{RectangleDAC1()}}
+{\footnotesize\ttfamily vector$<$ \hyperlink{classStripe}{Stripe} $>$ isorect\+::\+Rectangle\+D\+A\+C1 (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classRectangle}{Rectangle} $>$}]{rect }\end{DoxyParamCaption})}
+
+
+
+Stripes function is called and stripes are returned. 
+
+$<$ \mbox{\Hypertarget{classisorect_a0c292396ca5de5692da4130819e1edba}\label{classisorect_a0c292396ca5de5692da4130819e1edba}} 
+\index{isorect@{isorect}!set\+L1@{set\+L1}}
+\index{set\+L1@{set\+L1}!isorect@{isorect}}
+\subsubsection{\texorpdfstring{set\+L1()}{setL1()}}
+{\footnotesize\ttfamily void isorect\+::set\+L1 (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ $\ast$}]{Lorig,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{L1,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{R1,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{L2,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{R2 }\end{DoxyParamCaption})}
+
+
+
+function to perform L2 union (l1/\+LR) and push to Lorig 
+
+$<$ L1/\+LR
+
+$<$ s --$>$ now union with l2 \mbox{\Hypertarget{classisorect_ac0bb316a2ec6e0003ae4f298e789c3f9}\label{classisorect_ac0bb316a2ec6e0003ae4f298e789c3f9}} 
+\index{isorect@{isorect}!set\+Minus\+L\+R\+Helper1@{set\+Minus\+L\+R\+Helper1}}
+\index{set\+Minus\+L\+R\+Helper1@{set\+Minus\+L\+R\+Helper1}!isorect@{isorect}}
+\subsubsection{\texorpdfstring{set\+Minus\+L\+R\+Helper1()}{setMinusLRHelper1()}}
+{\footnotesize\ttfamily vector$<$ \hyperlink{classInterval}{Interval} $>$ isorect\+::set\+Minus\+L\+R\+Helper1 (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$}]{minus\+From,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{L1,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{R2 }\end{DoxyParamCaption})}
+
+
+
+helper function to calculate set/ LR 
+
+$<$ find L1 intersection R2 (LR) --$>$ s \mbox{\Hypertarget{classisorect_af3fb03a32b2c833d32ed610f0b260071}\label{classisorect_af3fb03a32b2c833d32ed610f0b260071}} 
+\index{isorect@{isorect}!set\+P1@{set\+P1}}
+\index{set\+P1@{set\+P1}!isorect@{isorect}}
+\subsubsection{\texorpdfstring{set\+P1()}{setP1()}}
+{\footnotesize\ttfamily void isorect\+::set\+P1 (\begin{DoxyParamCaption}\item[{vector$<$ float $>$ $\ast$}]{P,  }\item[{vector$<$ float $>$}]{P1,  }\item[{vector$<$ float $>$}]{P2 }\end{DoxyParamCaption})}
+
+
+
+function to calculate union of P1 and P2 
+
+$<$ \mbox{\Hypertarget{classisorect_af829250d2d043fde4d8356cb68076823}\label{classisorect_af829250d2d043fde4d8356cb68076823}} 
+\index{isorect@{isorect}!set\+R1@{set\+R1}}
+\index{set\+R1@{set\+R1}!isorect@{isorect}}
+\subsubsection{\texorpdfstring{set\+R1()}{setR1()}}
+{\footnotesize\ttfamily void isorect\+::set\+R1 (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ $\ast$}]{Rorig,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{L1,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{R1,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{L2,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{R2 }\end{DoxyParamCaption})}
+
+
+
+function to perform R1 union (R2/\+LR) and push to Lorig 
+
+$<$ R2/\+LR
+
+$<$ s --$>$ now union with R1 \mbox{\Hypertarget{classisorect_a74025c4207a4fe68b7a3e8be79d8c1cc}\label{classisorect_a74025c4207a4fe68b7a3e8be79d8c1cc}} 
+\index{isorect@{isorect}!Stripes1@{Stripes1}}
+\index{Stripes1@{Stripes1}!isorect@{isorect}}
+\subsubsection{\texorpdfstring{Stripes1()}{Stripes1()}}
+{\footnotesize\ttfamily void isorect\+::\+Stripes1 (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classEdge}{Edge} $>$}]{V,  }\item[{\hyperlink{classInterval}{Interval}}]{x\+\_\+ext,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ $\ast$}]{L,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ $\ast$}]{R,  }\item[{vector$<$ float $>$ $\ast$}]{P,  }\item[{vector$<$ \hyperlink{classStripe}{Stripe} $>$ $\ast$}]{S }\end{DoxyParamCaption})}
+
+
+
+The main divide and conquer algorithm to calculate stripes. 
+
+$<$ 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+isorect.\+hpp\item 
+isorect.\+cpp\end{DoxyCompactItemize}

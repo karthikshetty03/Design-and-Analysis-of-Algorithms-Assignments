@@ -1,2 +1,2 @@
 
-The Measure for the given set of rectangles is : 4740
+The Measure for the given set of rectangles is : 35

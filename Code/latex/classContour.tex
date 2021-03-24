@@ -1,0 +1,248 @@
+\hypertarget{classContour}{}\section{Contour Class Reference}
+\label{classContour}\index{Contour@{Contour}}
+
+
+\hyperlink{classRectangle}{Rectangle} D\+AC algorithm called to form stripes and calculate contours class \hyperlink{classContour}{Contour}.  
+
+
+
+
+{\ttfamily \#include $<$contour.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classContour_acb911b734ef67fa1ce24ca437da7fc91}{inorder} (\hyperlink{classctree}{ctree} $\ast$tree)
+\begin{DoxyCompactList}\small\item\em Tree traversall to find leaf node coords. \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{classInterval}{Interval} $>$ \hyperlink{classContour_a2b90717194f2c6a7506b7981302cfbcc}{make\+Intervals} ()
+\begin{DoxyCompactList}\small\item\em Make intervals of coordinates in vector Tree\+Coords. \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{classInterval}{Interval} $>$ \hyperlink{classContour_aa22cbdbd91f5422225eb9508d4a7983a}{stripe\+Intervals} (\hyperlink{classStripePrime}{Stripe\+Prime} s)
+\begin{DoxyCompactList}\small\item\em Helper function to call inorder traversal function and make\+I\+Ntervals together. \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{classEdge}{Edge} $>$ \hyperlink{classContour_a26b1f58c0345adaaec14bd7493d16ed2}{contour\+\_\+pieces} (\hyperlink{classEdge}{Edge} h, vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \&S)
+\begin{DoxyCompactList}\small\item\em function that calculates contour pieces corresponding to a \mbox{[}articular edge \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{classEdge}{Edge} $>$ \hyperlink{classContour_a759427c3b84a8b17bf9dcedddc4be48f}{contour} (vector$<$ \hyperlink{classEdge}{Edge} $>$ \&H, vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \&S)
+\begin{DoxyCompactList}\small\item\em function to call contour stripes on each edge in a loop \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{classInterval}{Interval} $>$ \hyperlink{classContour_a897419a7c2395ef5a367a784e063454d}{partition} (vector$<$ float $>$ coords)
+\begin{DoxyCompactList}\small\item\em function to return intervals after partition \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{classInterval}{Interval} $>$ \hyperlink{classContour_adde8de028db63f76082daea730ca87ed}{set\+Minus\+L\+R\+Helper} (vector$<$ \hyperlink{classInterval}{Interval} $>$ minus\+From, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&L1, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&R2)
+\begin{DoxyCompactList}\small\item\em helper function to calculate set/ LR \end{DoxyCompactList}\item 
+void \hyperlink{classContour_a89c3cb99cdd161bef97100bfdac69211}{setL} (vector$<$ \hyperlink{classInterval}{Interval} $>$ \&Lorig, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&L1, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&R1, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&L2, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&R2)
+\begin{DoxyCompactList}\small\item\em function to perform L2 union (l1/\+LR) and push to Lorig \end{DoxyCompactList}\item 
+void \hyperlink{classContour_aeff6ed3f1354733449c660ec77008093}{setR} (vector$<$ \hyperlink{classInterval}{Interval} $>$ \&Rorig, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&L1, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&R1, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&L2, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&R2)
+\begin{DoxyCompactList}\small\item\em function to perform R1 union (R2/\+LR) and push to Lorig \end{DoxyCompactList}\item 
+void \hyperlink{classContour_a74ab977c279575010af78733569c648d}{setP} (vector$<$ float $>$ \&P, vector$<$ float $>$ P1, vector$<$ float $>$ P2)
+\begin{DoxyCompactList}\small\item\em function to calculate union of P1 and P2 \end{DoxyCompactList}\item 
+float \hyperlink{classContour_a33d8bf3ecbf269674b48d35310d01800}{find\+Median\+Coord} (vector$<$ \hyperlink{classEdge}{Edge} $>$ \&V, vector$<$ \hyperlink{classEdge}{Edge} $>$ \&V1, vector$<$ \hyperlink{classEdge}{Edge} $>$ \&V2)
+\begin{DoxyCompactList}\small\item\em function to calculate median of edge sets V1 and V2 \end{DoxyCompactList}\item 
+bool \hyperlink{classContour_a96e3306fd29f86f54fd49c095a0a9bff}{proper\+Subset} (\hyperlink{classInterval}{Interval} A, \hyperlink{classInterval}{Interval} B)
+\begin{DoxyCompactList}\small\item\em helper function to check for subset of a set \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \hyperlink{classContour_a6eb03ad9779df6fabdb541f75a64ea92}{copy} (vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \&S, vector$<$ float $>$ \&P, \hyperlink{classInterval}{Interval} I)
+\begin{DoxyCompactList}\small\item\em The copy function that returns stripes. \end{DoxyCompactList}\item 
+void \hyperlink{classContour_abbb3cdafee0371a3d17fdc4492254581}{blacken} (vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \&S, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&J)
+\begin{DoxyCompactList}\small\item\em The blacken function. \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \hyperlink{classContour_a5d610630ea9afaa4921f832287811a0e}{concat} (vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \&S1, vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \&S2, vector$<$ float $>$ \&P, \hyperlink{classInterval}{Interval} x\+\_\+ext)
+\begin{DoxyCompactList}\small\item\em The concat function. \end{DoxyCompactList}\item 
+void \hyperlink{classContour_a604abcf672cfc7af1d3a3b8a03c836f4}{Stripes} (vector$<$ \hyperlink{classEdge}{Edge} $>$ \&V, \hyperlink{classInterval}{Interval} x\+\_\+ext, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&L, vector$<$ \hyperlink{classInterval}{Interval} $>$ \&R, vector$<$ float $>$ \&P, vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \&S)
+\begin{DoxyCompactList}\small\item\em The main divide and conquer algorithm to calculate stripes. \end{DoxyCompactList}\item 
+map$<$ int, vector$<$ \hyperlink{classInterval}{Interval} $>$ $>$ \hyperlink{classContour_a12d302a8ebc036b8f85e75b3f19e85df}{Rectangle\+D\+A\+C2} (vector$<$ \hyperlink{classRectangle}{Rectangle} $>$ rect)
+\begin{DoxyCompactList}\small\item\em Stripes function is called and then further contours to return conour peices mapped to corressponding y-\/stripes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classContour_adbbd4833112e8ae53b313308c984e8cc}\label{classContour_adbbd4833112e8ae53b313308c984e8cc}} 
+vector$<$ float $>$ \hyperlink{classContour_adbbd4833112e8ae53b313308c984e8cc}{Tree\+Coords}
+\begin{DoxyCompactList}\small\item\em leaf nodes of ctree of a particular edge \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classRectangle}{Rectangle} D\+AC algorithm called to form stripes and calculate contours class \hyperlink{classContour}{Contour}. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classContour_abbb3cdafee0371a3d17fdc4492254581}\label{classContour_abbb3cdafee0371a3d17fdc4492254581}} 
+\index{Contour@{Contour}!blacken@{blacken}}
+\index{blacken@{blacken}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{blacken()}{blacken()}}
+{\footnotesize\ttfamily void Contour\+::blacken (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \&}]{S,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{J }\end{DoxyParamCaption})}
+
+
+
+The blacken function. 
+
+$<$ \mbox{\Hypertarget{classContour_a5d610630ea9afaa4921f832287811a0e}\label{classContour_a5d610630ea9afaa4921f832287811a0e}} 
+\index{Contour@{Contour}!concat@{concat}}
+\index{concat@{concat}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{concat()}{concat()}}
+{\footnotesize\ttfamily vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ Contour\+::concat (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \&}]{S1,  }\item[{vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \&}]{S2,  }\item[{vector$<$ float $>$ \&}]{P,  }\item[{\hyperlink{classInterval}{Interval}}]{x\+\_\+ext }\end{DoxyParamCaption})}
+
+
+
+The concat function. 
+
+$<$ \mbox{\Hypertarget{classContour_a759427c3b84a8b17bf9dcedddc4be48f}\label{classContour_a759427c3b84a8b17bf9dcedddc4be48f}} 
+\index{Contour@{Contour}!contour@{contour}}
+\index{contour@{contour}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{contour()}{contour()}}
+{\footnotesize\ttfamily vector$<$ \hyperlink{classEdge}{Edge} $>$ Contour\+::contour (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classEdge}{Edge} $>$ \&}]{H,  }\item[{vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \&}]{S }\end{DoxyParamCaption})}
+
+
+
+function to call contour stripes on each edge in a loop 
+
+$<$ \mbox{\Hypertarget{classContour_a26b1f58c0345adaaec14bd7493d16ed2}\label{classContour_a26b1f58c0345adaaec14bd7493d16ed2}} 
+\index{Contour@{Contour}!contour\+\_\+pieces@{contour\+\_\+pieces}}
+\index{contour\+\_\+pieces@{contour\+\_\+pieces}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{contour\+\_\+pieces()}{contour\_pieces()}}
+{\footnotesize\ttfamily vector$<$ \hyperlink{classEdge}{Edge} $>$ Contour\+::contour\+\_\+pieces (\begin{DoxyParamCaption}\item[{\hyperlink{classEdge}{Edge}}]{h,  }\item[{vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \&}]{S }\end{DoxyParamCaption})}
+
+
+
+function that calculates contour pieces corresponding to a \mbox{[}articular edge 
+
+$<$
+
+$<$ Intersection with the edge
+
+$<$ Minus operation on intersection set from edge interval \mbox{\Hypertarget{classContour_a6eb03ad9779df6fabdb541f75a64ea92}\label{classContour_a6eb03ad9779df6fabdb541f75a64ea92}} 
+\index{Contour@{Contour}!copy@{copy}}
+\index{copy@{copy}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ Contour\+::copy (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \&}]{S,  }\item[{vector$<$ float $>$ \&}]{P,  }\item[{\hyperlink{classInterval}{Interval}}]{I }\end{DoxyParamCaption})}
+
+
+
+The copy function that returns stripes. 
+
+$<$ \mbox{\Hypertarget{classContour_a33d8bf3ecbf269674b48d35310d01800}\label{classContour_a33d8bf3ecbf269674b48d35310d01800}} 
+\index{Contour@{Contour}!find\+Median\+Coord@{find\+Median\+Coord}}
+\index{find\+Median\+Coord@{find\+Median\+Coord}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{find\+Median\+Coord()}{findMedianCoord()}}
+{\footnotesize\ttfamily float Contour\+::find\+Median\+Coord (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classEdge}{Edge} $>$ \&}]{V,  }\item[{vector$<$ \hyperlink{classEdge}{Edge} $>$ \&}]{V1,  }\item[{vector$<$ \hyperlink{classEdge}{Edge} $>$ \&}]{V2 }\end{DoxyParamCaption})}
+
+
+
+function to calculate median of edge sets V1 and V2 
+
+$<$ \mbox{\Hypertarget{classContour_acb911b734ef67fa1ce24ca437da7fc91}\label{classContour_acb911b734ef67fa1ce24ca437da7fc91}} 
+\index{Contour@{Contour}!inorder@{inorder}}
+\index{inorder@{inorder}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{inorder()}{inorder()}}
+{\footnotesize\ttfamily void Contour\+::inorder (\begin{DoxyParamCaption}\item[{\hyperlink{classctree}{ctree} $\ast$}]{tree }\end{DoxyParamCaption})}
+
+
+
+Tree traversall to find leaf node coords. 
+
+$<$ \mbox{\Hypertarget{classContour_a2b90717194f2c6a7506b7981302cfbcc}\label{classContour_a2b90717194f2c6a7506b7981302cfbcc}} 
+\index{Contour@{Contour}!make\+Intervals@{make\+Intervals}}
+\index{make\+Intervals@{make\+Intervals}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{make\+Intervals()}{makeIntervals()}}
+{\footnotesize\ttfamily vector$<$ \hyperlink{classInterval}{Interval} $>$ Contour\+::make\+Intervals (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Make intervals of coordinates in vector Tree\+Coords. 
+
+$<$ \mbox{\Hypertarget{classContour_a897419a7c2395ef5a367a784e063454d}\label{classContour_a897419a7c2395ef5a367a784e063454d}} 
+\index{Contour@{Contour}!partition@{partition}}
+\index{partition@{partition}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{partition()}{partition()}}
+{\footnotesize\ttfamily vector$<$ \hyperlink{classInterval}{Interval} $>$ Contour\+::partition (\begin{DoxyParamCaption}\item[{vector$<$ float $>$}]{coords }\end{DoxyParamCaption})}
+
+
+
+function to return intervals after partition 
+
+$<$ \mbox{\Hypertarget{classContour_a96e3306fd29f86f54fd49c095a0a9bff}\label{classContour_a96e3306fd29f86f54fd49c095a0a9bff}} 
+\index{Contour@{Contour}!proper\+Subset@{proper\+Subset}}
+\index{proper\+Subset@{proper\+Subset}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{proper\+Subset()}{properSubset()}}
+{\footnotesize\ttfamily bool Contour\+::proper\+Subset (\begin{DoxyParamCaption}\item[{\hyperlink{classInterval}{Interval}}]{A,  }\item[{\hyperlink{classInterval}{Interval}}]{B }\end{DoxyParamCaption})}
+
+
+
+helper function to check for subset of a set 
+
+$<$ \mbox{\Hypertarget{classContour_a12d302a8ebc036b8f85e75b3f19e85df}\label{classContour_a12d302a8ebc036b8f85e75b3f19e85df}} 
+\index{Contour@{Contour}!Rectangle\+D\+A\+C2@{Rectangle\+D\+A\+C2}}
+\index{Rectangle\+D\+A\+C2@{Rectangle\+D\+A\+C2}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{Rectangle\+D\+A\+C2()}{RectangleDAC2()}}
+{\footnotesize\ttfamily map$<$ int, vector$<$ \hyperlink{classInterval}{Interval} $>$ $>$ Contour\+::\+Rectangle\+D\+A\+C2 (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classRectangle}{Rectangle} $>$}]{rect }\end{DoxyParamCaption})}
+
+
+
+Stripes function is called and then further contours to return conour peices mapped to corressponding y-\/stripes. 
+
+$<$ \mbox{\Hypertarget{classContour_a89c3cb99cdd161bef97100bfdac69211}\label{classContour_a89c3cb99cdd161bef97100bfdac69211}} 
+\index{Contour@{Contour}!setL@{setL}}
+\index{setL@{setL}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{set\+L()}{setL()}}
+{\footnotesize\ttfamily void Contour\+::setL (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{Lorig,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{L1,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{R1,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{L2,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{R2 }\end{DoxyParamCaption})}
+
+
+
+function to perform L2 union (l1/\+LR) and push to Lorig 
+
+$<$
+
+$<$ L1/\+LR
+
+$<$ s --$>$ now union with l2 \mbox{\Hypertarget{classContour_adde8de028db63f76082daea730ca87ed}\label{classContour_adde8de028db63f76082daea730ca87ed}} 
+\index{Contour@{Contour}!set\+Minus\+L\+R\+Helper@{set\+Minus\+L\+R\+Helper}}
+\index{set\+Minus\+L\+R\+Helper@{set\+Minus\+L\+R\+Helper}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{set\+Minus\+L\+R\+Helper()}{setMinusLRHelper()}}
+{\footnotesize\ttfamily vector$<$ \hyperlink{classInterval}{Interval} $>$ Contour\+::set\+Minus\+L\+R\+Helper (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$}]{minus\+From,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{L1,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{R2 }\end{DoxyParamCaption})}
+
+
+
+helper function to calculate set/ LR 
+
+$<$
+
+$<$ find L1 intersection R2 (LR) --$>$ s \mbox{\Hypertarget{classContour_a74ab977c279575010af78733569c648d}\label{classContour_a74ab977c279575010af78733569c648d}} 
+\index{Contour@{Contour}!setP@{setP}}
+\index{setP@{setP}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{set\+P()}{setP()}}
+{\footnotesize\ttfamily void Contour\+::setP (\begin{DoxyParamCaption}\item[{vector$<$ float $>$ \&}]{P,  }\item[{vector$<$ float $>$}]{P1,  }\item[{vector$<$ float $>$}]{P2 }\end{DoxyParamCaption})}
+
+
+
+function to calculate union of P1 and P2 
+
+$<$ \mbox{\Hypertarget{classContour_aeff6ed3f1354733449c660ec77008093}\label{classContour_aeff6ed3f1354733449c660ec77008093}} 
+\index{Contour@{Contour}!setR@{setR}}
+\index{setR@{setR}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{set\+R()}{setR()}}
+{\footnotesize\ttfamily void Contour\+::setR (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{Rorig,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{L1,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{R1,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{L2,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{R2 }\end{DoxyParamCaption})}
+
+
+
+function to perform R1 union (R2/\+LR) and push to Lorig 
+
+$<$ R2/\+LR
+
+$<$ s --$>$ now union with R1 \mbox{\Hypertarget{classContour_aa22cbdbd91f5422225eb9508d4a7983a}\label{classContour_aa22cbdbd91f5422225eb9508d4a7983a}} 
+\index{Contour@{Contour}!stripe\+Intervals@{stripe\+Intervals}}
+\index{stripe\+Intervals@{stripe\+Intervals}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{stripe\+Intervals()}{stripeIntervals()}}
+{\footnotesize\ttfamily vector$<$ \hyperlink{classInterval}{Interval} $>$ Contour\+::stripe\+Intervals (\begin{DoxyParamCaption}\item[{\hyperlink{classStripePrime}{Stripe\+Prime}}]{s }\end{DoxyParamCaption})}
+
+
+
+Helper function to call inorder traversal function and make\+I\+Ntervals together. 
+
+$<$ \mbox{\Hypertarget{classContour_a604abcf672cfc7af1d3a3b8a03c836f4}\label{classContour_a604abcf672cfc7af1d3a3b8a03c836f4}} 
+\index{Contour@{Contour}!Stripes@{Stripes}}
+\index{Stripes@{Stripes}!Contour@{Contour}}
+\subsubsection{\texorpdfstring{Stripes()}{Stripes()}}
+{\footnotesize\ttfamily void Contour\+::\+Stripes (\begin{DoxyParamCaption}\item[{vector$<$ \hyperlink{classEdge}{Edge} $>$ \&}]{V,  }\item[{\hyperlink{classInterval}{Interval}}]{x\+\_\+ext,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{L,  }\item[{vector$<$ \hyperlink{classInterval}{Interval} $>$ \&}]{R,  }\item[{vector$<$ float $>$ \&}]{P,  }\item[{vector$<$ \hyperlink{classStripePrime}{Stripe\+Prime} $>$ \&}]{S }\end{DoxyParamCaption})}
+
+
+
+The main divide and conquer algorithm to calculate stripes. 
+
+$<$ 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+contour.\+hpp\item 
+contour.\+cpp\end{DoxyCompactItemize}

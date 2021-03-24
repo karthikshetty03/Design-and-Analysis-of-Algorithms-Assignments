@@ -1,14 +1,10 @@
 var searchData=
 [
-  ['getbottom',['getBottom',['../classInterval.html#aebf44908f1bd7269db6d9202ac759cd7',1,'Interval']]],
-  ['getcoord',['getCoord',['../classEdge.html#a2bdfd6b59be8ab33b9ab1cd0d02f4ab7',1,'Edge']]],
-  ['getedgetype',['getEdgeType',['../classEdge.html#ab996b76d5343965ad1087896e4c30446',1,'Edge']]],
-  ['getinterval',['getInterval',['../classEdge.html#aafea0a338f79c8397f175d7a58017361',1,'Edge']]],
-  ['getp1',['getP1',['../classRectangle.html#af5921ae0f9a77de0c2c997de12ea455c',1,'Rectangle']]],
-  ['getp2',['getP2',['../classRectangle.html#a1d4d588ff110b227eda59faa2e95aa27',1,'Rectangle']]],
-  ['gettop',['getTop',['../classInterval.html#aaad630e0a28e903cf91f8d90376015dc',1,'Interval']]],
-  ['getx',['getX',['../classPoint.html#acc27466778cc87a662bba40268c4c0c8',1,'Point']]],
-  ['getxinterval',['getXInterval',['../classStripe.html#ac29118cb6f4d6f8b684f39bbb1d550cb',1,'Stripe::getXInterval()'],['../classStripePrime.html#af4886dd218f6d112979af84d1b3e12f6',1,'StripePrime::getXInterval()']]],
-  ['gety',['getY',['../classPoint.html#a3cccbca94719ddde353cce86ce0e2f64',1,'Point']]],
-  ['getyinterval',['getYInterval',['../classStripe.html#a9fa20f20b1ae8fba317967418f98dd51',1,'Stripe::getYInterval()'],['../classStripePrime.html#a4a7a44141952bacd0e9aff750381368e',1,'StripePrime::getYInterval()']]]
+  ['concat',['concat',['../classContour.html#a5d610630ea9afaa4921f832287811a0e',1,'Contour']]],
+  ['concat1',['concat1',['../classisorect.html#aae8881a204dd1aac8bcfa00d95a7a7f0',1,'isorect']]],
+  ['contour',['contour',['../classContour.html#a759427c3b84a8b17bf9dcedddc4be48f',1,'Contour']]],
+  ['contour_5fpieces',['contour_pieces',['../classContour.html#a26b1f58c0345adaaec14bd7493d16ed2',1,'Contour']]],
+  ['copy',['copy',['../classContour.html#a6eb03ad9779df6fabdb541f75a64ea92',1,'Contour']]],
+  ['copy1',['copy1',['../classisorect.html#aa9e8b006294ee85a378fbc061f1c4f2f',1,'isorect']]],
+  ['ctree',['ctree',['../classctree.html#ae3c7d983f655e3315e3ddf1f67dfbea6',1,'ctree']]]
 ];
