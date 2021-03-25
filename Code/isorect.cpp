@@ -70,14 +70,17 @@ vector<Interval> isorect::setMinusLRHelper1(vector<Interval> minusFrom, vector<I
     for (auto &x : s)
     {
         auto itr = minusFrom.begin();
+        
         for (auto &ele : minusFrom)
         {
             if (x.getBottom() == ele.getBottom() and x.getTop() == ele.getTop())
             {
                 minusFrom.erase(itr);
             }
-
-            itr++;
+            else
+            {
+                itr++;
+            }
         }
     }
 
@@ -99,8 +102,17 @@ void isorect::setL1(vector<Interval> *Lorig, vector<Interval> &L1, vector<Interv
     for (auto &interval : L2)
         finalSet.push_back(interval);
 
+    for(int i = 0; i < finalSet.size(); i++) {
+        for(int j = i+1; j < finalSet.size(); j++) {
+            if(finalSet[i].getBottom() == finalSet[j].getBottom() and 
+                finalSet[i].getTop() == finalSet[j].getTop())
+                    finalSet.erase(finalSet.begin()+j);
+        }
+    }
+
     for (auto &finterval : finalSet)
         (*Lorig).push_back(finterval);
+
 }
 
 /// function to perform R1 union (R2/LR) and push to Lorig
@@ -117,6 +129,14 @@ void isorect::setR1(vector<Interval> *Rorig, vector<Interval> &L1, vector<Interv
 
     for (auto &interval : R1)
         finalSet.push_back(interval);
+    
+    for(int i = 0; i < finalSet.size(); i++) {
+        for(int j = i+1; j < finalSet.size(); j++) {
+            if(finalSet[i].getBottom() == finalSet[j].getBottom() and 
+                finalSet[i].getTop() == finalSet[j].getTop())
+                    finalSet.erase(finalSet.begin()+j);
+        }
+    }
 
     for (auto &finterval : finalSet)
         (*Rorig).push_back(finterval);
@@ -138,54 +158,41 @@ void isorect::setP1(vector<float> *P, vector<float> P1, vector<float> P2)
         (*P).push_back(p);
 }
 
+bool custom_sorter(Edge &lhs, Edge &rhs)
+{
+    if (lhs.getCoord() == rhs.getCoord())
+    {
+        if (lhs.getEdgeType() == "left")
+            return true;
+        else
+            return false;
+    }
+
+    return lhs.getCoord() < rhs.getCoord();
+}
+
 /// function to calculate median of edge sets V1 and V2
 float isorect::findMedianCoord1(vector<Edge> V, vector<Edge> &V1, vector<Edge> &V2)
 {
     ///<
-    vector<float> points;
-    set<float> s;
+    ///<
+    V1.clear();
+    V2.clear();
 
-    for (auto &v : V)
-        s.insert(v.getCoord());
-
-    for (auto x : s)
-        points.push_back(x);
-
-    sort(points.begin(), points.end());
-
+    sort(V.begin(), V.end(), custom_sorter);
     float median;
 
-    if (points.size() & 1)
+    int x = V.size() / 2;
+    median = V[x].getCoord();
+
+    for (int i = 0; i < x; i++)
     {
-        int x = points.size() / 2;
-        median = points[x];
-    }
-    else
-    {
-        int x = points.size() / 2;
-        int y = x - 1;
-        median = (points[x] + points[y]) / 2;
+        V1.push_back(V[i]);
     }
 
-    set<float> temp;
-
-    for (auto &v : V)
+    for (int i = x; i < V.size(); i++)
     {
-
-        if (v.getCoord() < median)
-        {
-            V1.push_back(v);
-        }
-        else
-        {
-            V2.push_back(v);
-        }
-    }
-
-    if (V1.size() == 0 and V2.size() >= 2)
-    {
-        V1.push_back(V2[0]);
-        V2.erase(V2.begin());
+        V2.push_back(V[i]);
     }
 
     return median;
@@ -218,7 +225,10 @@ vector<Stripe> isorect::copy1(vector<Stripe> *S, vector<float> *P, Interval I)
         {
             if (properSubset1(stripeDash.getYInterval(), stripe.getYInterval()))
             {
-                stripeDash.setXunion(stripe.x_union);
+                if(stripe.x_union < 1e9) {
+                    stripeDash.setXunion(stripe.x_union);
+                    break;
+                }
             }
         }
     }
@@ -237,8 +247,10 @@ void isorect::blacken1(vector<Stripe> *S, vector<Interval> *J)
             if (properSubset1(stripe.getYInterval(), interval))
             {
                 float temp = stripe.getXInterval().getTop() - stripe.getXInterval().getBottom();
-                stripe.setXunion(temp);
-                break;
+                if(temp <1e9) {
+                    stripe.setXunion(temp);
+                    break;
+                }
             }
         }
     }
@@ -295,10 +307,6 @@ void isorect::Stripes1(vector<Edge> V, Interval x_ext, vector<Interval> *L, vect
     if (V.size() == 1)
     {
         Edge edge = V[0];
-        (*L).clear();
-        (*R).clear();
-        (*P).clear();
-        (*S).clear();
 
         if (edge.getEdgeType() == "left")
         {
@@ -386,7 +394,7 @@ void isorect::Stripes1(vector<Edge> V, Interval x_ext, vector<Interval> *L, vect
 /// Stripes function is called and stripes are returned
 vector<Stripe> isorect::RectangleDAC1(vector<Rectangle> rect)
 {
-    ///< 
+    ///<
     vector<Edge> V;
     vector<Stripe> S;
     vector<float> P;
