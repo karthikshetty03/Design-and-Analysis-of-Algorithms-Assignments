@@ -47,9 +47,6 @@ vector<Interval> Contour::stripeIntervals(StripePrime s)
     this->TreeCoords.clear();
     inorder(s.tree);
     vector<Interval> intervals = makeIntervals();
-    //cout <<"INTERVALS: "<<this->TreeCoords.size()<<endl;
-    //for(auto x : intervals)
-    //    cout << x.getBottom() <<" "<<x.getTop()<<endl;
     return intervals;
 }
 
@@ -88,8 +85,6 @@ vector<Edge> Contour::contour_pieces(Edge h, vector<StripePrime> &S)
 
     float bottom = h.getInterval().getBottom();
     float top = h.getInterval().getTop();
-
-    //cout <<h.getCoord()<<": "<<bottom<<" "<<top<<endl;
 
     ///< Intersection with the edge
     for (auto x : intervals)
@@ -157,10 +152,8 @@ vector<Edge> Contour::contour_pieces(Edge h, vector<StripePrime> &S)
     }
 
     vector<Edge> edges;
-    //cout << "FINANS"<<endl;
     for (auto x : finAns)
     {
-        //cout << x.getBottom() <<" "<< x.getTop()<<endl;
         Edge *edge = new Edge(x, h.getCoord(), "undef");
         edges.push_back(*edge);
     }
@@ -300,10 +293,23 @@ void Contour::setP(vector<float> &P, vector<float> P1, vector<float> P2)
         P.push_back(p);
 }
 
-float Contour::findMedianCoord(vector<Edge> V, vector<Edge> &V1, vector<Edge> &V2)
+bool cmp1(Edge a, Edge b)
 {
+    if (a.getCoord() == b.getCoord())
+    {
+        return a.getEdgeType() == "left";
+    }
+    return a.getCoord() < b.getCoord();
+}
+
+/// function to calculate median of edge sets V1 and V2
+float Contour::findMedianCoord(vector<Edge> &V, vector<Edge> &V1, vector<Edge> &V2)
+{
+    ///<
     vector<float> points;
     set<float> s;
+
+    sort(V.begin(), V.end(), cmp1);
 
     for (auto &v : V)
         s.insert(v.getCoord());
@@ -348,6 +354,17 @@ float Contour::findMedianCoord(vector<Edge> V, vector<Edge> &V1, vector<Edge> &V
         V2.erase(V2.begin());
     }
 
+    // float median;
+    // sort(V.begin(), V.end(), cmp1);
+    // int ind = V.size()/2;
+    // median = V[ind].getCoord();
+
+    // for(int i = 0; i < ind; i++) {
+    //     V1.push_back(V[i]);
+    // }
+    // for(int i = ind; i < V.size(); i++)
+    //     V2.push_back(V[i]);
+
     return median;
 }
 
@@ -378,10 +395,8 @@ vector<StripePrime> Contour::copy(vector<StripePrime> &S, vector<float> &P, Inte
         {
             if (properSubset(stripeDash.getYInterval(), stripe.getYInterval()))
             {
-                if(stripe.tree and stripe.tree->edgeType != "undef") {
-                    stripeDash.setTree(stripe.tree);
-                    break;
-                }
+                stripeDash.setTree(stripe.tree);
+                break;
             }
         }
     }
@@ -401,6 +416,7 @@ void Contour::blacken(vector<StripePrime> &S, vector<Interval> &J)
             {
                 ctree *tree = NULL;
                 stripe.setTree(tree);
+                break;
             }
         }
     }
@@ -431,6 +447,7 @@ vector<StripePrime> Contour::concat(vector<StripePrime> &S1, vector<StripePrime>
                 s1.getYInterval().getTop() == stripeDash.getYInterval().getTop())
             {
                 s1Dash = &s1;
+                break;
             }
         }
 
@@ -440,6 +457,7 @@ vector<StripePrime> Contour::concat(vector<StripePrime> &S1, vector<StripePrime>
                 s2.getYInterval().getTop() == stripeDash.getYInterval().getTop())
             {
                 s2Dash = &s2;
+                break;
             }
         }
 
@@ -472,6 +490,10 @@ void Contour::Stripes(vector<Edge> &V, Interval x_ext, vector<Interval> &L, vect
     if (V.size() == 1)
     {
         Edge edge = V[0];
+        L.clear();
+        R.clear();
+        P.clear();
+        S.clear();
 
         if (edge.getEdgeType() == "left")
         {
@@ -516,7 +538,6 @@ void Contour::Stripes(vector<Edge> &V, Interval x_ext, vector<Interval> &L, vect
                 }
 
                 S[i].setTree(tree);
-                break;
             }
         }
     }
@@ -602,7 +623,7 @@ map<int, vector<Interval>> Contour::RectangleDAC2(vector<Rectangle> rect)
         stripeContours[x.getCoord()].push_back(x);
     }
 
-    for (auto &x : stripeContours)
+    for (auto x : stripeContours)
     {
         sort(x.second.begin(), x.second.end(), [](auto &lhs, auto &rhs) {
             if (lhs.getInterval().getBottom() == rhs.getInterval().getBottom())
@@ -635,14 +656,6 @@ map<int, vector<Interval>> Contour::RectangleDAC2(vector<Rectangle> rect)
         ans.push_back(*temp);
 
         newStripeContours[x.first] = ans;
-    }
-
-    for (auto x : newStripeContours)
-    {
-        cout << "<--- Stripe " << x.first << " --->" << endl;
-        for (auto y : x.second)
-            cout << y.getBottom() << " " << y.getTop() << endl;
-        cout << endl;
     }
 
     return newStripeContours;
