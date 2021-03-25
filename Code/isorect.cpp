@@ -247,7 +247,7 @@ void isorect::blacken1(vector<Stripe> *S, vector<Interval> *J)
             if (properSubset1(stripe.getYInterval(), interval))
             {
                 float temp = stripe.getXInterval().getTop() - stripe.getXInterval().getBottom();
-                if(temp <1e9) {
+                if(temp < 1e9) {
                     stripe.setXunion(temp);
                     break;
                 }

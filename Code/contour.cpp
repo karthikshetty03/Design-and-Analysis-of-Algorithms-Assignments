@@ -300,40 +300,52 @@ void Contour::setP(vector<float> &P, vector<float> P1, vector<float> P2)
         P.push_back(p);
 }
 
-bool custom_sorter1(Edge &lhs, Edge &rhs)
-{
-    if (lhs.getCoord() == rhs.getCoord())
-    {
-        if (lhs.getEdgeType() == "left")
-            return true;
-        else
-            return false;
-    }
-
-    return lhs.getCoord() < rhs.getCoord();
-}
-
-/// function to calculate median of edge sets V1 and V2
 float Contour::findMedianCoord(vector<Edge> V, vector<Edge> &V1, vector<Edge> &V2)
 {
-    ///<
-    V1.clear();
-    V2.clear();
+    vector<float> points;
+    set<float> s;
 
-    sort(V.begin(), V.end(), custom_sorter1);
+    for (auto &v : V)
+        s.insert(v.getCoord());
+
+    for (auto x : s)
+        points.push_back(x);
+
+    sort(points.begin(), points.end());
+
     float median;
 
-    int x = V.size() / 2;
-    median = V[x].getCoord();
-
-    for (int i = 0; i < x; i++)
+    if (points.size() & 1)
     {
-        V1.push_back(V[i]);
+        int x = points.size() / 2;
+        median = points[x];
+    }
+    else
+    {
+        int x = points.size() / 2;
+        int y = x - 1;
+        median = (points[x] + points[y]) / 2;
     }
 
-    for (int i = x; i < V.size(); i++)
+    set<float> temp;
+
+    for (auto &v : V)
     {
-        V2.push_back(V[i]);
+
+        if (v.getCoord() < median)
+        {
+            V1.push_back(v);
+        }
+        else
+        {
+            V2.push_back(v);
+        }
+    }
+
+    if (V1.size() == 0 and V2.size() >= 2)
+    {
+        V1.push_back(V2[0]);
+        V2.erase(V2.begin());
     }
 
     return median;
@@ -366,7 +378,7 @@ vector<StripePrime> Contour::copy(vector<StripePrime> &S, vector<float> &P, Inte
         {
             if (properSubset(stripeDash.getYInterval(), stripe.getYInterval()))
             {
-                if(stripe.tree) {
+                if(stripe.tree and stripe.tree->edgeType != "undef") {
                     stripeDash.setTree(stripe.tree);
                     break;
                 }
@@ -419,7 +431,6 @@ vector<StripePrime> Contour::concat(vector<StripePrime> &S1, vector<StripePrime>
                 s1.getYInterval().getTop() == stripeDash.getYInterval().getTop())
             {
                 s1Dash = &s1;
-                break;
             }
         }
 
@@ -429,7 +440,6 @@ vector<StripePrime> Contour::concat(vector<StripePrime> &S1, vector<StripePrime>
                 s2.getYInterval().getTop() == stripeDash.getYInterval().getTop())
             {
                 s2Dash = &s2;
-                break;
             }
         }
 
@@ -506,6 +516,7 @@ void Contour::Stripes(vector<Edge> &V, Interval x_ext, vector<Interval> &L, vect
                 }
 
                 S[i].setTree(tree);
+                break;
             }
         }
     }
