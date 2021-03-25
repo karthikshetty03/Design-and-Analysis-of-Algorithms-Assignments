@@ -20,7 +20,6 @@ void Contour::inorder(ctree *tree)
 ///Make intervals of coordinates in vector TreeCoords
 vector<Interval> Contour::makeIntervals()
 {
-    ///<
     vector<Interval> intervals;
     Interval *interval;
 
