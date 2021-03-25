@@ -658,5 +658,13 @@ map<int, vector<Interval>> Contour::RectangleDAC2(vector<Rectangle> rect)
         newStripeContours[x.first] = ans;
     }
 
+    for (auto x : newStripeContours)
+    {
+        cout << "<--- Stripe " << x.first << " --->" << endl;
+        for (auto y : x.second)
+            cout << y.getBottom() << " " << y.getTop() << endl;
+        cout << endl;
+    }
+
     return newStripeContours;
 }
