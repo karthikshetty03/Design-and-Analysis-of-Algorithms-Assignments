@@ -79,7 +79,7 @@ int main(int argc, char **argv)
     my_file1.close();
 
     ///< Part 1: Calculate Measure
-    isorect* isorectObject = new isorect();
+    isorect *isorectObject = new isorect();
     stripes = isorectObject->RectangleDAC1(rectangles);
     printStripes(stripes);
 
