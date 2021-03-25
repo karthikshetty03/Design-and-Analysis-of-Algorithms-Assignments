@@ -140,7 +140,6 @@ void isorect::setP1(vector<float> *P, vector<float> P1, vector<float> P2)
 
 bool cmp(Edge a, Edge b)
 {
- 
     return a.getCoord() < b.getCoord();
 }
 
