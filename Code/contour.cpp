@@ -6,7 +6,6 @@ using namespace std;
 ///Tree traversall to find leaf node coords
 void Contour::inorder(ctree *tree)
 {
-    ///<
     if (!tree)
         return;
 
