@@ -28,7 +28,7 @@ Be sure to include as much detail as possible including step-by-step description
 
 1. Firstly you have to make your own copy of project. For that you have to fork the repository. You can find the fork button on the top-right side of the browser window. (Refer image below )
 2. Kindly wait till it gets forked.
-3. After that copy will look like `<your-user-name>/edu-client` forked from `karthikshetty03/DAA-Assignments`.
+3. After that copy will look like `<your-user-name>/Design-and-Analysis-of-Algorithms-Assignments` forked from `karthikshetty03/DAA-Assignments`.
    <img src="./doc/images/fork.png" alt="Demo fork image" align="center"/>
 
 ### 🚩 Clone repository :
