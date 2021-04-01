@@ -77,3 +77,5 @@ By this time you can see a message on your github fork as `your fork is ahead of
 
 1. Click on `Compare and pull request` 
 2. Describe the changes and Click on `Pull request`
+
+### Maintainers @karthikshetty03 and @AbhirathS will review the PR and request for changes if any, else merge it successfully!
