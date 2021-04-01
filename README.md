@@ -2,5 +2,5 @@
 
 ### Show the visualization of rectangles and its contour using matplotlib
 
-### Want to COntribute?
+### Want to Contribute?
 See [CONTRIBUTING.md](https://github.com/karthikshetty03/Design-and-Analysis-of-Algorithms-Assignments/blob/main/CONTRIBUTING.md) for guidelines to contribute.
