@@ -1,5 +1,9 @@
 import matplotlib.pyplot as plt
 
+my_file = open("title.txt", "r")
+content = my_file.read()
+plt.title(content)
+
 my_file = open("segments.txt", "r")
 content = my_file.read()
 content_rect = content.split("\n")

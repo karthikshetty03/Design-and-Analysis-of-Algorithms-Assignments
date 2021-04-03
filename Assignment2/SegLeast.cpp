@@ -1,21 +1,4 @@
-/*
- Petar 'PetarV' Velickovic
- Algorithm: Segmented Least Squares (Microchallenge)
-*/
-
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
-#include <iostream>
-#include <vector>
-#include <list>
-#include <string>
-#include <algorithm>
-#include <queue>
-#include <stack>
-#include <set>
-#include <map>
-#include <complex>
+#include <bits/stdc++.h>
 #define MAX_N 501
 using namespace std;
 typedef long long lld;
@@ -38,7 +21,7 @@ int n = 1, c;
 struct Point
 {
     int x, y;
-    bool operator <(const Point &p) const
+    bool operator<(const Point &p) const
     {
         return (x < p.x);
     }
@@ -46,13 +29,13 @@ struct Point
 Point pts[MAX_N];
 
 double err[MAX_N][MAX_N]; //err[i][j] - total error by approximating points [i..j] by a segment
-double a[MAX_N][MAX_N]; //a[i][j] - the slope of the segment used to approximate points [i..j]
-double b[MAX_N][MAX_N]; //b[i][j] - the y-intercept of the segment used to approximate points [i..j]
+double a[MAX_N][MAX_N];   //a[i][j] - the slope of the segment used to approximate points [i..j]
+double b[MAX_N][MAX_N];   //b[i][j] - the y-intercept of the segment used to approximate points [i..j]
 
 int xySums[MAX_N], xSums[MAX_N], ySums[MAX_N], xSqrSums[MAX_N], ySqrSums[MAX_N]; //prefix sums for x_i * y_i, x_i, y_i, x_i * x_i and y_i * y_i
 
 double minCost[MAX_N]; //minCost[j] - optimal cost for points [1..j]
-int retIndex[MAX_N]; //the last segment in the optimal case for points [1..j] is [retIndex[j], j]
+int retIndex[MAX_N];   //the last segment in the optimal case for points [1..j] is [retIndex[j], j]
 
 struct Segment
 {
@@ -156,14 +139,33 @@ inline void getSegments()
 
 int main(int argc, char **argv)
 {
-    sscanf(argv[1], "%d", &c);
+    cout << "Enter number of rectangles\n";
+    cin >> c;
     freopen("input.txt", "r", stdin);
-    while (scanf("%d%d", &pts[n].x, &pts[n].y) == 2) n++;
+    while (scanf("%d%d", &pts[n].x, &pts[n].y) == 2)
+        n++;
     n--;
     Precalculate();
-    printf("%.10lf\n", SegmentedLeastSquares());
+    float ans = SegmentedLeastSquares();
+    printf("Penalty: %.10lf\n", ans);
+
+    fstream my_file2;
+    my_file2.open("title.txt", ios::out);
+
+    ///< write measure to a file
+    if (!my_file2)
+    {
+        cout << "File not created!";
+    }
+    else
+    {
+        my_file2 << endl;
+        my_file2 << "Penalty : " << ans << ans;
+    }
+
     freopen("segments.txt", "w", stdout);
     getSegments();
+
     for (int i = 0; i < ret.size(); i++)
     {
         printf("%d %d %d %d\n", (int)ret[i].x1, (int)ret[i].y1, (int)ret[i].x2, (int)ret[i].y2);
