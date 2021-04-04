@@ -141,18 +141,34 @@ int main(int argc, char **argv)
 {
     cout << "Enter number of rectangles\n";
     cin >> c;
+    cout <<"Enter "<<c<<" points in the format x y in next "<<c<<" lines."<<endl;
+    
+    fstream my_file1;
+    my_file1.open("input.txt", ios::out);
+    int x, y;
+
+    if (!my_file1)
+    {
+        cout << "File not created!";
+    }
+    else
+    {
+        for(int i = 0; i < c; i++) {
+            cin >> x >> y;
+            my_file1 << x <<" "<< y << endl;
+        }
+    }
     freopen("input.txt", "r", stdin);
     while (scanf("%d%d", &pts[n].x, &pts[n].y) == 2)
         n++;
     n--;
     Precalculate();
-    float ans = SegmentedLeastSquares();
+    double ans = SegmentedLeastSquares();
     printf("Penalty: %.10lf\n", ans);
 
     fstream my_file2;
     my_file2.open("title.txt", ios::out);
 
-    ///< write measure to a file
     if (!my_file2)
     {
         cout << "File not created!";
@@ -160,7 +176,7 @@ int main(int argc, char **argv)
     else
     {
         my_file2 << endl;
-        my_file2 << "Penalty : " << ans << ans;
+        my_file2 << "Penalty : " << ans << endl;
     }
 
     freopen("segments.txt", "w", stdout);
