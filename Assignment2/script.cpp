@@ -15,5 +15,6 @@ int main() {
 			out << x << " " << y << endl;
 		}
 	}
+	
 	return 0;
 }
