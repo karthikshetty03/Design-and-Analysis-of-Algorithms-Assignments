@@ -1,23 +1,33 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define N_MAXI 2000
+#define LIMIT_VAL 2000
 #define infi numeric_limits<double>::infinity()
 
+/// <Definiton of Point data structure
 struct Point
 {
 	double x, y;
+
 	bool operator<(const Point &m) const
 	{
 		return x < m.x;
 	}
 };
 
-struct Point pts[N_MAXI + 1];
+stack<int> seg;
+struct Point pts[LIMIT_VAL + 1];
+int num, i = 1, j = 1, k = 1, gap;
 double sum_x, sum_y, sum_xy, sum_x_sqr, numr, denr, temp, mini, C;
-vector<double> X(N_MAXI + 1), Y(N_MAXI + 1), XY(N_MAXI + 1), X_sqr(N_MAXI + 1), optimum(N_MAXI + 1), seg_opti(N_MAXI + 1);
-vector<vector<double>> slope(N_MAXI + 1, vector<double>(N_MAXI + 1)), intercept(N_MAXI + 1, vector<double>(N_MAXI + 1)), error(N_MAXI + 1, vector<double>(N_MAXI + 1));
 
+vector<double> X(LIMIT_VAL + 1), Y(LIMIT_VAL + 1), XY(LIMIT_VAL + 1), X_sqr(LIMIT_VAL + 1);
+vector<double> optimum(LIMIT_VAL + 1), seg_opti(LIMIT_VAL + 1);
+
+vector<vector<double>> slope(LIMIT_VAL + 1, vector<double>(LIMIT_VAL + 1));
+vector<vector<double>> intercept(LIMIT_VAL + 1, vector<double>(LIMIT_VAL + 1));
+vector<vector<double>> error(LIMIT_VAL + 1, vector<double>(LIMIT_VAL + 1));
+
+/// <helper function to initialize values
 void init()
 {
 	X[0] = 0;
@@ -26,6 +36,7 @@ void init()
 	X_sqr[0] = 0;
 }
 
+/// <helper function to update values in X, Y, Xy and X_sqr
 void XYInitializer(int i, int j)
 {
 	X[j] = X[j - 1] + pts[j].x;
@@ -34,6 +45,7 @@ void XYInitializer(int i, int j)
 	X_sqr[j] = X_sqr[j - 1] + pts[j].x * pts[j].x;
 }
 
+/// <helper function to updare sum_x, sum_y, sum_xy, sum_x_sqr
 void sumInitializer(int i, int j)
 {
 	sum_x = X[j] - X[i - 1];
@@ -42,9 +54,9 @@ void sumInitializer(int i, int j)
 	sum_x_sqr = X_sqr[j] - X_sqr[i - 1];
 }
 
+/// <driver code
 int main()
 {
-	int num, i = 1, j = 1, k = 1, gap;
 	cout << "Enter 1 for manual input, 2 to run input script\n";
 	int inp;
 	cin >> inp;
@@ -71,7 +83,7 @@ int main()
 			i++;
 		}
 	}
-	else
+	else ///<Manual input
 	{
 		opp.open("points.txt");
 		double x, y;
@@ -92,6 +104,7 @@ int main()
 	cout << "Enter the cost of creating a new segment : ";
 	cin >> C;
 
+	/// <Sort points
 	sort(pts + 1, pts + num + 1);
 	init();
 
@@ -106,18 +119,12 @@ int main()
 			sumInitializer(i, j);
 			numr = gap * sum_xy - sum_x * sum_y;
 
-			if (numr != 0)
-			{
-				denr = gap * sum_x_sqr - sum_x * sum_x;
-				if (denr != 0)
-					slope[i][j] = (numr / double(denr));
-				else
-					slope[i][j] == infi;
-			}
-			else
-				slope[i][j] = 0.0;
+			(numr != 0) ? (denr = gap * sum_x_sqr - sum_x * sum_x,
+										 (denr != 0) ? slope[i][j] = (numr / double(denr)) : slope[i][j] == infi)
+									: (slope[i][j] = 0.0);
 
 			intercept[i][j] = (sum_y - slope[i][j] * sum_x) / double(gap);
+
 			k = i;
 			error[i][j] = 0.0;
 			while (k <= j)
@@ -126,8 +133,10 @@ int main()
 				error[i][j] += temp * temp;
 				k++;
 			}
+
 			i++;
 		}
+
 		j++;
 	}
 
@@ -142,11 +151,7 @@ int main()
 		while (i <= j)
 		{
 			temp = error[i][j] + optimum[i - 1];
-			if (temp < mini)
-			{
-				mini = temp;
-				k = i;
-			}
+			(temp < mini) ? (mini = temp, k = i) : 0;
 			i++;
 		}
 		optimum[j] = mini + C;
@@ -162,7 +167,6 @@ int main()
 	title << endl
 				<< "The cost of the optimal solution : " << optimum[num] << endl;
 
-	stack<int> seg;
 	i = num;
 	j = seg_opti[num];
 	while (i > 0)
@@ -175,17 +179,23 @@ int main()
 
 	ofstream op;
 	op.open("segments.txt");
+
 	cout << endl
 			 << "An optimal solution is:" << endl;
 
-	while (!seg.empty())
+	for (; !seg.empty();)
 	{
 		i = seg.top();
 		seg.pop();
 		j = seg.top();
 		seg.pop();
-		cout << "Segment (y = " << slope[i][j] << " * x + " << intercept[i][j] << ") from points " << i << " to " << j << " with square error " << error[i][j] << endl;
+
+		cout << "Segment (y = " << slope[i][j] << " * x + " << intercept[i][j]
+				 << ") from points " << i << " to " << j
+				 << " with square error " << error[i][j] << endl;
+
 		op << pts[i].x << " " << pts[i].y << " " << pts[j].x << " " << pts[j].y << endl;
 	}
+
 	return 0;
 }

@@ -1,2 +1,2 @@
 
-The cost of the optimal solution : 50.0754
+The cost of the optimal solution : 697.961
