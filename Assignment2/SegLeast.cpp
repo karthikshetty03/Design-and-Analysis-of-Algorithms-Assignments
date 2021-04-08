@@ -14,15 +14,38 @@ struct Point
 };
 
 struct Point pts[N_MAXI + 1];
-
+double sum_x, sum_y, sum_xy, sum_x_sqr, numr, denr, temp, mini, C;
 vector<double> X(N_MAXI + 1), Y(N_MAXI + 1), XY(N_MAXI + 1), X_sqr(N_MAXI + 1), optimum(N_MAXI + 1), seg_opti(N_MAXI + 1);
 vector<vector<double>> slope(N_MAXI + 1, vector<double>(N_MAXI + 1)), intercept(N_MAXI + 1, vector<double>(N_MAXI + 1)), error(N_MAXI + 1, vector<double>(N_MAXI + 1));
+
+void init()
+{
+	X[0] = 0;
+	Y[0] = 0;
+	XY[0] = 0;
+	X_sqr[0] = 0;
+}
+
+void XYInitializer(int i, int j)
+{
+	X[j] = X[j - 1] + pts[j].x;
+	Y[j] = Y[j - 1] + pts[j].y;
+	XY[j] = XY[j - 1] + pts[j].x * pts[j].y;
+	X_sqr[j] = X_sqr[j - 1] + pts[j].x * pts[j].x;
+}
+
+void sumInitializer(int i, int j)
+{
+	sum_x = X[j] - X[i - 1];
+	sum_y = Y[j] - Y[i - 1];
+	sum_xy = XY[j] - XY[i - 1];
+	sum_x_sqr = X_sqr[j] - X_sqr[i - 1];
+}
 
 int main()
 {
 	int num, i = 1, j = 1, k = 1, gap;
-	double sum_x, sum_y, sum_xy, sum_x_sqr, numr, denr, temp, mini, C;
-	cout << "ENter 1 for manual input, 2 to run input script\n";
+	cout << "Enter 1 for manual input, 2 to run input script\n";
 	int inp;
 	cin >> inp;
 
@@ -70,27 +93,17 @@ int main()
 	cin >> C;
 
 	sort(pts + 1, pts + num + 1);
-
-	X[0] = 0;
-	Y[0] = 0;
-	XY[0] = 0;
-	X_sqr[0] = 0;
+	init();
 
 	j = 1;
 	while (j <= num)
 	{
-		X[j] = X[j - 1] + pts[j].x;
-		Y[j] = Y[j - 1] + pts[j].y;
-		XY[j] = XY[j - 1] + pts[j].x * pts[j].y;
-		X_sqr[j] = X_sqr[j - 1] + pts[j].x * pts[j].x;
+		XYInitializer(i, j);
 		i = 1;
 		while (i <= j)
 		{
 			gap = j - i + 1;
-			sum_x = X[j] - X[i - 1];
-			sum_y = Y[j] - Y[i - 1];
-			sum_xy = XY[j] - XY[i - 1];
-			sum_x_sqr = X_sqr[j] - X_sqr[i - 1];
+			sumInitializer(i, j);
 			numr = gap * sum_xy - sum_x * sum_y;
 
 			if (numr != 0)
