@@ -1,174 +1,147 @@
-#include <bits/stdc++.h>
-#define MAX_N 501
+#include<bits/stdc++.h>
 using namespace std;
-typedef long long lld;
 
-/*
- Algorithm for calculating the minimal cost of approximating a set of points with segments
+#define N_MAXI 2000
+#define infi numeric_limits<double>::infinity()
 
- The cost of a particular set of segments is calculated as sum(i=1 -> n) E_i + c*L,
- where E_i is the error of the i-th point WRT its segment,
- c the cost of each segment,
- and L the amount of segments used
 
- Input: Set of points (from file) + Cost of each segment (from command line)
- Returns: The minimal cost (to command line) + segments used (to file)
- Complexity: O(n^2) time, O(n^2) memory
-*/
-
-int n = 1, c;
-
-struct Point
+struct Point 
 {
-    int x, y;
-    bool operator<(const Point &p) const
-    {
-        return (x < p.x);
-    }
-};
-Point pts[MAX_N];
+	double x, y;
+	bool operator < (const Point& m) const 
+	{
+		return x < m.x;
+	}
+}; 
 
-double err[MAX_N][MAX_N]; //err[i][j] - total error by approximating points [i..j] by a segment
-double a[MAX_N][MAX_N];   //a[i][j] - the slope of the segment used to approximate points [i..j]
-double b[MAX_N][MAX_N];   //b[i][j] - the y-intercept of the segment used to approximate points [i..j]
+struct Point pts[N_MAXI+1];
 
-int xySums[MAX_N], xSums[MAX_N], ySums[MAX_N], xSqrSums[MAX_N], ySqrSums[MAX_N]; //prefix sums for x_i * y_i, x_i, y_i, x_i * x_i and y_i * y_i
+vector<double> X(N_MAXI+1), Y(N_MAXI+1), XY(N_MAXI+1), X_sqr(N_MAXI+1), optimum(N_MAXI+1), seg_opti(N_MAXI+1);
+vector<vector<double>> slope(N_MAXI+1,vector<double>(N_MAXI+1)), intercept(N_MAXI+1,vector<double>(N_MAXI+1)), error(N_MAXI+1,vector<double>(N_MAXI+1));
 
-double minCost[MAX_N]; //minCost[j] - optimal cost for points [1..j]
-int retIndex[MAX_N];   //the last segment in the optimal case for points [1..j] is [retIndex[j], j]
-
-struct Segment
+int main()	
 {
-    double x1, y1, x2, y2;
-    Segment()
-    {
-        this->x1 = 0;
-        this->y1 = 0;
-        this->x2 = 0;
-        this->y2 = 0;
-    }
-    Segment(double x1, double y1, double x2, double y2)
-    {
-        this->x1 = x1;
-        this->y1 = y1;
-        this->x2 = x2;
-        this->y2 = y2;
-    }
-};
-vector<Segment> ret; //final solution
+	int num, i = 1, j = 1, k = 1, gap;
+	double sum_x, sum_y, sum_xy, sum_x_sqr, numr, denr, temp, mini, C;
+	
+	cout << "Enter the number of points : ";
+	cin >> num;
+	cout << "Enter " << num << " points :" << endl;
+	ifstream ip;
+	ip.open("points.txt");
 
-inline void Precalculate()
-{
-    sort(pts + 1, pts + n + 1); //can be omitted if points are guaranteed to be given in ascending X order
+	while(i <= num)
+	{
+		ip >> pts[i].x >> pts[i].y;
+		i++;
+	}
 
-    for (int i = 1; i <= n; i++)
-    {
-        xSums[i] = xSums[i - 1] + pts[i].x;
-        ySums[i] = ySums[i - 1] + pts[i].y;
-        xSqrSums[i] = xSqrSums[i - 1] + pts[i].x * pts[i].x;
-        xySums[i] = xySums[i - 1] + pts[i].x * pts[i].y;
-        ySqrSums[i] = ySqrSums[i - 1] + pts[i].y * pts[i].y;
-    }
+	i = 1;
+	while(i <= num) 
+	{
+		cout << i << " " << pts[i].x << " " << pts[i].y << endl;
+		i++;
+	}
 
-    for (int i = 1; i <= n; i++)
-    {
-        for (int j = i + 1; j <= n; j++)
-        {
-            int nn = j - i + 1;
-            int xySum = xySums[j] - xySums[i - 1];
-            int xSum = xSums[j] - xSums[i - 1];
-            int ySum = ySums[j] - ySums[i - 1];
-            int xSqrSum = xSqrSums[j] - xSqrSums[i - 1];
-            int ySqrSum = ySqrSums[j] - ySqrSums[i - 1];
+	cout << "Enter the cost of creating a new segment : ";
+	cin >> C;
+	sort (pts+1, pts+num+1);
 
-            a[i][j] = ((nn * xySum - xSum * ySum) * 1.0) / ((nn * xSqrSum - xSum * xSum) * 1.0);
-            b[i][j] = ((ySum - a[i][j] * xSum) * 1.0) / (nn * 1.0);
+	X[0] = 0;
+	Y[0] = 0;
+	XY[0] = 0;
+	X_sqr[0] = 0;
 
-            err[i][j] = a[i][j] * a[i][j] * xSqrSum + 2.0 * a[i][j] * b[i][j] * xSum - 2.0 * a[i][j] * xySum + nn * b[i][j] * b[i][j] - 2.0 * b[i][j] * ySum + ySqrSum;
-        }
-    }
-}
+	j = 1;
+	while(j <= num)	
+	{
+		X[j] = X[j-1] + pts[j].x;
+		Y[j] = Y[j-1] + pts[j].y;
+		XY[j] = XY[j-1] + pts[j].x*pts[j].y;
+		X_sqr[j] = X_sqr[j-1] + pts[j].x*pts[j].x;
+		i = 1;
+		while(i <= j)	
+		{
+			gap = j - i + 1;
+			sum_x = X[j] - X[i-1];
+			sum_y = Y[j] - Y[i-1];
+			sum_xy = XY[j] - XY[i-1];
+			sum_x_sqr = X_sqr[j] - X_sqr[i-1];
+			numr = gap*sum_xy - sum_x*sum_y;
 
-inline double SegmentedLeastSquares()
-{
-    for (int j = 1; j <= n; j++)
-    {
-        minCost[j] = err[1][j] + c;
-        retIndex[j] = 1;
+			if(numr != 0)
+			{
+				denr = gap*sum_x_sqr - sum_x*sum_x;
+				if(denr != 0)
+					slope[i][j] = (numr / double(denr));
+				else
+					slope[i][j] == infi;
+			}
+			else 
+				slope[i][j] = 0.0;
 
-        for (int i = 2; i <= j; i++)
-        {
-            if (minCost[i - 1] + err[i][j] + c < minCost[j])
-            {
-                minCost[j] = minCost[i - 1] + err[i][j] + c;
-                retIndex[j] = i;
-            }
-        }
-    }
+            intercept[i][j] = (sum_y - slope[i][j]*sum_x) / double(gap);
+			k = i;
+			error[i][j] = 0.0;
+           	while(k <= j)	
+			{
+            	temp = pts[k].y - slope[i][j]*pts[k].x - intercept[i][j];
+            	error[i][j] += temp*temp;
+				k++;
+    		}
+			i++;
+		}
+		j++;
+	}
 
-    return minCost[n];
-}
+	optimum[0] = 0;
+	seg_opti[0] = 0;
+	j = 1;
+	while(j <= num)	
+	{
+		i = 1;
+		mini = infi;
+		k = 0;
+		while(i <= j)	
+		{
+			temp = error[i][j] + optimum[i-1];
+			if(temp < mini)	
+			{
+				mini = temp;
+				k = i;
+			}
+			i++;
+		}
+		optimum[j] = mini + C;
+		seg_opti[j] = k;
+		j++;
+	}
 
-inline void getSegments()
-{
-    stack<Segment> S;
-    int currInd = n;
-    while (currInd > 1)
-    {
-        int nextInd = retIndex[currInd];
-        if (nextInd == currInd)
-        {
-            S.push(Segment(pts[currInd - 1].x, pts[currInd - 1].y, pts[currInd].x, pts[currInd].y));
-        }
-        else
-        {
-            double x1 = pts[nextInd].x;
-            double y1 = x1 * a[nextInd][currInd] + b[nextInd][currInd];
-            double x2 = pts[currInd].x;
-            double y2 = x2 * a[nextInd][currInd] + b[nextInd][currInd];
-            S.push(Segment(x1, y1, x2, y2));
-        }
-        currInd = nextInd - 1;
-    }
-    while (!S.empty())
-    {
-        ret.push_back(S.top());
-        S.pop();
-    }
-}
+	cout << endl << "Enter the cost of the optimal solution : " << optimum[num] << endl;
 
-int main(int argc, char **argv)
-{
-    cout << "Enter number of rectangles\n";
-    cin >> c;
-    freopen("input.txt", "r", stdin);
-    while (scanf("%d%d", &pts[n].x, &pts[n].y) == 2)
-        n++;
-    n--;
-    Precalculate();
-    float ans = SegmentedLeastSquares();
-    printf("Penalty: %.10lf\n", ans);
+	stack<int> seg;
+	i = num;
+	j = seg_opti[num];
+	while(i > 0)	
+	{
+		seg.push(i);
+		seg.push(j);
+		i = j-1;
+		j = seg_opti[i];
+	}
 
-    fstream my_file2;
-    my_file2.open("title.txt", ios::out);
+	ofstream op;
+	op.open("ans.txt");
+	cout << endl << "An optimal solution is:" << endl;
 
-    ///< write measure to a file
-    if (!my_file2)
-    {
-        cout << "File not created!";
-    }
-    else
-    {
-        my_file2 << endl;
-        my_file2 << "Penalty : " << ans << ans;
-    }
-
-    freopen("segments.txt", "w", stdout);
-    getSegments();
-
-    for (int i = 0; i < ret.size(); i++)
-    {
-        printf("%d %d %d %d\n", (int)ret[i].x1, (int)ret[i].y1, (int)ret[i].x2, (int)ret[i].y2);
-    }
-    return 0;
+	while(!seg.empty())	
+	{
+		i = seg.top(); 
+		seg.pop();
+		j = seg.top(); 
+		seg.pop();
+		cout << "Segment (y = " << slope[i][j] << " * x + " << intercept[i][j] << ") from points " << i << " to " << j << " with square error " << error[i][j] << endl;
+		op << pts[i].x << " " << pts[i].y << " " << pts[j].x << " " << pts[j].y << endl;
+	}
+	return 0;
 }
