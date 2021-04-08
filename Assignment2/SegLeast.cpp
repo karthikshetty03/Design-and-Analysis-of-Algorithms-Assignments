@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define LIMIT_VAL 2000
+#define LIMIT_VAL 10000
 #define infi numeric_limits<double>::infinity()
 
 /// <Definiton of Point data structure
@@ -39,19 +39,33 @@ void init()
 /// <helper function to update values in X, Y, Xy and X_sqr
 void XYInitializer(int i, int j)
 {
-	X[j] = X[j - 1] + pts[j].x;
-	Y[j] = Y[j - 1] + pts[j].y;
-	XY[j] = XY[j - 1] + pts[j].x * pts[j].y;
-	X_sqr[j] = X_sqr[j - 1] + pts[j].x * pts[j].x;
+	X[j] = X[j - 1];
+	X[j] += pts[j].x;
+
+	Y[j] = Y[j - 1];
+	Y[j] += pts[j].y;
+
+	XY[j] = XY[j - 1];
+	XY[j] += pts[j].x * pts[j].y;
+
+	X_sqr[j] = X_sqr[j - 1];
+	X_sqr[j] += pts[j].x * pts[j].x;
 }
 
 /// <helper function to updare sum_x, sum_y, sum_xy, sum_x_sqr
 void sumInitializer(int i, int j)
 {
-	sum_x = X[j] - X[i - 1];
-	sum_y = Y[j] - Y[i - 1];
-	sum_xy = XY[j] - XY[i - 1];
-	sum_x_sqr = X_sqr[j] - X_sqr[i - 1];
+	sum_x = X[j];
+	sum_x -= X[i - 1];
+
+	sum_y = Y[j];
+	sum_y -= Y[i - 1];
+
+	sum_xy = XY[j];
+	sum_xy -= XY[i - 1];
+
+	sum_x_sqr = X_sqr[j];
+	sum_x_sqr -= X_sqr[i - 1];
 }
 
 /// <driver code
