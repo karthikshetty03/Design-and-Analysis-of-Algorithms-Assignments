@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 # my_file = open("title.txt", "r")
 # content = my_file.read()
@@ -25,7 +26,7 @@ content = my_file.read()
 content_rect = content.split("\n")
 
 i = 0
-a = []
+del lines[len(lines) - 1]
 
 while i < len(content_rect) - 1:
     x1, y1 = content_rect[i].split(" ")
