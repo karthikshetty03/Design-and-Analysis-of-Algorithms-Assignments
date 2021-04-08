@@ -11,7 +11,7 @@ fin = file1.read()
 lines = fin.split("\n")
 a = points.split("\n")
 
-i = 0
+i = 1
 while i < len(a) - 1:
     x, y = a[i].split(" ")
     x = float(x)

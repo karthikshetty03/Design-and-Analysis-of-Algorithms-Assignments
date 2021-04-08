@@ -22,28 +22,53 @@ int main()
 {
 	int num, i = 1, j = 1, k = 1, gap;
 	double sum_x, sum_y, sum_xy, sum_x_sqr, numr, denr, temp, mini, C;
+	cout << "ENter 1 for manual input, 2 to run input script\n";
+	int inp;
+	cin >> inp;
 
-	cout << "Enter the number of points : ";
-	cin >> num;
-	cout << "Enter " << num << " points :" << endl;
 	ifstream ip;
-	ip.open("points.txt");
+	ofstream opp;
 
-	while (i <= num)
+	/// <Input through script
+	if (inp == 2)
 	{
-		ip >> pts[i].x >> pts[i].y;
-		i++;
+		ip.open("points.txt");
+		ip >> num;
+		cout << num << " points:" << endl;
+		while (i <= num)
+		{
+			ip >> pts[i].x >> pts[i].y;
+			i++;
+		}
+
+		i = 1;
+		while (i <= num)
+		{
+			cout << pts[i].x << " " << pts[i].y << endl;
+			i++;
+		}
 	}
-
-	i = 1;
-	while (i <= num)
+	else
 	{
-		cout << i << " " << pts[i].x << " " << pts[i].y << endl;
-		i++;
+		opp.open("points.txt");
+		double x, y;
+		cout << "Enter the number of points : ";
+		cin >> num;
+		opp << num << endl;
+		cout << "Enter " << num << " points :" << endl;
+
+		for (int i = 1; i <= num; i++)
+		{
+			cin >> x >> y;
+			pts[i].x = x;
+			pts[i].y = y;
+			opp << x << " " << y << endl;
+		}
 	}
 
 	cout << "Enter the cost of creating a new segment : ";
 	cin >> C;
+
 	sort(pts + 1, pts + num + 1);
 
 	X[0] = 0;
@@ -122,7 +147,7 @@ int main()
 	cout << endl
 			 << "The cost of the optimal solution : " << optimum[num] << endl;
 	title << endl
-			 << "The cost of the optimal solution : " << optimum[num] << endl;
+				<< "The cost of the optimal solution : " << optimum[num] << endl;
 
 	stack<int> seg;
 	i = num;

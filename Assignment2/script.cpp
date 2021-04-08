@@ -6,6 +6,9 @@ int main() {
 	out.open("points.txt");
 	int n;
 	cin >> n;
+	int val = n*5;
+	cout << "Script generated "<<val<<" points succesfully!"<<endl;
+	out << val << endl;
 	int m = 1;
 	int k = 0;
 	for(int i = 0; i < n; i++) {
