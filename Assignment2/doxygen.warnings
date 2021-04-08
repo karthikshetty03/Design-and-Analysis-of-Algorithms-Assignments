@@ -1,0 +1,5 @@
+warning: source src/googleapis is not a readable file or directory... skipping.
+warning: source src/googleapis/client is not a readable file or directory... skipping.
+warning: source src/googleapis/strings/stringpiece.h is not a readable file or directory... skipping.
+warning: source src/googleapis/util/status.h is not a readable file or directory... skipping.
+warning: source src/googleapis/util/executor.h is not a readable file or directory... skipping.

@@ -1,4 +1,4 @@
-/**
+/*
  * Code to implement the line fitting dynamic programming algorithm
  * 
  * 
@@ -24,7 +24,7 @@
  * Time Complexity : O(N2)
  * Space Complexity: O(N2)
  * 
- *  /
+ */
 
 
 #include <bits/stdc++.h>
@@ -33,7 +33,7 @@ using namespace std;
 #define LIMIT_VAL 10000
 #define infi numeric_limits<double>::infinity()
 
-/// <Definiton of Point data structure
+///< Definiton of Point data structure
 struct Point
 {
 	double x, y;
@@ -56,7 +56,7 @@ vector<vector<double>> slope(LIMIT_VAL + 1, vector<double>(LIMIT_VAL + 1));
 vector<vector<double>> intercept(LIMIT_VAL + 1, vector<double>(LIMIT_VAL + 1));
 vector<vector<double>> error(LIMIT_VAL + 1, vector<double>(LIMIT_VAL + 1));
 
-/// <helper function to initialize values
+///< helper function to initialize values
 void init()
 {
 	X[0] = 0;
@@ -65,7 +65,7 @@ void init()
 	X_sqr[0] = 0;
 }
 
-/// <helper function to update values in X, Y, Xy and X_sqr
+///< helper function to update values in X, Y, Xy and X_sqr
 void XYInitializer(int i, int j)
 {
 	X[j] = X[j - 1];
@@ -81,7 +81,7 @@ void XYInitializer(int i, int j)
 	X_sqr[j] += pts[j].x * pts[j].x;
 }
 
-/// <helper function to updare sum_x, sum_y, sum_xy, sum_x_sqr
+///< helper function to updare sum_x, sum_y, sum_xy, sum_x_sqr
 void sumInitializer(int i, int j)
 {
 	sum_x = X[j];
@@ -97,7 +97,7 @@ void sumInitializer(int i, int j)
 	sum_x_sqr -= X_sqr[i - 1];
 }
 
-/// <driver code
+///< driver code
 int main()
 {
 	cout << "Enter 1 for manual input, 2 to run input script\n";
@@ -107,7 +107,7 @@ int main()
 	ifstream ip;
 	ofstream opp;
 
-	/// <Input through script
+	///< Input through script
 	if (inp == 2)
 	{
 		ip.open("points.txt");
@@ -147,7 +147,7 @@ int main()
 	cout << "Enter the cost of creating a new segment : ";
 	cin >> C;
 
-	/// <Sort points
+	///< Sort points
 	sort(pts + 1, pts + num + 1);
 	init();
 
