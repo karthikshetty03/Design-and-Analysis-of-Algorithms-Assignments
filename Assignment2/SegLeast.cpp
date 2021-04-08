@@ -26,8 +26,8 @@
  * 
  */
 
-
 #include <bits/stdc++.h>
+#include <sys/resource.h>
 using namespace std;
 
 #define LIMIT_VAL 10000
@@ -98,8 +98,9 @@ void sumInitializer(int i, int j)
 }
 
 ///< driver code
-int main()
+int32_t main()
 {
+	struct rusage r_usage;
 	cout << "Enter 1 for manual input, 2 to run input script\n";
 	int inp;
 	cin >> inp;
@@ -147,6 +148,7 @@ int main()
 	cout << "Enter the cost of creating a new segment : ";
 	cin >> C;
 
+	clock_t start = clock();
 	///< Sort points
 	sort(pts + 1, pts + num + 1);
 	init();
@@ -243,6 +245,12 @@ int main()
 
 		op << pts[i].x << " " << pts[i].y << " " << pts[j].x << " " << pts[j].y << endl;
 	}
+
+	cout << "Time taken by algorithm is " << double(clock() - start) / (double)CLOCKS_PER_SEC << " seconds." << endl;
+	int ret = getrusage(RUSAGE_SELF, &r_usage);
+
+	if (ret == 0)
+		printf("Memory usage: %ld kilobytes\n", r_usage.ru_maxrss);
 
 	return 0;
 }

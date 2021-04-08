@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Segmented Least Squares Algorithm</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="doc.css">
+</head>
+
+<body>
+  <h2>
+    Group Memebers:<br/>
+
+    <ul>
+
+      <li>
+        Shetty Karthik Ravindra - 2018A7PS0141H
+
+      </li>
+      <li>
+        Abhirath Singh - 2018A7PS0521H
+
+      </li>
+      <li>
+        Koustubh Sharma - 2018A7PS0114H
+
+      </li>
+      <li>
+        Rishabh Baid - 2018A7PS0189H
+
+      </li>
+    </ul>
+
+    <hr/>
+  </h2>
+  <h1><b>Implementation of Segmented Least Squares Algorithm</b></h1>
+
+  <p>
+  <h2>
+    This algorithm solves a geometrical problem of calculating segmented least square. This is done by minimizing the
+    sum of squares of differences between the segment and the point.
+  </h2>
+  <br /><br /><br />
+
+  </p>
+
+  <hr/>
+  
+  <div>
+    <p>
+    <h2> <b>Results produced by our code:</b></h2>
+    </p>
+    <p>
+    <h2>
+      We can see that on changing the cost the space and time complexity is almost the same.
+      Also the number of line segments decreses on increasing the cost in order to find the optimal solution to the
+      problem.
+    </h2>
+    </p>
+    <br /><br /><br />
+
+  </div>
+
+  <div>
+    <h4>Input</h4>
+    &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b><a href="1.html">Click here to see the testcase</a></b>
+    <br /><br />
+
+    <h4>Output</h4>
+    <img src="./output/case1.JPG" alt="Result 3" height="400" width="600">
+    <br /><br />
+
+    <img src="./graph/d1.JPG" alt="Result 3" height="500" width="900">
+
+    <h2>Runtime: 0.0025 sec</h2>
+    <h2>Memory usage: 5356 kB</h2>
+    <br /><br />
+  </div>
+
+  <div>
+    <h4>Input</h4>
+    &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="2.html">Click here to see the testcase</a></b>
+    <br /><br />
+
+    <h4>Output</h4>
+    <img src="./output/case2.JPG" alt="Result 3" height="350" width="400">
+    <br /><br />
+
+    <img src="./graph/d2.JPG" alt="Result 3" height="500" width="900">
+
+    <h2>Runtime: 0.0030 sec</h2>
+    <h2>Memory usage:5692 kB</h2>
+    <br /><br />
+  </div>
+
+  <div>
+    <h4>Input</h4>
+    &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="3.html">Click here to see the testcase</a></b>
+    <br /><br />
+
+    <h4>Output</h4>
+    <img src="./output/case3.JPG" alt="Result 3" height="450" width="400">
+    <br /><br />
+
+    <img src="./graph/d3.JPG" alt="Result 3" height="500" width="700">
+
+    <h2>Runtime:0.055 sec</h2>
+    <h2>Memory usage:7588 kB</h2>
+    <br /><br />
+  </div>
+
+  <div>
+    <h4>Input</h4>
+    &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="4.html">Click here to see the testcase</a></b>
+    <br /><br />
+
+    <h4>Output</h4>
+    <img src="./output/case4.JPG" alt="Result 3" height="450" width="400">
+    <br /><br />
+
+    <img src="./graph/d4.JPG" alt="Result 3" height="450" width="600">
+
+    <h2>Runtime:0.0025 sec</h2>>
+    <h2>Memory usage:7584 kB</h2>
+    <br /><br />
+  </div>
+
+  <div>
+    <h4>Input</h4>
+    &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="5.html">Click here to see the testcase</a></b>
+    <br /><br />
+
+    <h4>Output</h4>
+    <img src="./output/case5.JPG" alt="Result 3" height="550" width="500">
+    <br /><br />
+
+    <img src="./graph/d5.JPG" alt="Result 3" height="450" width="600">
+
+    <h2>Runtime:0.0021 sec</h2>
+    <h2>Memory usage:7572 kB</h2>
+    <br /><br />
+  </div>
+
+  <div>
+    <h4>Input</h4>
+    &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="6.html">Click here to see the testcase</a></b>
+    <br /><br />
+
+    <h4>Output</h4>
+    <img src="./output/case6.JPG" alt="Result 3" height="450" width="400">
+    <br /><br />
+
+    <img src="./graph/d6.JPG" alt="Result 3" height="450" width="500">
+
+    <h2>Runtime:0.0027</h2>
+    <h2>Memory usage:7516 kB</h2>
+    <br /><br />
+    <2div>
+
+      <div>
+        <h4>Input</h4>
+        &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="7.html">Click here to see the testcase</a></b>
+        <br /><br />
+
+        <h4>Output</h4>
+        <img src="./output/case7.JPG" alt="Result 3" height="600" width="400">
+        <br /><br />
+
+        <img src="./graph/d7.JPG" alt="Result 3" height="400" width="500">
+
+        <h2>Runtime:0.0035 sec</h2>
+        <h2>Memory usage:7588 kB</h2>
+        <br /><br />
+      </div>
+
+
+      <div>
+        <h4>Input</h4>
+        &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="8.html">Click here to see the testcase</a></b>
+        <br /><br />
+
+        <h4>Output</h4>
+        <img src="./output/case8.JPG" alt="Result 3" height="500" width="400">
+        <br /><br />
+
+        <img src="./graph/d8.JPG" alt="Result 3" height="400" width="500">
+
+        <h2>Runtime:0.032 sec</h2>
+        <h2>Memory usage:7616 kB</h2>
+        <br /><br />
+      </div>
+
+      <div>
+        <h4>Input</h4>
+        &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="9.html">Click here to see the testcase</a></b>
+        <br /><br />
+
+        <h4>Output</h4>
+        <img src="./output/case9.JPG" alt="Result 3" height="200" width="800">
+        <br /><br />
+
+        <img src="./graph/d9.JPG" alt="Result 3" height="400" width="550">
+
+        <h2>Runtime:0.0037 sec</h2>
+        <h2>Memory usage:7600 kB</h2>
+        <br /><br />
+      </div>
+
+      <div>
+        <h4>Input</h4>
+        &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="10.html">Click here to see the testcase</a></b>
+        <br /><br />
+
+        <h4>Output</h4>
+        <img src="./output/case10.JPG" alt="Result 3" height="100" width="800">
+        <br /><br />
+
+        <img src="./graph/d10.JPG" alt="Result 3" height="400" width="600">
+
+        <h2>Runtime:0.0028 sec</h2>
+        <h2>Memory usage:9640 kB</h2>
+        <br /><br />
+      </div>
+
+
+      <div>
+        <h4>Input</h4>
+        &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="11.html">Click here to see the testcase</a></b>
+        <br /><br />
+
+        <h4>Output</h4>
+        <img src="./output/case11.JPG" alt="Result 3" height="400" width="1000">
+        <br /><br />
+
+        <img src="./graph/d11.JPG" alt="Result 3" height="500" width="1000">
+
+        <h2>Runtime:0.006 sec</h2>
+        <h2>Memory usage:7600 kB</h2>
+        <br /><br />
+      </div>
+
+      <div>
+        <h4>Input</h4>
+        &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="12.html">Click here to see the testcase</a></b>
+        <br /><br />
+
+        <h4>Output</h4>
+        <img src="./output/case12.JPG" alt="Result 3" height="100" width="600">
+        <br /><br />
+
+        <img src="./graph/d12.JPG" alt="Result 3" height="500" width="1000">
+
+        <h2>Runtime:0.0037 sec</h2>
+        <h2>Memory usage:7596 kB</h2>
+        <br /><br />
+      </div>
+
+
+      <div>
+        <h4>Input</h4>
+        &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="13.html">Click here to see the testcase</a></b>
+        <br /><br />
+        <h4>Output</h4>
+        <img src="./output/case13.JPG" alt="Result 3" height="450" width="600">
+        <br /><br />
+        <img src="./graph/d13.JPG" alt="Result 3" height="500" width="1000">
+        <h2>Runtime:0.0089 sec<h2>
+            <h2>Memory usage:7848 kB</h2>
+            <br /><br />
+      </div>
+
+
+      <div>
+        <h4>Input</h4>
+        &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="14.html">Click here to see the testcase</a></b>
+        <br /><br />
+
+        <h4>Output</h4>
+        <img src="./output/case14.JPG" alt="Result 3" height="100" width="800">
+        <br /><br />
+
+        <img src="./graph/d14.JPG" alt="Result 3" height="500" width="1000">
+
+        <h2>Runtime:0.0049 sec<h2>
+            <h2>Memory usage:9892 kB</h42 <br /><br />
+      </div>
+
+
+      <div>
+        <h4>Input</h4>
+        &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="15.html">Click here to see the testcase</a></b>
+        <br /><br />
+
+        <h4>Output</h4>
+        <img src="./output/case15.JPG" alt="Result 3" height="500" width="700">
+        <br /><br />
+
+        <img src="./graph/d15.JPG" alt="Result 3" height="500" width="1000">
+
+        <h2>Runtime:0.031 sec</h2>
+        <h2>Memory usage:11840 kB</h2>
+        <br /><br />
+      </div>
+
+
+      <dvi>
+        <h4>Input</h4>
+        &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="16.html">Click here to see the testcase</a></b>
+        <br /><br />
+
+        <h4>Output</h4>
+        <img src="./output/case16.JPG" alt="Result 3" height="200" width="900">
+        <br /><br />
+
+        <img src="./graph/d16.JPG" alt="Result 3" height="500" width="1000">
+
+        <h2>Runtime:0.007 sec</h2>
+        <h2>Memory usage:11852 kB</h2>
+        <br /><br />
+  </div>
+
+
+  <div>
+    <h4>Input</h4>
+    &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="17.html">Click here to see the testcase</a></b>
+    <br /><br />
+
+    <h4>Output</h4>
+    <img src="./output/case17.JPG" alt="Result 3" height="500" width="700">
+    <br /><br />
+
+    <img src="./graph/d17.JPG" alt="Result 3" height="500" width="1000">
+
+    <h2>Runtime:0.017 sec</h2>
+    <h2>Memory usage:11684 kB</h2>
+    <br /><br />
+  </div>
+
+
+  <div>
+    <h4>Input</h4>
+    &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="18.html">Click here to see the testcase</a></b>
+    <br /><br />
+
+    <h4>Output</h4>
+    <img src="./output/case18.JPG" alt="Result 3" height="150" width="900">
+    <br /><br />
+
+    <img src="./graph/d18.JPG" alt="Result 3" height="500" width="1000">
+
+    <h2>Runtime:0.010 sec</24>
+      <h2>Memory usage:10060 kB</h2>
+      <br /><br />
+  </div>
+
+
+  <div>
+    <h4>Input</h4>
+    &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="19.html">Click here to see the testcase</a></b>
+    <br /><br />
+
+    <h4>Output</h4>
+    <img src="./output/case19.JPG" alt="Result 3" height="500" width="500">
+    <br /><br />
+
+    <img src="./graph/d19.JPG" alt="Result 3" height="500" width="1000">
+
+    <h2>Runtime:0.07 sec</h2>
+    <h2>Memory usage:14460 kB</h2>
+    <br /><br />
+  </div>
+
+
+  <div>
+    <h4>Input</h4>
+    &emsp;&emsp;&emsp; &emsp;&emsp;&emsp;<b></b><a href="20.html">Click here to see the testcase</a></b>
+    <br /><br />
+
+    <h4>Output</h4>
+    <img src="./output/case20.JPG" alt="Result 3" height="100" width="700">
+    <br /><br />
+
+    <img src="./graph/d20.JPG" alt="Result 3" height="600" width="1000">
+
+    <h2>Runtime:0.05 sec</h2>
+    <h2>Memory usage:14264 kB</h2>
+    <br /><br />
+  </div>
+
+
+  <script src="" async defer></script>
+</body>
+
+</html>
