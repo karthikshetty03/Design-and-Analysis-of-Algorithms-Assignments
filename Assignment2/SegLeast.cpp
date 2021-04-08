@@ -143,8 +143,12 @@ int main()
 			error[i][j] = 0.0;
 			while (k <= j)
 			{
-				temp = pts[k].y - slope[i][j] * pts[k].x - intercept[i][j];
-				error[i][j] += temp * temp;
+				temp = pts[k].y;
+				temp -= slope[i][j] * pts[k].x;
+				temp -= intercept[i][j];
+				double val = temp;
+				val *= temp;
+				error[i][j] += val;
 				k++;
 			}
 
