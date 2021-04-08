@@ -1,0 +1,18 @@
+digraph "XY"
+{
+ // INTERACTIVE_SVG=YES
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node56 [label="XY",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node56 -> Node57 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node57 [label="init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#a02fd73d861ef2e4aabb38c0c9ff82947",tooltip="helper function to update values in X, Y, Xy and X_sqr "];
+  Node57 -> Node58 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node58 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4"];
+  Node56 -> Node59 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node59 [label="sumInitializer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#a0b4b1bb4f7756636f938542bcca1df6c",tooltip="driver code "];
+  Node59 -> Node58 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 -> Node60 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node60 [label="XYInitializer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#abb1200c8321b04faac36e48129423db0",tooltip="helper function to updare sum_x, sum_y, sum_xy, sum_x_sqr "];
+  Node60 -> Node58 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}
