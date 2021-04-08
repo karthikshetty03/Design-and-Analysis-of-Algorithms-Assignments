@@ -1,2 +1,1 @@
-
-Penalty : 10
+Penalty: 10582.7

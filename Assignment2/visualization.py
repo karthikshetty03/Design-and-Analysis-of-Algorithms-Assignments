@@ -34,5 +34,5 @@ while i < len(content_rect) - 1:
     a.append([x1, y1])
     i += 1
 
-plt.plot(*zip(*a), marker="o", color="r", ls="")
+plt.plot(*zip(*a), marker="o", color="b", ls="")
 plt.show()

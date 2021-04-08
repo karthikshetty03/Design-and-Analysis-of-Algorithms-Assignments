@@ -1,20 +1,3 @@
-// <Used for computing E[i][j] which is the square error of a segment
-// <that is best fit to the points {points[i], points[i+1], ..., points[j]}
-
-// <cumulative_x[i] is sum(points[j].x) for 1 <= j <= i
-// <cumulative_y[i] is sum(points[j].y) for 1 <= j <= i
-// <cumulative_xy[i] is sum(points[j].x * points[j].y) for 1 <= j <= i
-// <cumulative_xSqr[i] is sum(points[j].x * points[j].x) for 1 <= j <= i
-
-// <slope[i][j] is the slope of the segment that is best fit to
-// <the points {points[i], points[i+1], ..., points[j]}
-
-// <intercept[i][j] is the y-intercept of the segment that is best fit to
-// <the points {points[i], points[i+1], ..., points[j]}
-
-// <E[i][j] is the square error of the segment that is best fit to
-// <the points {points[i], points[i+1], ..., points[j]}
-
 /*
  * Actual Code starts from here
  * First we define all the necessary data structures
@@ -41,7 +24,20 @@ public:
 
 } points[MAXN + 1];
 
-int cumulative_x[MAXN + 1], cumulative_y[MAXN + 1], cumulative_xy[MAXN + 1], cumulative_xSqr[MAXN + 1];
+// <For Computing E[i][j] which is the square error of a segment:
+// <that is best fit to the points {points[i], points[i+1], ..., points[j]}
+// <cumulative_x[i] is sum(points[j].x) for 1 <= j <= i
+// <cumulative_y[i] is sum(points[j].y) for 1 <= j <= i
+// <cumulative_xy[i] is sum(points[j].x * points[j].y) for 1 <= j <= i
+// <cumulative_xSqr[i] is sum(points[j].x * points[j].x) for 1 <= j <= i
+// <slope[i][j] is the slope of the segment that is best fit to
+// <the points {points[i], points[i+1], ..., points[j]}
+// <intercept[i][j] is the y-intercept of the segment that is best fit to
+// <the points {points[i], points[i+1], ..., points[j]}
+// <E[i][j] is the square error of the segment that is best fit to
+// <the points {points[i], points[i+1], ..., points[j]}
+
+double cumulative_x[MAXN + 1], cumulative_y[MAXN + 1], cumulative_xy[MAXN + 1], cumulative_xSqr[MAXN + 1];
 double slope[MAXN + 1][MAXN + 1], intercept[MAXN + 1][MAXN + 1], E[MAXN + 1][MAXN + 1];
 
 // <OPT[i] is the optimal solution (minimum cost) for the points {points[1], points[2], ..., points[i]}
@@ -49,7 +45,7 @@ double OPT[MAXN + 1];
 
 // <[opt_segment[i], i] is the last segment in the optimal solution
 // <for the points {points[1], points[2], ..., points[i]}
-int opt_segment[MAXN + 1];
+double opt_segment[MAXN + 1];
 
 int32_t main()
 {
