@@ -132,7 +132,7 @@ int main()
 	}
 
 	ofstream op;
-	op.open("ans.txt");
+	op.open("segments.txt");
 	cout << endl << "An optimal solution is:" << endl;
 
 	while(!seg.empty())	
