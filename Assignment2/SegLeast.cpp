@@ -1,3 +1,32 @@
+/**
+ * Code to implement the line fitting dynamic programming algorithm
+ * 
+ * 
+ * The cost of a particular set of segments is:  
+ * sum(i from 1 to N) 
+ *  Error_i + cost * amt,
+ *
+ * where,
+ * 
+ * Error_i is the error of the ith point of the segment, 
+ * cost is the segment cost,
+ * and amt is the number of segments used
+ * 
+ * The alogrithm accepts set of points and cost of introducing a segment as input 
+ * It outputs the minimal cost and the corresponding set of segments
+ * 
+ * Two modes of inputs: 
+ * 	1. Manually give the number of points say n, and enter n points in n lines
+ * 
+ *  2. First run script.cpp file which will take an input say n and generate n*5 points 
+ *     These points are then written to points.txt file and read directly fron there
+ * 
+ * Time Complexity : O(N2)
+ * Space Complexity: O(N2)
+ * 
+ *  /
+
+
 #include <bits/stdc++.h>
 using namespace std;
 
