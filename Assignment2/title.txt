@@ -1,1 +1,2 @@
-Penalty: 10582.7
+
+The cost of the optimal solution : 8

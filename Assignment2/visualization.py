@@ -1,5 +1,9 @@
 import matplotlib.pyplot as plt
 
+my_file = open("title.txt", "r")
+content = my_file.read()
+plt.title(content)
+
 file = open("points.txt", "r")
 points = file.read()
 file1 = open("segments.txt", "r")
