@@ -70,6 +70,7 @@ int main()
 			sum_x_sqr = X_sqr[j] - X_sqr[i-1];
 			numr = gap*sum_xy - sum_x*sum_y;
 
+<<<<<<< HEAD
 			if(numr != 0)
 			{
 				denr = gap*sum_x_sqr - sum_x*sum_x;
@@ -77,6 +78,45 @@ int main()
 					slope[i][j] = (numr / double(denr));
 				else
 					slope[i][j] == infi;
+=======
+int main()	{
+	int N, i, j, k, interval;
+	double x_sum, y_sum, xy_sum, xsqr_sum, num, denom;
+	double tmp, mn, C;
+	
+	printf("Enter the number of points : ");
+	scanf("%d", &N);
+	printf("Enter %d points :\n", N);
+	for (i = 1; i <= N; i++)
+		scanf("%lf %lf", &points[i].x, &points[i].y);
+	printf("Enter the cost of creating a new segment : ");
+	scanf("%lf", &C);
+	
+	// sort the points in non-decreasing order of x coordinate
+	sort (points + 1, points + N + 1);
+	
+	// precompute the error terms
+	cumulative_x[0] = cumulative_y[0] = cumulative_xy[0] = cumulative_xSqr[0] = 0;
+	for (j = 1; j <= N; j++)	{
+		cumulative_x[j] = cumulative_x[j-1] + points[j].x;
+		cumulative_y[j] = cumulative_y[j-1] + points[j].y;
+		cumulative_xy[j] = cumulative_xy[j-1] + points[j].x * points[j].y;
+		cumulative_xSqr[j] = cumulative_xSqr[j-1] + points[j].x * points[j].x;
+		
+		for (i = 1; i <= j; i++)	{
+			interval = j - i + 1;
+			x_sum = cumulative_x[j] - cumulative_x[i-1];
+			y_sum = cumulative_y[j] - cumulative_y[i-1];
+			xy_sum = cumulative_xy[j] - cumulative_xy[i-1];
+			xsqr_sum = cumulative_xSqr[j] - cumulative_xSqr[i-1];
+			
+			num = interval * xy_sum - x_sum * y_sum;
+			if (num == 0)
+				slope[i][j] = 0.0;
+			else {
+				denom = interval * xsqr_sum - x_sum * x_sum;
+				slope[i][j] = (denom == 0) ? INF : (num / double(denom));				
+>>>>>>> 6acdab2 (Fixes and work on this)
 			}
 			else 
 				slope[i][j] = 0.0;
