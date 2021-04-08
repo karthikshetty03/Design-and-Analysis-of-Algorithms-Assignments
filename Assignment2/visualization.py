@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import numpy as np
 
 file = open("points.txt", "r")
 points = file.read()
