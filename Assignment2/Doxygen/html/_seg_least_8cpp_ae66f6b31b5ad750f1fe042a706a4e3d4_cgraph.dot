@@ -1,0 +1,40 @@
+digraph "main"
+{
+ // INTERACTIVE_SVG=YES
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node13 [label="main",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node13 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="error",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#a603a96957a6df249b6d7b7207eab837f",tooltip="helper function to initialize values "];
+  Node13 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#a02fd73d861ef2e4aabb38c0c9ff82947",tooltip="helper function to update values in X, Y, Xy and X_sqr "];
+  Node15 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="X",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#ab97f549f06ae782f4670c19b049c4ace"];
+  Node15 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="X_sqr",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#a47002d6645b78c6c2969dc6ed512eb55"];
+  Node15 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="XY",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#ad9abe7b887ced63dfaa9afd70357b837"];
+  Node15 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="Y",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#a2d8a3d3c5f89e0ca29000b35ca73d3ec"];
+  Node13 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="intercept",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#ac50b55a2b734969544226ce1f5e17437"];
+  Node13 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node21 [label="optimum",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#a38e0da0e5c77472a8518df3830f63c14"];
+  Node13 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node22 [label="seg_opti",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#a1b8992c9e0832429cc3df6f27e9b69e9"];
+  Node13 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node23 [label="slope",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#a429e2c9c80e74224fc052f2a95ddea7e"];
+  Node13 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node24 [label="sumInitializer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#a0b4b1bb4f7756636f938542bcca1df6c",tooltip="driver code "];
+  Node24 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node24 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node24 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node24 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node25 [label="XYInitializer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$_seg_least_8cpp.html#abb1200c8321b04faac36e48129423db0",tooltip="helper function to updare sum_x, sum_y, sum_xy, sum_x_sqr "];
+  Node25 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node25 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node25 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node25 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}
